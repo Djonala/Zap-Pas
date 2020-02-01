@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\SecurityUser;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @method SecurityUser|null find($id, $lockMode = null, $lockVersion = null)
- * @method SecurityUser|null findOneBy(array $criteria, array $orderBy = null)
- * @method SecurityUser[]    findAll()
- * @method SecurityUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Users|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Users|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Users[]    findAll()
+ * @method Users[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class SecurityUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SecurityUser::class);
+        parent::__construct($registry, Users::class);
     }
 
     /**
@@ -37,7 +37,7 @@ class SecurityUserRepository extends ServiceEntityRepository implements Password
     }
 
     // /**
-    //  * @return SecurityUser[] Returns an array of SecurityUser objects
+    //  * @return Users[] Returns an array of Users objects
     //  */
     /*
     public function findByExampleField($value)
@@ -54,7 +54,7 @@ class SecurityUserRepository extends ServiceEntityRepository implements Password
     */
 
     /*
-    public function findOneBySomeField($value): ?SecurityUser
+    public function findOneBySomeField($value): ?Users
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
