@@ -8,7 +8,6 @@
 pour vous en assurer : 
 
         git status
-
 pour vous déplacer : 
         
         git checkout develop
