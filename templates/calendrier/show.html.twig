@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block body %}
+    <h1>Calendrier</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ calendrier.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ calendrier.nom }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ calendrier.url ? calendrier.url|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>DocPersistJson</th>
+                <td>{{ calendrier.docPersistJson ? calendrier.docPersistJson|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Classe</th>
+                <td>{{ calendrier.classe ? calendrier.classe|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Formateurs</th>
+                <td>{{ calendrier.formateurs ? calendrier.formateurs|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Admin</th>
+                <td>{{ calendrier.admin }}</td>
+            </tr>
+            <tr>
+                <th>Administratifs</th>
+                <td>{{ calendrier.administratifs ? calendrier.administratifs|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EventZimbra</th>
+                <td>{{ calendrier.eventZimbra ? calendrier.eventZimbra|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EventLocal</th>
+                <td>{{ calendrier.eventLocal ? calendrier.eventLocal|join(', ') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('calendrier_index') }}">back to list</a>
+
+    <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}">edit</a>
+
+    {{ include('calendrier/_delete_form.html.twig') }}
+{% endblock %}
