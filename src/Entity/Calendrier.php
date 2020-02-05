@@ -199,7 +199,13 @@ class Calendrier
             $id = $parsed_json->{'appt'}[$i]->{'id'};
             $nom = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'name'};
             $lieu = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'loc'};
-            $mailAnimateur = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'at'}[0]->{'a'};
+            if (isset($parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'at'}[0]->{'a'})){
+                $mailAnimateur = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'at'}[0]->{'a'};
+
+            } else {
+                $mailAnimateur = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'or'}->{'a'};
+            }
+            echo($mailAnimateur."\n");
             //$description1 = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'fr'};
             $description2 = $parsed_json->{'appt'}[0]->{'inv'}[0]->{'comp'}[0]->{'desc'}[0]->{'_content'};
             $dBegin = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'s'}[0]->{'d'};
