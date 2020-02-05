@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Cassandra\Date;
+use Cassandra\Time;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,33 @@ class CoursZimbra
      * @ORM\Column(type="string", length=255)
      */
     private $lieu;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $emailIntervenant;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descriptionEvent;
+
+
+    public function __construct(string $titreEvent, $dateEvent, $HDebutEvent, $HFinEvent, string $nomProfEvent, string $lieuEvent, string $emailProfEvent, string $description)
+    {
+        $this->matiere=$titreEvent;
+        $this->date=$dateEvent;
+        $this->heureDebut=$HDebutEvent;
+        $this->heureFin=$HFinEvent;
+        $this->nomFormateur=$nomProfEvent;
+        $this->lieu=$lieuEvent;
+        $this->emailIntervenant=$emailProfEvent;
+        $this->descriptionEvent=$description;
+
+
+    }
+
+
 
     public function getId(): ?int
     {
@@ -119,6 +148,30 @@ class CoursZimbra
     public function setLieu(string $lieu): self
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getEmailIntervenant(): ?string
+    {
+        return $this->emailIntervenant;
+    }
+
+    public function setEmailIntervenant(string $emailIntervenant): self
+    {
+        $this->emailIntervenant = $emailIntervenant;
+
+        return $this;
+    }
+
+    public function getDescriptionEvent(): ?string
+    {
+        return $this->descriptionEvent;
+    }
+
+    public function setDescriptionEvent(string $descriptionEvent): self
+    {
+        $this->descriptionEvent = $descriptionEvent;
 
         return $this;
     }
