@@ -62,14 +62,15 @@ class Calendrier
      */
     private $eventLocal = [];
 
-    public function  __construct(string $nomCal, string $urlJsonCal, $classCal, $formatterCal, $adminCal, $agentAdminCal)
+    public function __construct(string $nomCal, string $urlJsonCal, $classCal, $formatterCal, $adminCal, $agentAdminCal)
     {
         $this->nom = $nomCal;
         $this->url = $urlJsonCal;
         $this->classe = $classCal;
-        $this->formateurs=$formatterCal;
+        $this->formateurs = $formatterCal;
         $this->admin = $adminCal;
-        $this->administratifs=$agentAdminCal;
+        $this->administratifs = $agentAdminCal;
+        $this->docPersistJson = $this->initCalendarZimbra($this->url);
     }
 
 
@@ -90,9 +91,10 @@ class Calendrier
         return $this;
     }
 
-    public function getUrl(): ?array
+    public function getUrl(): string
     {
         return $this->url;
+
     }
 
     public function setUrl(array $url): self
@@ -186,40 +188,74 @@ class Calendrier
         return $this;
     }
 
-    public function initCalendarZimbra() {
-         $json = file_get_contents($this->url);
-        $parsed_json= json_decode($json,true);
-        $appt = $parsed_json['appt'];
-        $parsed_json = json_decode($json);
-        $i=0;
+    /**
+     * @param url du calendrier
+     * @return array de CoursZimbra
+     * Cette fonction est à utiliser au moment de la construction de l'objet pour générer la première version des
+     * evenements zimbra contenu du calendrier.
+     */
+    public function initCalendarZimbra($url) {
+        $json = file_get_contents($url); // Recupération du fichier json via l'url
+        $parsed_json = json_decode($json, true);    // parse du fichier json en tableau PHP
+        $ar_evenements = $parsed_json['appt'];   //recupération du grand tableau appt qui contient l'ensemble des events
+        $arrayEventZimbra = array();
 
-        foreach ($appt as $value) {
-            //Attention aux erreurs ici (!!!!!!!!!!) WARNING (!!!!!!!!!!!!!!!)
-            //Les valeurs doivent être try..catch
-            $id = $parsed_json->{'appt'}[$i]->{'id'};
-            $nom = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'name'};
-            $lieu = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'loc'};
-            if (isset($parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'at'}[0]->{'a'})){
-                $mailAnimateur = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'at'}[0]->{'a'};
-
+        foreach ($ar_evenements as $event) {
+            if (isset($event{'id'})) {
+                $id = $event{'id'};
             } else {
-                $mailAnimateur = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'or'}->{'a'};
+                $id = "id non trouvé ";
             }
-            echo($mailAnimateur."\n");
-            //$description1 = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'fr'};
-            $description2 = $parsed_json->{'appt'}[0]->{'inv'}[0]->{'comp'}[0]->{'desc'}[0]->{'_content'};
-            $dBegin = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'s'}[0]->{'d'};
-            $dateDebut = DateTime::createFromFormat('Ymd\THis', $dBegin)->format('d/m/Y H:i:s');
-            $dEnd = $parsed_json->{'appt'}[$i]->{'inv'}[0]->{'comp'}[0]->{'e'}[0]->{'d'};
-            $dateFin = DateTime::createFromFormat('Ymd\THis', $dEnd)->format('d/m/Y H:i:s');
 
-            $i++;
-            //Attention au constructeur ici (!!!!!!!!!!) WARNING (!!!!!!!!!!!!!!!)
-            //Les valeurs sont incorrecte & pas toutes utilisées
-            $cours = new CoursZimbra($nom, $dateDebut->format('d/m/Y'), $dateDebut->format('H:i:s'), $dateFin->format('H:i:s'), $mailAnimateur, $lieu, $mailAnimateur,$description2);
-            $this->eventZimbra[] = $cours;
+            if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
+                $titre = $event{'inv'}[0]{'comp'}[0]{'name'};
+            } else {
+                $titre = "titre non défini";
+            }
+
+
+            if (isset($event{'inv'}[0]{'comp'}[0]{'loc'})) {
+                $lieu = $event{'inv'}[0]{'comp'}[0]{'loc'};
+            } else {
+                $lieu = "Lieu non précisé";
+            }
+
+            if (isset($event{'inv'}[0]{'comp'}[0]{'at'}[0]{'a'})) {
+                $mailAnimateur = $event{'inv'}[0]{'comp'}[0]{'at'}[0]{'a'};
+            } else {
+                $mailAnimateur = $event{'inv'}[0]{'comp'}[0]{'or'}{'a'};
+            }
+
+            if (isset($event{'inv'}[0]{'comp'}[0]{'fr'})) {
+                $description1 = $event{'inv'}[0]{'comp'}[0]{'fr'};
+            } else {
+                $description1 = "";
+            }
+
+            if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
+                $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
+                $dateDebut = DateTime::createFromFormat('Ymd\THis', $dBegin)->format('d/m/Y');
+                $heureDebut = DateTime::createFromFormat('Ymd\THis', $dBegin)->format('H:i:s');
+            } else {
+                $dateDebut = "date debut non precisée";
+                $heureDebut = "heure debut non precisé";
+            }
+
+            if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
+                $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
+                $dateFin = DateTime::createFromFormat('Ymd\THis', $dEnd)->format('d/m/Y');
+                $heureFin = DateTime::createFromFormat('Ymd\THis', $dEnd)->format('H:i:s');
+            } else {
+                $dateFin = "date fin non precisée";
+                $heureFin = "heure fin non precisé";
+            }
+            $cours = new CoursZimbra($titre, $dateDebut, $heureDebut, $heureFin, $mailAnimateur, $lieu, $mailAnimateur, $description1);
+            $arrayEventZimbra[] = $cours;
         }
 
+        return $arrayEventZimbra;
 
     }
+
+
 }
