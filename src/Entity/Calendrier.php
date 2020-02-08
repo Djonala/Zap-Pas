@@ -192,7 +192,7 @@ class Calendrier
      * @param url du calendrier
      * @return array de CoursZimbra
      * Cette fonction est à utiliser au moment de la construction de l'objet pour générer la première version des
-     * evenements zimbra contenu du calendrier.
+     * evenements zimbra du calendrier.
      */
     public function initCalendarZimbra($url) {
         $json = file_get_contents($url); // Recupération du fichier json via l'url
