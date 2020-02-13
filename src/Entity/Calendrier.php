@@ -17,17 +17,17 @@ class Calendrier
      */
     private $id;
 
-    /**
+    /** titre de la formation
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
-    /**
+    /** url agenda transmis par l'admin
      * @ORM\Column(type="string", length=255)
      */
     private $url;
 
-    /**
+    /** (!)(!)(!) A VOIR SI VRAIMENT NECESSAIRE (!)(!)(!)
      * @ORM\Column(type="json")
      */
     private $docPersistJson = [];
