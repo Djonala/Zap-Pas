@@ -15,13 +15,15 @@ window.onload = () => {
             center: 'title',
             right:'dayGridMonth, timeGridWeek, list',
         },
+        // on passe en francais les bouttons
         buttonText:{
             today:"Aujourd'hui",
             month:"Mois",
             week:'Semaine',
             list:"Liste des cours"
         },
-        //events:evenements,
+
+        // on ajoute la vue de l'heure qu'il est sur la vue semaine
         nowIndicator: true,
     })
 
