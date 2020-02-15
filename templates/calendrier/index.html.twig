@@ -39,49 +39,49 @@
 
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Url</th>
-                <th>DocPersistJson</th>
-                <th>Classe</th>
-                <th>Formateurs</th>
-                <th>Admin</th>
-                <th>Administratifs</th>
-                <th>EventZimbra</th>
-                <th>EventLocal</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for calendrier in calendriers %}
-            <tr>
-                <td>{{ calendrier.id }}</td>
-                <td>{{ calendrier.nom }}</td>
-                <td>{{ calendrier.url ? calendrier.url|json_encode : '' }}</td>
-                <td>{{ calendrier.docPersistJson ? calendrier.docPersistJson|json_encode : '' }}</td>
-                <td>{{ calendrier.classe ? calendrier.classe|join(', ') : '' }}</td>
-                <td>{{ calendrier.formateurs ? calendrier.formateurs|join(', ') : '' }}</td>
-                <td>{{ calendrier.admin }}</td>
-                <td>{{ calendrier.administratifs ? calendrier.administratifs|join(', ') : '' }}</td>
-                <td>{{ calendrier.eventZimbra ? calendrier.eventZimbra|join(', ') : '' }}</td>
-                <td>{{ calendrier.eventLocal ? calendrier.eventLocal|join(', ') : '' }}</td>
-                <td>
-                    <a href="{{ path('calendrier_show', {'id': calendrier.id}) }}">show</a>
-                    <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Nom</th>#}
+{#                <th>Url</th>#}
+{#                <th>DocPersistJson</th>#}
+{#                <th>Classe</th>#}
+{#                <th>Formateurs</th>#}
+{#                <th>Admin</th>#}
+{#                <th>Administratifs</th>#}
+{#                <th>EventZimbra</th>#}
+{#                <th>EventLocal</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for calendrier in calendriers %}#}
+{#            <tr>#}
+{#                <td>{{ calendrier.id }}</td>#}
+{#                <td>{{ calendrier.nom }}</td>#}
+{#                <td>{{ calendrier.url ? calendrier.url|json_encode : '' }}</td>#}
+{#                <td>{{ calendrier.docPersistJson ? calendrier.docPersistJson|json_encode : '' }}</td>#}
+{#                <td>{{ calendrier.classe ? calendrier.classe|join(', ') : '' }}</td>#}
+{#                <td>{{ calendrier.formateurs ? calendrier.formateurs|join(', ') : '' }}</td>#}
+{#                <td>{{ calendrier.admin }}</td>#}
+{#                <td>{{ calendrier.administratifs ? calendrier.administratifs|join(', ') : '' }}</td>#}
+{#                <td>{{ calendrier.eventZimbra ? calendrier.eventZimbra|join(', ') : '' }}</td>#}
+{#                <td>{{ calendrier.eventLocal ? calendrier.eventLocal|join(', ') : '' }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('calendrier_show', {'id': calendrier.id}) }}">show</a>#}
+{#                    <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="11">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
 
-    <a href="{{ path('calendrier_new') }}">Create new</a>
+{#    <a href="{{ path('calendrier_new') }}">Create new</a>#}
 </body>
 </html>
 {% endblock %}
