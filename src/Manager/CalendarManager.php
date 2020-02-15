@@ -7,6 +7,7 @@ namespace App\Manager;
 use App\Entity\Calendrier;
 use App\Entity\CoursZimbra;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class CalendarManager
 {
@@ -26,23 +27,26 @@ class CalendarManager
 
 
     /**
-     * @param $calendar url du calendrier
-     * @return array de CoursZimbra
+     * @param $calendar Calendrier url du calendrier
      * Cette fonction est à utiliser au moment de la construction de l'objet pour générer la première version des
      * evenements zimbra du calendrier.
+     * @throws Exception
      */
     public function initCalendarZimbra(Calendrier $calendar) {
-        $json = file_get_contents($calendar->getUrl()); // Recupération du fichier json via l'url
+        if(!file_get_contents($calendar->getUrl())){
+            throw new Exception('Le lien URL est incorrect');
+        }
+        $json = file_get_contents($calendar->getUrl()); // Recupération du fichier json via l'url du calendrier passé en param
         $parsed_json = json_decode($json, true);    // parse du fichier json en tableau PHP
         $ar_evenements = $parsed_json['appt'];   //recupération du grand tableau appt qui contient l'ensemble des events
         $arrayEventZimbra = array();
 
         foreach ($ar_evenements as $event) {
-            if (isset($event{'id'})) {
-                $id = $event{'id'};
-            } else {
-                $id = "id non trouvé ";
-            }
+//            if (isset($event{'id'})) {
+//                $id = $event{'id'};
+//            } else {
+//                $id = "id non trouvé ";
+//            }
 
             if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
                 $titre = $event{'inv'}[0]{'comp'}[0]{'name'};
@@ -75,7 +79,7 @@ class CalendarManager
                 $heureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin)->format('H:i:s');
             } else {
                 $dateDebut = "date debut non precisée";
-                $heureDebut = "heure debut non precisé";
+                $heureDebut = "heure debut non precisée";
             }
 
             if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
@@ -84,13 +88,15 @@ class CalendarManager
                 $heureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd)->format('H:i:s');
             } else {
                 $dateFin = "date fin non precisée";
-                $heureFin = "heure fin non precisé";
+                $heureFin = "heure fin non precisée";
             }
             $cours = new CoursZimbra($titre, $dateDebut, $heureDebut, $heureFin, $mailAnimateur, $lieu, $mailAnimateur, $description1);
             $arrayEventZimbra[] = $cours;
         }
+    }
 
-        return $arrayEventZimbra;
+    public function synchroCalendar(Calendrier $calendar) {
+
 
     }
 
