@@ -5,14 +5,12 @@ body {
 }
 
 
-.logo {
-
-    width: 350px;
-   
+#logo {
+    width: 23vh;
 }
 
 .imageflottante2 {
-    position: absolute; /* a changer en relative */
+    position: relative;
     float: right;
     margin-top: 20px;
     width: 1150px;
@@ -23,15 +21,22 @@ body {
 
     width: 350px;
     position: absolute;
-    align-items: right;
 }
 
-.container {
+.container-2 {
 
     text-align: center;
 
 }
 
+.container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+
+}
 
 
 form {
