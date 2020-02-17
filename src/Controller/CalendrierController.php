@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Calendrier;
 use App\Form\CalendrierType;
+use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
+use MongoDB\Driver\Exception\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +29,9 @@ class CalendrierController extends AbstractController
 
     /**
      * @Route("/new", name="calendrier_new", methods={"GET","POST"})
+     * @throws \Exception
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CalendarManager $calendarManager): Response
     {
         $calendrier = new Calendrier();
         $form = $this->createForm(CalendrierType::class, $calendrier);
@@ -38,6 +41,12 @@ class CalendrierController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($calendrier);
             $entityManager->flush();
+            try {
+                $calendarManager->initCalendarZimbra($calendrier);
+            } catch (\Exception $error) {
+                echo $error->getMessage();
+            }
+
 
             return $this->redirectToRoute('calendrier_index');
         }
