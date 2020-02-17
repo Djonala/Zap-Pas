@@ -9,7 +9,7 @@ pour vous en assurer :
 
         git status
 pour vous déplacer : 
-        
+        sy
         git checkout develop
 
 ###2. Recupérer le projet sur git  :  
@@ -32,7 +32,7 @@ Vous pouvez commencer à faire vos modifications
 
 ###1. Creez votre fichier de migration :
 
-        symfony console create-migration
+        symfony console make:migration
         
 ###2. Staged vos modifications : 
 
