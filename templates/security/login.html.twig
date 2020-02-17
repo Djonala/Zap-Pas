@@ -3,13 +3,49 @@
 {% block title %}Login{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="assets/login.css">
+    <link rel="stylesheet" href="{{ asset('assets/login.css') }}">
 {% endblock %}
 
+
+
+
 {% block body %}
-    <img class="logo" src="{{ asset('assets/img/LOGOZAP-PAS.png') }}" alt="Logo">
+
+    <div class="container">
+    <img id="logo" src="{{ asset('assets/img/LOGOZAP-PAS2.png') }}" alt="Logo" >
     <img class="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
+    </div>
     <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
+
+
+    <form id="formulaire" method="post">
+{#    {% if error %}#}
+{#        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+{#    {% endif %}#}
+
+{#    {% if app.user %}#}
+{#        <div class="mb-3">#}
+{#            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+
+        <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
+
+        <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
+
+{#    <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}"  >#}
+    <span class="psw"><a href="#">Identifiant ou mot de passe oublié?</a></span>
+    <br>
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>{% block body %}
+    <img class="logo" src="{{ asset('assets/img/LOGOZAP-PAS.png') }}" alt="Logo">
+    <img id="container1" class="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
+    <img id="container1" class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
 
     <form id="formulaire" method="post">
     {% if error %}
@@ -22,11 +58,11 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
+
+
     <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
 
-    <label for="inputPassword">Password</label>
+
     <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
@@ -50,3 +86,12 @@
     </button>
 </form>
 {% endblock %}
+
+{#                <input type="checkbox" name="_remember_me"> Remember me#}
+
+
+{#    <button class="btn btn-lg btn-primary" type="submit">#}
+{#        Sign in#}
+{#    </button>#}
+{#</form>#}
+{#{% endblock %}#}
