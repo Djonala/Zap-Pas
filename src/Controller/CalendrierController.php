@@ -6,7 +6,6 @@ use App\Entity\Calendrier;
 use App\Form\CalendrierType;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
-use MongoDB\Driver\Exception\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

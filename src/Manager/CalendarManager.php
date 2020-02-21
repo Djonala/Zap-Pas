@@ -107,50 +107,74 @@ class CalendarManager
      * @throws Exception
      */
     public function creationEventsZimbraFC(json $url){
+
+        // PARSE DU FICHIER JSON EN ARRAY PHP
         try {
             $parsed_json = $this->parseJsonToPhpArray($url);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
+
+        // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
         try {
-            $ar_evenements = $this->selectArrayFileJson($parsed_json,'appt');
+            $ar_events= $this->selectArrayFileJson($parsed_json,'appt');
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
 
         $arrayEventZimbra = array();
 
-        foreach ($ar_evenements as $event) {
+        /**
+         * Pour chaque ligne du tableau d'evenement
+         * recupération des différents élements nécessaires
+         * au traitement et à l'affichage
+         */
+        foreach ($ar_events as $event) {
+
+            // RECUPERATION DU TITRE DE L'EVENT
             if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
                 $titre = $event{'inv'}[0]{'comp'}[0]{'name'};
             } else {
                 $titre = "titre non défini";
             }
 
+            // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
             if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
                 $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
                 $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin)->format('Y-m-d H:i:s');
-
             } else {
-                throw new Exception('Date de debut non communiquée');
+                throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
             }
 
+            // RECUPERATION DE LA DATE DE FIN DE L'EVENT
             if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
                 $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
                 $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd)->format('Y-m-d H:i:s');
             } else {
-                throw new Exception('Date de fin non communiquée');
+                throw new Exception('Date de fin non communiquée'); // une date de fin non définie renvoi une exception
             }
 
+            // ASSEMBLAGE DE L'ENSEMBLE DANS UN OBJET
             $myObj->titre = $titre;
             $myObj->start = $dBegin;
             $myObj->end = $dEnd;
+
+            // AJOUT DANS UN TABLEAU FINAL
             $arrayEventZimbra[] = $myObj;
         }
+
+        // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
         $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
+
         return $myJson;
     }
 
+    /**
+     * Fonction qui parse un fichier JSON en array PHP
+     * @param string $url
+     * @return mixed
+     * @throws Exception
+     */
     public function parseJsonToPhpArray(string $url){
         if(!file_get_contents($url)){
             throw new Exception('Le lien URL est incorrect');
@@ -160,6 +184,12 @@ class CalendarManager
         return $parsed_json;
     }
 
+    /** Fonction qui selectionne une ligne du tableau PHP (elle même un tableau)
+     * @param array $arrayPHP
+     * @param string $selector
+     * @return mixed
+     * @throws Exception
+     */
     public function selectArrayFileJson(array $arrayPHP, string $selector){
         if (!$arrayPHP){
             throw new Exception('Le tableau est vide');
@@ -171,6 +201,10 @@ class CalendarManager
         return $ar_select;
     }
 
+    /** Fonction qui parse un array en JSON
+     * @param array $arPHP
+     * @return false|string
+     */
     public function parsePhpToJsonFile(array $arPHP){
         $arJSON = json_encode($arPHP);
         return $arJSON;
