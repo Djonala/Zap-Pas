@@ -14,17 +14,6 @@ window.onload = () => {
     }]
 
 
-    // let xmlhttp = new XMLHttpRequest();
-    // xmlhttp.onreadystatechange = function() {
-    //     if (this.readyState === 4 && this.status === 200) {
-    //         let evenement = JSON.parse(xmlhttp.responseText);
-    //
-    //     }
-    // };
-    // xmlhttp.open("GET", "https://webmail.ec-nantes.fr/home/mailys.veguer@ec-nantes.fr/Web%20in-pulse%20%231.json", true);
-    // xmlhttp.send();
-
-
 
     // on s'instancie le calendrier
     let calendrierZap_pas = new FullCalendar.Calendar(elementCalendrier, {
