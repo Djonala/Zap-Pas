@@ -7,6 +7,8 @@ body {
 
 #logo {
     width: 23vh;
+    position: relative;
+    left: 80%;
 }
 
 .imageflottante2 {
@@ -49,7 +51,7 @@ form {
     align-items:  center; 
     padding-bottom:  20px; 
     width:  400px;
-    height: 350px;
+    height: 250px;
     margin: 0 auto;
     background-color: #dba005;
 
@@ -99,10 +101,7 @@ form {
     font-style: italic;
 }
 
-.form-control {
 
-    margin-top: 80px;
-}
 
 span {
 
