@@ -20,10 +20,10 @@ class CalendarManager
     /**
      * CalendarManager constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+//    public function __construct(EntityManagerInterface $entityManager)
+//    {
+//        $this->entityManager = $entityManager;
+//    }
 
 
     /**
@@ -102,12 +102,12 @@ class CalendarManager
 
     /**
      * Fonction qui selectionne les éléments nécessaires à l'affichage dans un fichier .json et qui renvoi un fichier json
-     * @param json $url
+     * @param string $url
      * @return array
      * @throws Exception
      */
-    public function creationEventsZimbraFC(json $url){
-
+    public function creationEventsZimbraFC(Calendrier $calendar){
+        $url = $calendar->getUrl();
         // PARSE DU FICHIER JSON EN ARRAY PHP
         try {
             $parsed_json = $this->parseJsonToPhpArray($url);
@@ -163,10 +163,11 @@ class CalendarManager
             $arrayEventZimbra[] = $myObj;
         }
 
-        // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
-        $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
+//        // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
+//        $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
 
-        return $myJson;
+//        return $myJson;
+        $calendar->setDocPersistJson($arrayEventZimbra);
     }
 
     /**
