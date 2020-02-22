@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/login.css') }}">
+{% endblock %}
+
+
+
+
+{% block body %}
+    <h1> Mot de passe Oublié</h1>
+        {{ form(emailForm) }}
+{% endblock %}
+
