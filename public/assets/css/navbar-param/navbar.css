@@ -1,0 +1,84 @@
+body{
+    font-family: arial;
+    margin: 0;
+    padding: 0;
+
+}
+
+menu{
+    margin: 0 auto;
+
+}
+nav{
+
+    background:  #0e2748;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+
+}
+.logo{
+
+    width:15vh;
+    height:8vh;
+    margin-left: 5vh;
+
+}
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    margin-right: 30px;
+
+}
+li{
+
+    background:#0e2748;
+    float: left;
+}
+
+a{
+    padding: 0 70px;
+    color:#dba005;
+    text-decoration: none;
+    line-height: 80px;
+    font-size: 20px;
+
+}
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+.submit {
+    display: block;
+    margin: 10px auto 0;
+    text-align:center;
+    float:right;
+}
+
+nav ul li a:hover{
+    background:#0e2748;
+}
+
+nav ul ul{
+
+    position: absolute;
+    top: 60px;
+    display: none;
+
+}
+
+nav ul li:hover > ul{
+
+    display: block;
+}
+
+#calendrier {
+    margin-top: 3vh;
+}
+
