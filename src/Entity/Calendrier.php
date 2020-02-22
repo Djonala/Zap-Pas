@@ -89,7 +89,7 @@ class Calendrier
 
     }
 
-    public function setUrl(array $url): self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
