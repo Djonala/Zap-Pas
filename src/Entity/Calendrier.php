@@ -63,24 +63,7 @@ class Calendrier
      */
     private $eventLocal = [];
 
-    /**
-     * Calendrier constructor.
-     * @param string $nomCal
-     * @param string $urlJsonCal
-     * @param $classCal
-     * @param $formatterCal
-     * @param $adminCal
-     * @param $agentAdminCal
-     */
-    public function __construct(string $nomCal, string $urlJsonCal, $classCal, $formatterCal, $adminCal, $agentAdminCal)
-    {
-        $this->nom = $nomCal;
-        $this->url = $urlJsonCal;
-        $this->classe = $classCal;
-        $this->formateurs = $formatterCal;
-        $this->admin = $adminCal;
-        $this->administratifs = $agentAdminCal;
-    }
+
 
 
     public function getId(): ?int
@@ -106,7 +89,7 @@ class Calendrier
 
     }
 
-    public function setUrl(array $url): self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
