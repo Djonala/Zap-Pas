@@ -4,10 +4,13 @@
 namespace App\Manager;
 
 
+use App\Entity\EventView;
 use App\Entity\Calendrier;
 use App\Entity\CoursZimbra;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+
+
 
 class CalendarManager
 {
@@ -111,63 +114,68 @@ class CalendarManager
         // PARSE DU FICHIER JSON EN ARRAY PHP
         try {
             $parsed_json = $this->parseJsonToPhpArray($url);
+            // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
+            try {
+                $ar_events= $this->selectArrayFileJson($parsed_json,'appt');
+                $arrayEventZimbra = array();
+
+                /**
+                 * Pour chaque ligne du tableau d'evenement
+                 * recupération des différents élements nécessaires
+                 * au traitement et à l'affichage
+                 */
+                foreach ($ar_events as $event) {
+
+                    // RECUPERATION DU TITRE DE L'EVENT
+                    if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
+                        $titre = $event{'inv'}[0]{'comp'}[0]{'name'};
+                    } else {
+                        $titre = "titre non défini";
+                    }
+
+                    // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
+                    if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
+                        $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
+                        $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin)->format('Y-m-d H:i:s');
+                    } else {
+                        throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
+                    }
+
+                    // RECUPERATION DE LA DATE DE FIN DE L'EVENT
+                    if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
+                        $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
+                        $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd)->format('Y-m-d H:i:s');
+                    } else {
+                        throw new Exception('Date de fin non communiquée'); // une date de fin non définie renvoi une exception
+                    }
+
+                    // ASSEMBLAGE DE L'ENSEMBLE DANS UN OBJET
+//                    $event = new EventView();
+//                    $event->setDEnd($dEnd);
+//                    $event->setDStart($dBegin);
+//                    $event->setTitle($titre);
+
+                    // AJOUT DANS UN TABLEAU FINAL
+                    $arrayEventZimbra[] = [$titre,$dBegin,$dEnd];
+                }
+
+                // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
+//                $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
+
+                //return $myJson;
+                var_dump($arrayEventZimbra);
+                $calendar->setDocPersistJson($arrayEventZimbra);
+
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+            }
+
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
 
-        // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
-        try {
-            $ar_events= $this->selectArrayFileJson($parsed_json,'appt');
-        } catch (Exception $exception) {
-            echo $exception->getMessage();
-        }
 
-        $arrayEventZimbra = array();
 
-        /**
-         * Pour chaque ligne du tableau d'evenement
-         * recupération des différents élements nécessaires
-         * au traitement et à l'affichage
-         */
-        foreach ($ar_events as $event) {
-
-            // RECUPERATION DU TITRE DE L'EVENT
-            if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
-                $titre = $event{'inv'}[0]{'comp'}[0]{'name'};
-            } else {
-                $titre = "titre non défini";
-            }
-
-            // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
-            if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
-                $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
-                $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin)->format('Y-m-d H:i:s');
-            } else {
-                throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
-            }
-
-            // RECUPERATION DE LA DATE DE FIN DE L'EVENT
-            if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
-                $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
-                $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd)->format('Y-m-d H:i:s');
-            } else {
-                throw new Exception('Date de fin non communiquée'); // une date de fin non définie renvoi une exception
-            }
-
-            // ASSEMBLAGE DE L'ENSEMBLE DANS UN OBJET
-            $myObj->titre = $titre;
-            $myObj->start = $dBegin;
-            $myObj->end = $dEnd;
-
-            // AJOUT DANS UN TABLEAU FINAL
-            $arrayEventZimbra[] = $myObj;
-        }
-
-//        // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
-//        $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
-
-//        return $myJson;
-        $calendar->setDocPersistJson($arrayEventZimbra);
     }
 
     /**
