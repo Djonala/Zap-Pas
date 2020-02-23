@@ -22,9 +22,10 @@ class CalendarFixture extends Fixture
          $calendar->setUrl('https://webmail.ec-nantes.fr/home/mailys.veguer@ec-nantes.fr/Web%20in-pulse%20%231.json');
          $managerCal = new Manager\CalendarManager();
         try {
+
             $managerCal->creationEventsZimbraFC($calendar);
         } catch (\Exception $e) {
-            $e->getMessage();
+           var_dump($e->getMessage());
         }
 
 
