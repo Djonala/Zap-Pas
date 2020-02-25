@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Form\MotDePasseOublieType;
+use App\Form\ResetPasswordType;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -42,7 +45,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/oubli-pass", name="app_forgotten_password")
      */
-    public function forgottenPassword(Request $request, UsersRepository $usersRepository, TokenGeneratorInterface $tokenGenerator){
+    public function forgottenPassword(Request $request, UsersRepository $usersRepository, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator){
         // on créer le formulaire
 
         $form = $this->createForm(MotDePasseOublieType::class);
@@ -80,7 +83,7 @@ class SecurityController extends AbstractController
             }
 
             // On génère l'URL de réinialisatio, de mot de passe
-            $url = $this->generateUrl('app_reset_password', ['token'=> $token]);
+            $url = $this->generateUrl('app_reset_password', ['token'=> $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // On envoie le message
             $message = (new \Swift_Message ('Mot de passe oublié'))
@@ -107,7 +110,34 @@ class SecurityController extends AbstractController
     /**
      * @Route("/reset-pass/{token}", name ="app_reset_password")
      */
-    public function resetPassword(){
+    public function resetPassword($token, Request $request, UserPasswordEncoderInterface $passwordEncoder){
+
+        $form = $this->createForm(ResetPasswordType::class);
+
+        // on cherche l'utilsiateur avec le token fourni
+        $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['reset_token'=>$token]);
+
+        if (!$user){
+            $this->addFlash('message d\'erreur');
+            return $this->redirectToRoute("app_login");
+
+            // Si le formulaire est envoyé en méthode POST
+
+            if ($form->isValid()) {
+                $user->setResetToken(null);
+
+
+                //On chiffre le mot de passe
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+                $entityManager = $this->getDoctrine()->getManagers();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('message identendique');
+
+                return $this->redirectToRoute('app_login');
+            }
+        }
 
     }
 }
