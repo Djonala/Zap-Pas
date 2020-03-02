@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Calendrier index{% endblock %}
 
 {% block body %}
+    {% include 'composants/navbaar.html.twig' %}
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
 <div id="calendrier"></div>
+
+
 {# fichier js #}
 {% block javascripts %}
 <script src="{{ asset('assets/js/core/main.js') }}"></script>
@@ -12,7 +18,9 @@
 <script src="{{ asset('assets/js/list/main.js') }}"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
 
+
 {% endblock %}
+
 
 
 {#    <table class="table">#}
