@@ -1,6 +1,5 @@
 body {
-
-    background-image: linear-gradient(to right, #ffffff, #c3a453, #207788);
+    background: whitesmoke;
     opacity: 0.8;
 }
 
@@ -54,8 +53,6 @@ form {
     height: 250px;
     margin: 0 auto;
     background-color: #dba005;
-
-    
   }
 
 
