@@ -5,23 +5,20 @@ body{
 
 }
 
-menu{
-    margin: 0 auto;
 
+.logo {
+    height: 6vh;
+    width: auto;
+    margin-left: 3vh;
 }
-nav{
 
+.bodyNavbar{
+    display: flex;
     background:  #0e2748;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-
+    height: 6vh;
 }
-.logo{
 
-    width:15vh;
-    height:8vh;
-    margin-left: 5vh;
 
-}
 ul{
     list-style: none;
     padding: 0;
@@ -68,17 +65,15 @@ nav ul li a:hover{
 nav ul ul{
 
     position: absolute;
-    top: 60px;
     display: none;
 
 }
 
 nav ul li:hover > ul{
 
-    display: block;
+    display: flex;
 }
 
 #calendrier {
     margin-top: 3vh;
 }
-
