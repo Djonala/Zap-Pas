@@ -169,9 +169,9 @@ class CalendarManager
      * @return array
      * @throws Exception
      */
-    public function creationEventsZimbraFC(Calendrier $calendar){
-        $url = $calendar->getUrl();
-        // PARSE DU FICHIER JSON EN ARRAY PHP
+    public function creationEventsZimbraFC(string $url){
+//        $url = $calendar->getUrl();
+//        // PARSE DU FICHIER JSON EN ARRAY PHP
         try {
             $parsed_json = $this->parseJsonToPhpArray($url);
             // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
@@ -215,8 +215,8 @@ class CalendarManager
                 }
 
                 // PARSE DU TABLEAU EN JSON POUR AFFICHAGE
-//                $myJson= $this->parsePhpToJsonFile($arrayEventZimbra);
-                $calendar->setDocPersistJson($arrayEventZimbra);
+                   return $this->parsePhpToJsonFile($arrayEventZimbra);
+
 
             } catch (Exception $exception) {
                 echo $exception->getMessage();
