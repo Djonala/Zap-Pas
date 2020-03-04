@@ -6,7 +6,7 @@ namespace App\Manager;
 
 use App\Entity\EventView;
 use App\Entity\Calendrier;
-use App\Entity\CoursZimbra;
+use App\Entity\EventZimbra;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
@@ -51,7 +51,7 @@ class CalendarManager
                  * au traitement et à l'affichage
                  */
                 foreach ($ar_events as $event) {
-                    $coursZimbra = new CoursZimbra();
+                    $coursZimbra = new EventZimbra();
 
                     // RECUPERATION DU TITRE DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'name'})) {
@@ -61,6 +61,7 @@ class CalendarManager
                     }
                     $coursZimbra->setMatiere($titre);
 
+
                     // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
                         $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
@@ -68,6 +69,7 @@ class CalendarManager
                     } else {
                         throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
                     }
+                    $coursZimbra->setDateDebutEvent($dateHeureDebut);
 
 
                     // RECUPERATION DE LA DATE DE FIN DE L'EVENT
@@ -77,13 +79,32 @@ class CalendarManager
                     } else {
                         throw new Exception('Date de fin non communiquée'); // une date de fin non définie renvoi une exception
                     }
+                    $coursZimbra->setDateFinEvent($dateHeureFin);
 
                     // RECUPERATION DU LIEU DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'loc'})) {
                         $lieu = $event{'inv'}[0]{'comp'}[0]{'loc'};
                     } else {
-                        $lieu = "Lieu non précisé";
+                        $lieu = 'lieu non renseigné';
                     }
+                    $coursZimbra->setLieu($lieu);
+
+
+                    // RECUPERATION DU MAIL DE L'INTERVENANT
+                    if (isset($event{'inv'}[0]{'comp'}[0]{'at'}[0]{'a'})) {
+                        $mailIntervenant = $event{'inv'}[0]{'comp'}[0]{'at'}[0]{'a'};
+                    } else {
+                        $mailIntervenant = 'mail non renseigné';
+                    }
+                    $coursZimbra->setEmailIntervenant($mailIntervenant);
+
+                    //RECUPERATION DU NOM DE L'INTERVENANT
+                    if (isset($event{'inv'}[0]{'comp'}[0]{'fr'})) {
+                        $nomIntervenant = $event{'inv'}[0]{'comp'}[0]{'fr'};
+                    } else {
+                        $nomIntervenant = "";
+                    }
+                    $coursZimbra->setEmailIntervenant($nomIntervenant);
 
                     // ENREGISTREMENT EN BDD
                     $this->entityManager->persist($coursZimbra);
@@ -100,9 +121,6 @@ class CalendarManager
         }
 
     }
-
-
-
 
 
 

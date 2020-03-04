@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CoursZimbra;
+use App\Entity\EventZimbra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method CoursZimbra|null find($id, $lockMode = null, $lockVersion = null)
- * @method CoursZimbra|null findOneBy(array $criteria, array $orderBy = null)
- * @method CoursZimbra[]    findAll()
- * @method CoursZimbra[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method EventZimbra|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EventZimbra|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EventZimbra[]    findAll()
+ * @method EventZimbra[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CoursZimbraRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CoursZimbra::class);
+        parent::__construct($registry, EventZimbra::class);
     }
 
     // /**
-    //  * @return CoursZimbra[] Returns an array of CoursZimbra objects
+    //  * @return EventZimbra[] Returns an array of EventZimbra objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CoursZimbraRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CoursZimbra
+    public function findOneBySomeField($value): ?EventZimbra
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
