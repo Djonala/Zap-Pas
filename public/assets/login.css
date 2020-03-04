@@ -110,7 +110,8 @@ span {
 a {
     
     text-decoration: none;
-    color: grey;
+    color: black;
     font-style: italic;
+    font-weight: bold;
 
 }
