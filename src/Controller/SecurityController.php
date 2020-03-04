@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use App\Form\MotDePasseOublieType;
 use App\Form\ResetPasswordType;
 use App\Repository\UsersRepository;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -65,8 +68,8 @@ class SecurityController extends AbstractController
             //si l'utilisateur n'existe pas
             if(!$user){
                 //on envoie un message flash
-                $this->addFlash('pas de compte');
-                $this->redirectToRoute('/login');
+                $this->addFlash('notice','pas de compte');
+                $this->redirectToRoute('login');
             }
 
             // On génère un token
@@ -74,12 +77,13 @@ class SecurityController extends AbstractController
 
             try {
                 $user->setResetToken($token);
-                $entityManager = $this->getDoctrine()->getManagers();
+                $entityManager = $this->getDoctrine()->getManager();
+
                 $entityManager->persist($user);
                 $entityManager->flush();
             }catch (\Exception $e){
                 $this->addFlash('attention', 'une erreur est survenue : '. $e->getMessage());
-                return $this->redirectToRoute('/login');
+                return $this->redirectToRoute('login');
             }
 
             // On génère l'URL de réinialisatio, de mot de passe
@@ -87,7 +91,7 @@ class SecurityController extends AbstractController
 
             // On envoie le message
             $message = (new \Swift_Message ('Mot de passe oublié'))
-                ->setForm('votre@adresse.fr')
+                ->setFormat('votre@adresse.fr')
                 ->setTo($user->getEmail())
                 ->setBody(
                     "<p>Bonjour, </p><p>Une demande de réinitialisation de mot de passe a été éffectuée pour l'appli Zap'Pas. Veuillez cliquer sur le lien suivant : ". $url . '</p>',
@@ -100,7 +104,7 @@ class SecurityController extends AbstractController
             //On créer le message flash
             $this->addFlash('message', 'Un e-mail de réinitialisation de mot de passe vous à été envoyé ');
 
-            return$this->redirectToRoute('/login');
+            return $this->redirectToRoute('app_reset_password', ['token'=> $token]);
             }
 
         //On envoie vers la page de demande de l'e-email
@@ -110,34 +114,40 @@ class SecurityController extends AbstractController
     /**
      * @Route("/reset-pass/{token}", name ="app_reset_password")
      */
-    public function resetPassword($token, Request $request, UserPasswordEncoderInterface $passwordEncoder){
-
+    public function resetPassword($token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
         $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
 
         // on cherche l'utilsiateur avec le token fourni
-        $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['reset_token'=>$token]);
+        $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['reset_token' => $token]);
 
-        if (!$user){
-            $this->addFlash('message d\'erreur');
-            return $this->redirectToRoute("app_login");
+        if (!$user) {
+            $this->addFlash('message', 'blabla');
+            return $this->redirectToRoute('app_login');
+        }
+        // Si le formulaire est envoyé en méthode POST
 
-            // Si le formulaire est envoyé en méthode POST
+        if ($form->isSubmitted() && $form->isValid())  {
+            $user->setResetToken(null);
+            //On chiffre le mot de passe
+            $user->setPassword($passwordEncoder->encodePassword($user, $form->get('password')->getData()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $user->setResetToken(null);
+            $this->addFlash('message identendique',' blabla');
 
-
-                //On chiffre le mot de passe
-                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
-                $entityManager = $this->getDoctrine()->getManagers();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash('message identendique');
-
-                return $this->redirectToRoute('app_login');
-            }
+            return $this->redirectToRoute('app_login');
         }
 
+        return $this->render('security/reset_password.html.twig', [
+            'user' => $user,
+            'resetPass' => $form->createView(),
+
+        ]);
     }
+
 }
+
+
