@@ -1,54 +1,56 @@
-
+<nav>
     <div class="bodyNavbar">
-        <nav>
+        <!-- LE LOGO-->
+        <div class="container-logo">
             <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}"/>
-
+        </div>
+        <!-- LES LIENS -->
+        <div class="container-link">
             <ul>
-                <li><a href="#">Affichage</a>
-                    <ul>
-                        <li> <a class="elmt" for="checkbox1" > <input type="checkbox" name="checkbox1" id="checkbox1" class="check" value="1" href="#"> Semaine</a></li>
-                            <div><li> <a class="elmt" for="checkbox1" > <input type="checkbox" name="checkbox1" id="checkbox1" class="check" value="1" href="#"> Mois</a></li></div>
-                        <li> <a class="elmt" for="checkbox1" > <input type="checkbox" name="checkbox1" id="checkbox1" class="check" value="1" href="#"> Formation</a></li>
+                <!--LIEN POUR RETOUR SUR CALENDRIER -->
+                <li><a href="#">Calendrier</a>
 
-                    </ul>
-                </li>
-
-
+                <!-- LIEN OHLALA POUR LES RETARDS -->
                 <li><a href="#">Ohlala</a>
-                    <ul>
-                        <li> <a class="elmt" for="checkbox" > <input type="checkbox" name="checkbox" id="checkbox" class="check" value="1" href="#" onclick="validateRetard()"> Retard</a></li>
-                        <div>
-                            <li> <a class="elmt" for="checkbox" > <input type="checkbox" name="checkbox1" id="checkbox1" class="check" value="1" href="#" onclick="validateAbsence()"> Absence</a></li>
-                        </div>
+                        <ul>
+                            <li> <a class="elmt" for="checkbox" >
+                                    <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1" href="#" onclick="validateRetard()"> Retard
+                                </a>
+                            </li>
+                            <div>
+                                <li> <a class="elmt" for="checkbox" >
+                                        <input type="checkbox" name="checkbox-absence" id="checkbox-absence" class="check-absence" value="1" href="#" onclick="validateAbsence()"> Absence
+                                    </a>
+                                </li>
+                            </div>
 
-                         <div>
-                             <li><a href="#" for="start"> Date :  <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31">
-                                     <div>
-                                         <label for="appt"> Durée :</label>
-                                         <input type="text" class="datepicker" name="date" value="" />
-                                     </div>
-
-                                     <div>
-                                            <input class="submit" type="submit"  value="Envoyer">
-                                     </div>
-                                 </a>
-                             </li>
-                         </div>
-                    </ul>
+                            <div>
+                                <li><a href="#" for="start"> Date :
+                                        <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31">
+                                            <div>
+                                                <label for="appt"> Durée :</label>
+                                                <input type="text" class="datepicker" name="date" value="" />
+                                            </div>
+                                        <div>
+                                            <input  type="submit" class="submit-retard-absence" value="Envoyer">
+                                        </div>
+                                    </a>
+                                </li>
+                            </div>
+                        </ul>
                 </li>
-
-
+                <!-- LIEN GERER POUR LA GESTION DE L'AGENDA -->
                 <li><a href="#">Gérer</a>
                     <ul>
                         <li><a href="#">Modifier</a></li>
-                            <div>
-                                <li><a href="#">Créer</a></li>
-                            </div>
+                        <div>
+                            <li><a href="#">Créer</a></li>
+                        </div>
                         <li><a href="#">Supprimer</a></li>
                     </ul>
                 </li>
 
-
+                <!-- LIEN EDITER POUR L'EDITION DE NOUVEAUX DOCUMENTS -->
                 <li><a href="#">Editer</a>
                     <ul>
                         <li><a href="#">Extraire période</a></li>
@@ -56,7 +58,10 @@
                         <li><a href="#">Générer mot de passe </a></li>
                     </ul>
                 </li>
+
+                <!-- LIEN DE DECONNEXTION -->
                 <li><a href="#">Se Déconnecter </a></li>
             </ul>
-        </nav>
+        </div>
     </div>
+</nav>
