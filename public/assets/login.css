@@ -104,11 +104,12 @@ span {
     float: right;
 }
 
-a {
-    
-    text-decoration: none;
+span a {
+
+    text-decoration: #0e2748;
     color: black;
     font-style: italic;
     font-weight: bold;
+
 
 }
