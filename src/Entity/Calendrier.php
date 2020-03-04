@@ -27,10 +27,6 @@ class Calendrier
      */
     private $url;
 
-    /** (!)(!)(!) A VOIR SI VRAIMENT NECESSAIRE (!)(!)(!)
-     * @ORM\Column(type="json")
-     */
-    private $docPersistJson = [];
 
     /**
      * la promotion
@@ -52,17 +48,6 @@ class Calendrier
      * @ORM\Column(type="array")
      */
     private $administratifs = [];
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $eventZimbra = [];
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $eventLocal = [];
-
 
 
 
@@ -96,17 +81,7 @@ class Calendrier
         return $this;
     }
 
-    public function getDocPersistJson(): ?array
-    {
-        return $this->docPersistJson;
-    }
 
-    public function setDocPersistJson(array $docPersistJson): self
-    {
-        $this->docPersistJson = $docPersistJson;
-
-        return $this;
-    }
 
     public function getClasse(): ?array
     {
@@ -156,29 +131,6 @@ class Calendrier
         return $this;
     }
 
-    public function getEventZimbra(): ?array
-    {
-        return $this->eventZimbra;
-    }
-
-    public function setEventZimbra(array $eventZimbra): self
-    {
-        $this->eventZimbra = $eventZimbra;
-
-        return $this;
-    }
-
-    public function getEventLocal(): ?array
-    {
-        return $this->eventLocal;
-    }
-
-    public function setEventLocal(array $eventLocal): self
-    {
-        $this->eventLocal = $eventLocal;
-
-        return $this;
-    }
 
 
 }

@@ -65,7 +65,8 @@ class CalendarManager
                     // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
                         $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
-                        $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin)->format('Y-m-d H:i:s');
+                        $dateHeureDebut = new \DateTime($dBegin);
+                        $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin);
                     } else {
                         throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
                     }
@@ -74,8 +75,9 @@ class CalendarManager
 
                     // RECUPERATION DE LA DATE DE FIN DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
+                        $dateHeureFin;
                         $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
-                        $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd)->format('Y-m-d H:i:s');
+                        $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd);
                     } else {
                         throw new Exception('Date de fin non communiquée'); // une date de fin non définie renvoi une exception
                     }
@@ -102,9 +104,9 @@ class CalendarManager
                     if (isset($event{'inv'}[0]{'comp'}[0]{'fr'})) {
                         $nomIntervenant = $event{'inv'}[0]{'comp'}[0]{'fr'};
                     } else {
-                        $nomIntervenant = "";
+                        $nomIntervenant = 'nom de l\'intervenant non renseigné';
                     }
-                    $coursZimbra->setEmailIntervenant($nomIntervenant);
+                    $coursZimbra->setNomFormateur($nomIntervenant);
 
                     // ENREGISTREMENT EN BDD
                     $this->entityManager->persist($coursZimbra);

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Cassandra\Date;
 use Cassandra\Time;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -113,19 +114,19 @@ class EventZimbra
 
 
 
-    public function setDateDebutEvent(\DateTimeInterface $dateDebutEvent): self
+    public function setDateDebutEvent( DateTimeInterface $dateDebutEvent): self
     {
         $this->dateDebutEvent = $dateDebutEvent;
 
         return $this;
     }
 
-    public function getDateFinEvent(): ?\DateTimeInterface
+    public function getDateFinEvent(): ?DateTimeInterface
     {
         return $this->dateFinEvent;
     }
 
-    public function setDateFinEvent(\DateTimeInterface $dateFinEvent): self
+    public function setDateFinEvent(DateTimeInterface $dateFinEvent): self
     {
         $this->dateFinEvent = $dateFinEvent;
 
