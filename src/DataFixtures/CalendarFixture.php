@@ -17,21 +17,16 @@ class CalendarFixture extends Fixture
          $calendar->setAdmin('maelys-veguer@onfaitunessai.com');
          $calendar->setFormateurs(['Vincent', 'Pascal', 'Sarah']);
          $calendar->setAdministratifs(['Emilie','Laurence','Laetitia']);
-         $calendar->setEventZimbra(['']);
-         $calendar->setEventLocal(['']);
          $calendar->setUrl('https://webmail.ec-nantes.fr/home/mailys.veguer@ec-nantes.fr/Web%20in-pulse%20%231.json');
-         $managerCal = new Manager\CalendarManager();
+         $managerCal = new Manager\CalendarManager($manager);
         try {
-
-            $managerCal->creationEventsZimbraFC($calendar);
+            $managerCal->initCalendarZimbra($calendar->getUrl());
         } catch (\Exception $e) {
            var_dump($e->getMessage());
         }
 
 
-
          $manager->persist($calendar);
-
         $manager->flush();
     }
 }

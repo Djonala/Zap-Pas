@@ -14,7 +14,6 @@ class CalendrierType extends AbstractType
         $builder
             ->add('nom')
             ->add('url')
-            ->add('docPersistJson')
             ->add('classe')
             ->add('formateurs')
             ->add('admin')

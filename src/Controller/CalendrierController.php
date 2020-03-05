@@ -40,8 +40,9 @@ class CalendrierController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($calendrier);
             $entityManager->flush();
+
             try {
-                $calendarManager->initCalendarZimbra($calendrier);
+                $calendarManager->initCalendarZimbra($calendrier->getUrl());
             } catch (\Exception $error) {
                 echo $error->getMessage();
             }
