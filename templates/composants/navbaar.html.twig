@@ -1,67 +1,60 @@
-<nav>
-    <div class="bodyNavbar">
-        <!-- LE LOGO-->
-        <div class="container-logo">
-            <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}"/>
-        </div>
-        <!-- LES LIENS -->
-        <div class="container-link">
-            <ul>
-                <!--LIEN POUR RETOUR SUR CALENDRIER -->
-                <li class="bouton-nav"><a href="#">Calendrier</a>
-
-                <!-- LIEN OHLALA POUR LES RETARDS -->
-                <li class="bouton-nav"><a href="#">Ohlala</a>
-                        <ul>
-                            <li > <a class="elmt" for="checkbox" >
-                                    <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1" href="#" onclick="validateRetard()"> Retard
-                                </a>
-                            </li>
-                            <div>
-                                <li> <a class="elmt" for="checkbox" >
-                                        <input type="checkbox" name="checkbox-absence" id="checkbox-absence" class="check-absence" value="1" href="#" onclick="validateAbsence()"> Absence
-                                    </a>
-                                </li>
-                            </div>
-
-                            <div>
-                                <li><a href="#" for="start"> Date :
-                                        <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31">
-                                            <div>
-                                                <label for="appt"> Durée :</label>
-                                                <input type="text" class="datepicker" name="date" value="" />
-                                            </div>
-                                        <div>
-                                            <input  type="submit" class="submit-retard-absence" value="Envoyer">
-                                        </div>
-                                    </a>
-                                </li>
-                            </div>
-                        </ul>
-                </li>
-                <!-- LIEN GERER POUR LA GESTION DE L'AGENDA -->
-                <li class="bouton-nav"><a href="#">Gérer</a>
-                    <ul>
-                        <li><a href="#">Modifier</a></li>
-                        <div>
-                            <li><a href="#">Créer</a></li>
-                        </div>
-                        <li><a href="#">Supprimer</a></li>
-                    </ul>
-                </li>
-
-                <!-- LIEN EDITER POUR L'EDITION DE NOUVEAUX DOCUMENTS -->
-                <li class="bouton-nav"><a href="#">Editer</a>
-                    <ul>
-                        <li><a href="#">Extraire période</a></li>
-                        <li><a href="#">Extraire liste de classe</a></li>
-                        <li><a href="#">Générer mot de passe </a></li>
-                    </ul>
-                </li>
-
-                <!-- LIEN DE DECONNEXTION -->
-                <li class="bouton-nav"><a href="#">Se Déconnecter </a></li>
-            </ul>
-        </div>
+<nav class="nav" role="navigation">
+    <div class="container-logo">
+        <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}"/>
     </div>
+    <ul class="container-link">
+        <li class="bouton-link"><a href="#">Calendrier</a></li>
+        <li class="has-children bouton-link"><a href="#">Ohlala</a>
+
+            <ul class="sous-menu">
+                <form>
+                        <li > <a class="elmt" for="checkbox" >
+                                <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1"  onclick="afficheFormRetard(this)"> Retard
+                            </a>
+                        </li>
+                        <li id="form-retard">
+                            <label for="appt"> Durée :</label>
+                            <div id="appt" class="container-duree">
+                                <input type="number" class="duree"  name="date" value="" />
+                                <select name="unite-temp" id="unite-temp-select">
+                                    <option value="min">min</option>
+                                    <option value="heure">H</option>
+                                </select>
+                            </div>
+                        </li>
+
+                        <li> <a class="elmt" for="checkbox" >
+                                <input type="checkbox" name="checkbox-absence" id="checkbox-absence" class="check-absence" value="2" onclick="afficheFormAbsence(this)"> Absence
+                            </a>
+                        </li>
+                        <li id="form-absence">
+                                <label for="start">du</label>
+                                <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31"><br>
+                                <label for="end">au</label>
+                                <input type="date" id="end" name="trip-end" value="2020-02-10" min="2010-01-01" max="2050-12-31">
+                            </a>
+                        </li>
+
+                    <li>
+                        <input  type="submit" class="submit-retard-absence" value="Envoyer"><br>
+                    </li>
+                </form>
+            </ul>
+
+        </li>
+        <li class="bouton-link"><a href="#">Gérer</a>
+
+        <li class="has-children bouton-link"><a href="#">Editer</a>
+
+            <ul class="sous-menu">
+                <li class="li-sous-menu-edition"><a href="#">Extraire période</a></li>
+                <li class="li-sous-menu-edition"><a href="#">Extraire liste de classe</a></li>
+                <li class="li-sous-menu-edition"><a href="#">Générer mot de passe </a></li>
+            </ul>
+        </li>
+        <li><a class="bouton-link" href="#">Deconnexion </a></li>
+    </ul>
 </nav>
+{% block javascripts %}
+    <script src="{{ asset('assets/js/navbar.js') }}"></script>
+{% endblock %}
