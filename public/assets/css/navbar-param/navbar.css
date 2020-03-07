@@ -1,84 +1,115 @@
-body{
-    font-family: arial;
+.nav ul {
     margin: 0;
     padding: 0;
-
-}
-
-
-.logo {
-    height: 6vh;
-    width: auto;
-    margin-left: 3vh;
-}
-
-.bodyNavbar{
-    display: flex;
-    background:  #0e2748;
-    height: 6vh;
-}
-
-.container-link {
-    display: flex;
-}
-ul{
-    list-style: none;
-    margin: 0;
-    float: right;
-    margin-right: 3vh;
-    display: flex;
-
-}
-.bouton-nav{
-
-}
-li{
-
     background:#0e2748;
-
+    list-style:none;
+    font-family: arial, serif;
 }
 
-a{
-    padding: 0 70px;
-    color:#dba005;
-    text-decoration: none;
-    line-height: 80px;
-    font-size: 20px;
-
-}
-label {
+.nav a {
+    padding: 1rem;
     display: block;
-    font: 1rem 'Fira Sans', sans-serif;
-}
-
-input,
-label {
-    margin: .4rem 0;
-}
-
-.submit {
-    display: block;
-    margin: 10px auto 0;
     text-align:center;
-    float:right;
+    text-decoration: none;
+    color: #dba005;
 }
 
-nav ul li a:hover{
-    background:#0e2748;
+.nav .container-link {
+    display: flex; /*1*/
+    flex-direction : row; /*2*/
+    justify-content: flex-end; /*3*/
+    width: 100%;
+    padding-right: 10vh;
 }
-
-nav ul ul{
-
-    position: absolute;
-    display: none;
-
-}
-
-nav ul li:hover > ul{
-
+.container-logo{
     display: flex;
+    justify-content: flex-start;
+    width: auto;
+}
+.logo {
+    height: 5vh;
 }
 
-#calendrier {
-    margin-top: 3vh;
+body {
+    margin : 0vh;
+}
+
+.nav {
+    margin-bottom: 3vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+.has-children { /*1*/
+    position: relative;
+}
+
+.has-children:hover > .sous-menu { /*2*/
+    display: flex;
+    width: 100%;
+}
+
+.sous-menu { /*3*/
+    display: none;
+    flex-flow: column wrap;
+    min-width: 100px;
+    position: absolute;
+    z-index: 6;
+}
+
+.sous-menu a { /*4*/
+    text-align: center;
+    color:white;
+}
+
+.container-link li ul {
+
+    display: none;
+}
+
+.container-link li ul:hover{
+    display: block;
+
+}
+.bouton-link {
+    width: 20vh;
+}
+
+.bouton-link:hover{
+    background: #10385f;
+}
+label {
+    color: white;
+}
+
+.container-duree {
+    display: flex;
+    justify-content: center;
+}
+
+ .duree {
+    width: 5vh;
+}
+
+ form{
+     display: inline-flex;
+     flex-direction: column;
+     align-items: center;
+     width: 100%;
+ }
+ .submit-retard-absence {
+     margin: 1vh;
+ }
+
+.li-sous-menu-edition:hover {
+    background: #105280;
+}
+
+#form-retard {
+    display: none;
+}
+
+#form-absence {
+    display: none;
 }
