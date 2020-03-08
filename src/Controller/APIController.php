@@ -27,6 +27,16 @@ class APIController extends AbstractController
         //On recupère la liste des events du calendrier
         $events = $eventsRepo->findAll();
 
+        $result=array();
+        foreach ($events as $event){
+            $result[] = [
+                "title" => $event->getMatiere(),
+                "start" => $event->getDateDebutEvent()->format('Y-m-d H:i:s'),
+                "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s')
+            ];
+        }
+
+
         //On specifie qu'on utilise un encodeur en json
         $encoders = [new JsonEncoder()];
 
@@ -37,19 +47,16 @@ class APIController extends AbstractController
         //on instancie le convertisseur
         $serializer = new Serializer($normalizers, $encoders);
 
-//        dd($events);
+//      dd($events);
 
         //on convertit en json
 
-        $jsonContent = $serializer->serialize($events, 'json', [
+        $jsonContent = $serializer->serialize($result, 'json', [
             AbstractNormalizer::IGNORED_ATTRIBUTES => ['calendrier'],
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
         ]);
-
-
-
 
         //On instancie la réponse
         $response = new Response($jsonContent);
@@ -57,7 +64,7 @@ class APIController extends AbstractController
         // On ajoute l'entête http
         $response->headers->set('Content-Type', 'application/json');
 
-        //On envoi
+        //On envoie la reponse
 
         return $response;
 

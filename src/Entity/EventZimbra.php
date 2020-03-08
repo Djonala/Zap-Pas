@@ -117,6 +117,14 @@ class EventZimbra
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDateDebutEvent()
+    {
+        return $this->dateDebutEvent;
+    }
+
 
 
     public function setDateDebutEvent( DateTimeInterface $dateDebutEvent): self

@@ -69,7 +69,6 @@ class CalendarManager
                     // RECUPERATION DE LA DATE DE DEBUT DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'})) {
                         $dBegin = $event{'inv'}[0]{'comp'}[0]{'s'}[0]{'d'};
-                        $dateHeureDebut = new \DateTime($dBegin);
                         $dateHeureDebut = \DateTime::createFromFormat('Ymd\THis', $dBegin);
                     } else {
                         throw new Exception('Date de debut non communiquée'); // Une date de début non définie renvoi une exception
