@@ -7,6 +7,7 @@ use App\Form\CalendrierType;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,7 @@ class CalendrierController extends AbstractController
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
+
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
         ]);
@@ -42,7 +44,7 @@ class CalendrierController extends AbstractController
             $entityManager->flush();
 
             try {
-                $calendarManager->initCalendarZimbra($calendrier->getUrl());
+                $calendarManager->initCalendarZimbra($calendrier);
             } catch (\Exception $error) {
                 echo $error->getMessage();
             }
@@ -99,5 +101,27 @@ class CalendrierController extends AbstractController
         }
 
         return $this->redirectToRoute('calendrier_index');
+    }
+
+    public function listEventZimbraCal(Request $request) : JsonResponse
+    {
+        $output=array(); // initialisation du tableau
+        $entityManager = $this->getDoctrine()->getManager(); // recuperation de mon manager
+        if ($request->isXmlHttpRequest()) {
+            $events = $entityManager->getRepository('EventZimbra::class');
+            $events = $events->findAll();
+
+            foreach ($events as $event){
+                $output[]=array(
+                    $event->getMatiere(),
+                    $event->getDateDebutEvent(),
+                    $event->getDateDebutEvent(),
+                );
+            }
+
+            return new JsonResponse($output);
+
+        }
+        return new JsonResponse('no results found', Response::HTTP_NOT_FOUND);
     }
 }

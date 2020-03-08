@@ -19,14 +19,12 @@ class CalendarFixture extends Fixture
          $calendar->setAdministratifs(['Emilie','Laurence','Laetitia']);
          $calendar->setUrl('https://webmail.ec-nantes.fr/home/mailys.veguer@ec-nantes.fr/Web%20in-pulse%20%231.json');
          $managerCal = new Manager\CalendarManager($manager);
+
         try {
-            $managerCal->initCalendarZimbra($calendar->getUrl());
+            $managerCal->initCalendarZimbra($calendar);
         } catch (\Exception $e) {
            var_dump($e->getMessage());
         }
-
-
-         $manager->persist($calendar);
         $manager->flush();
     }
 }
