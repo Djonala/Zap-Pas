@@ -28,6 +28,8 @@ class APIController extends AbstractController
         $events = $eventsRepo->findAll();
 
         $result=array();
+
+        // Je selectionne dans mon tableau les elements qui m'interesse
         foreach ($events as $event){
             $result[] = [
                 "title" => $event->getMatiere(),
@@ -35,7 +37,6 @@ class APIController extends AbstractController
                 "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s')
             ];
         }
-
 
         //On specifie qu'on utilise un encodeur en json
         $encoders = [new JsonEncoder()];
@@ -47,7 +48,6 @@ class APIController extends AbstractController
         //on instancie le convertisseur
         $serializer = new Serializer($normalizers, $encoders);
 
-//      dd($events);
 
         //on convertit en json
 
