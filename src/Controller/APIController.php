@@ -2,9 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\EventZimbra;
 use App\Repository\EventZimbraRepository;
+use Doctrine\DBAL\Types\ObjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 
 /**
  * @Route("/api")
@@ -18,7 +26,41 @@ class APIController extends AbstractController
     {
         //On recupère la liste des events du calendrier
         $events = $eventsRepo->findAll();
-        dd($events);
+
+        //On specifie qu'on utilise un encodeur en json
+        $encoders = [new JsonEncoder()];
+
+        //On instancie le "normaliseur" pour convertir la collection en tableau
+        $normalizers = [new ObjectNormalizer()];
+
+        // On fait la conversion en json
+        //on instancie le convertisseur
+        $serializer = new Serializer($normalizers, $encoders);
+
+//        dd($events);
+
+        //on convertit en json
+
+        $jsonContent = $serializer->serialize($events, 'json', [
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['calendrier'],
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+
+
+
+
+        //On instancie la réponse
+        $response = new Response($jsonContent);
+
+        // On ajoute l'entête http
+        $response->headers->set('Content-Type', 'application/json');
+
+        //On envoi
+
+        return $response;
+
     }
 
 
