@@ -51,6 +51,11 @@ class EventZimbra
      */
     private $dateFinEvent;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Calendrier", inversedBy="eventsZimbra")
+     */
+    private $calendrier;
+
 
     public function __construct()
     {
@@ -129,6 +134,18 @@ class EventZimbra
     public function setDateFinEvent(DateTimeInterface $dateFinEvent): self
     {
         $this->dateFinEvent = $dateFinEvent;
+
+        return $this;
+    }
+
+    public function getCalendrier(): ?Calendrier
+    {
+        return $this->calendrier;
+    }
+
+    public function setCalendrier(?Calendrier $calendrier): self
+    {
+        $this->calendrier = $calendrier;
 
         return $this;
     }

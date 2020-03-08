@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EventZimbra{% endblock %}
+
+{% block body %}
+    <h1>EventZimbra</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ event_zimbra.id }}</td>
+            </tr>
+            <tr>
+                <th>Matiere</th>
+                <td>{{ event_zimbra.matiere }}</td>
+            </tr>
+            <tr>
+                <th>NomFormateur</th>
+                <td>{{ event_zimbra.nomFormateur }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ event_zimbra.lieu }}</td>
+            </tr>
+            <tr>
+                <th>EmailIntervenant</th>
+                <td>{{ event_zimbra.emailIntervenant }}</td>
+            </tr>
+            <tr>
+                <th>DateDebutEvent</th>
+                <td>{{ event_zimbra.dateDebutEvent ? event_zimbra.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFinEvent</th>
+                <td>{{ event_zimbra.dateFinEvent ? event_zimbra.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('event_zimbra_index') }}">back to list</a>
+
+    <a href="{{ path('event_zimbra_edit', {'id': event_zimbra.id}) }}">edit</a>
+
+    {{ include('event_zimbra/_delete_form.html.twig') }}
+{% endblock %}

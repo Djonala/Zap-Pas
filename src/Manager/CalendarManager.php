@@ -8,6 +8,7 @@ use App\Entity\EventView;
 use App\Entity\Calendrier;
 use App\Entity\EventZimbra;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
 
 
@@ -22,10 +23,11 @@ class CalendarManager
     /**
      * CalendarManager constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ObjectManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
+
 
     public function synchroCalendar(Calendrier $calendar) {
     }
@@ -36,7 +38,9 @@ class CalendarManager
      * @return array
      * @throws Exception
      */
-    public function initCalendarZimbra(string $url){
+    public function initCalendarZimbra(Calendrier $calendrier){
+        // RECUPERATION DE L'URL
+        $url = $calendrier->getUrl();
      // PARSE DU FICHIER JSON EN ARRAY PHP
         try {
             $parsed_json = $this->parseJsonToPhpArray($url);
@@ -75,7 +79,6 @@ class CalendarManager
 
                     // RECUPERATION DE LA DATE DE FIN DE L'EVENT
                     if (isset($event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'})) {
-                        $dateHeureFin;
                         $dEnd = $event{'inv'}[0]{'comp'}[0]{'e'}[0]{'d'};
                         $dateHeureFin = \DateTime::createFromFormat('Ymd\THis', $dEnd);
                     } else {
@@ -108,8 +111,13 @@ class CalendarManager
                     }
                     $coursZimbra->setNomFormateur($nomIntervenant);
 
+                    $calendrier->addEventsZimbra($coursZimbra);
+
+
                     // ENREGISTREMENT EN BDD
                     $this->entityManager->persist($coursZimbra);
+                    $this->entityManager->persist($calendrier);
+
                 }
                 // VALIDATION DE L'ENREGISTREMENT
                 $this->entityManager->flush();
@@ -140,7 +148,6 @@ class CalendarManager
         $parsed_json = json_decode($json, true);    // parse du fichier json en tableau PHP
         return $parsed_json;
     }
-
 
 
     /** Fonction qui selectionne une ligne du tableau PHP (elle même un tableau)

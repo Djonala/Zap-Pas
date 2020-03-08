@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EventZimbra index{% endblock %}
+
+{% block body %}
+    <h1>EventZimbra index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matiere</th>
+                <th>NomFormateur</th>
+                <th>Lieu</th>
+                <th>EmailIntervenant</th>
+                <th>DateDebutEvent</th>
+                <th>DateFinEvent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event_zimbra in event_zimbras %}
+            <tr>
+                <td>{{ event_zimbra.id }}</td>
+                <td>{{ event_zimbra.matiere }}</td>
+                <td>{{ event_zimbra.nomFormateur }}</td>
+                <td>{{ event_zimbra.lieu }}</td>
+                <td>{{ event_zimbra.emailIntervenant }}</td>
+                <td>{{ event_zimbra.dateDebutEvent ? event_zimbra.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event_zimbra.dateFinEvent ? event_zimbra.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('event_zimbra_show', {'id': event_zimbra.id}) }}">show</a>
+                    <a href="{{ path('event_zimbra_edit', {'id': event_zimbra.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('event_zimbra_new') }}">Create new</a>
+{% endblock %}

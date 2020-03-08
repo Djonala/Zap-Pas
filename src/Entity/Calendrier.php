@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -48,6 +50,16 @@ class Calendrier
      * @ORM\Column(type="array")
      */
     private $administratifs = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EventZimbra", mappedBy="calendrier")
+     */
+    private $eventsZimbra;
+
+    public function __construct()
+    {
+        $this->eventsZimbra = new ArrayCollection();
+    }
 
 
 
@@ -127,6 +139,37 @@ class Calendrier
     public function setAdministratifs(array $administratifs): self
     {
         $this->administratifs = $administratifs;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EventZimbra[]
+     */
+    public function getEventsZimbra(): Collection
+    {
+        return $this->eventsZimbra;
+    }
+
+    public function addEventsZimbra(EventZimbra $eventsZimbra): self
+    {
+        if (!$this->eventsZimbra->contains($eventsZimbra)) {
+            $this->eventsZimbra[] = $eventsZimbra;
+            $eventsZimbra->setCalendrier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsZimbra(EventZimbra $eventsZimbra): self
+    {
+        if ($this->eventsZimbra->contains($eventsZimbra)) {
+            $this->eventsZimbra->removeElement($eventsZimbra);
+            // set the owning side to null (unless already changed)
+            if ($eventsZimbra->getCalendrier() === $this) {
+                $eventsZimbra->setCalendrier(null);
+            }
+        }
 
         return $this;
     }
