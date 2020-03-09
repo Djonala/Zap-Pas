@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}home admin page{% endblock %}
+
+{% block body %}
+    {% include 'composants/navbaar.html.twig' %}
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/page/page.css') }}">
+
+
+
+    <div class="wrapper">
+        <button class="button">Modifier</button>
+        <button class="button">Administrer</button>
+        <button class="button">Supprimer</button>
+    </div>
+
+    <div class="div-link-crea-agenda">
+
+        <button type="button" class="btn btn-warning btn-xxl" id="bouton-crea-agenda">
+            <img src="https://img.icons8.com/metro/26/000000/plus-math.png" class="image-icon"> AJOUTER UN NOUVEL AGENDA
+        </button>
+    </div>
+
+
+{% endblock %}
+
