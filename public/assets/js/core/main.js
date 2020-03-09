@@ -4490,8 +4490,8 @@ Docs & License: https://fullcalendar.io/
         editable: false,
         // nowIndicator: false,
         scrollTime: '06:00:00',
-        minTime: '00:00:00',
-        maxTime: '24:00:00',
+        minTime: '07:00:00',
+        maxTime: '20:00:00',
         showNonCurrentDates: true,
         // event ajax
         lazyFetching: true,
@@ -5529,7 +5529,7 @@ Docs & License: https://fullcalendar.io/
             var isHiddenDayHash = []; // is the day-of-week hidden? (hash with day-of-week-index -> bool)
             var dayCnt = 0;
             var i;
-            if (this.options.weekends === false) {
+            if (this.options.weekends === true) {
                 hiddenDays.push(0, 6); // 0=sunday, 6=saturday
             }
             for (i = 0; i < 7; i++) {
