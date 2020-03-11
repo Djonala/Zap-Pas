@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Calendrier;
-use App\Form\CalendrierType;
-use App\Manager\CalendarManager;
+use App\Form\Calendrier1Type;
 use App\Repository\CalendrierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +20,6 @@ class CalendrierController extends AbstractController
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
-
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
         ]);
@@ -30,25 +27,17 @@ class CalendrierController extends AbstractController
 
     /**
      * @Route("/new", name="calendrier_new", methods={"GET","POST"})
-     * @throws \Exception
      */
-    public function new(Request $request, CalendarManager $calendarManager): Response
+    public function new(Request $request): Response
     {
         $calendrier = new Calendrier();
-        $form = $this->createForm(CalendrierType::class, $calendrier);
+        $form = $this->createForm(Calendrier1Type::class, $calendrier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($calendrier);
             $entityManager->flush();
-
-            try {
-                $calendarManager->initCalendarZimbra($calendrier);
-            } catch (\Exception $error) {
-                echo $error->getMessage();
-            }
-
 
             return $this->redirectToRoute('calendrier_index');
         }
@@ -74,7 +63,7 @@ class CalendrierController extends AbstractController
      */
     public function edit(Request $request, Calendrier $calendrier): Response
     {
-        $form = $this->createForm(CalendrierType::class, $calendrier);
+        $form = $this->createForm(Calendrier1Type::class, $calendrier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,27 +90,5 @@ class CalendrierController extends AbstractController
         }
 
         return $this->redirectToRoute('calendrier_index');
-    }
-
-    public function listEventZimbraCal(Request $request) : JsonResponse
-    {
-        $output=array(); // initialisation du tableau
-        $entityManager = $this->getDoctrine()->getManager(); // recuperation de mon manager
-        if ($request->isXmlHttpRequest()) {
-            $events = $entityManager->getRepository('EventZimbra::class');
-            $events = $events->findAll();
-
-            foreach ($events as $event){
-                $output[]=array(
-                    $event->getMatiere(),
-                    $event->getDateDebutEvent(),
-                    $event->getDateDebutEvent(),
-                );
-            }
-
-            return new JsonResponse($output);
-
-        }
-        return new JsonResponse('no results found', Response::HTTP_NOT_FOUND);
     }
 }

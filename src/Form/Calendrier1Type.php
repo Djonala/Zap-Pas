@@ -3,13 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Calendrier;
-use Doctrine\DBAL\Types\ArrayType;
-use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CalendrierType extends AbstractType
+class Calendrier1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +18,6 @@ class CalendrierType extends AbstractType
             ->add('formateurs')
             ->add('admin')
             ->add('administratifs')
-            ->add('eventZimbra')
         ;
     }
 
