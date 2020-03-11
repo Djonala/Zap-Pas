@@ -17,11 +17,7 @@
             </tr>
             <tr>
                 <th>Url</th>
-                <td>{{ calendrier.url ? calendrier.url|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>DocPersistJson</th>
-                <td>{{ calendrier.docPersistJson ? calendrier.docPersistJson|json_encode : '' }}</td>
+                <td>{{ calendrier.url }}</td>
             </tr>
             <tr>
                 <th>Classe</th>
@@ -38,14 +34,6 @@
             <tr>
                 <th>Administratifs</th>
                 <td>{{ calendrier.administratifs ? calendrier.administratifs|join(', ') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EventZimbra</th>
-                <td>{{ calendrier.eventZimbra ? calendrier.eventZimbra|join(', ') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EventLocal</th>
-                <td>{{ calendrier.eventLocal ? calendrier.eventLocal|join(', ') : '' }}</td>
             </tr>
         </tbody>
     </table>
