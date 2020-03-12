@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -47,6 +49,16 @@ class Users implements UserInterface
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $reset_token;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Calendrier", mappedBy="users")
+     */
+    private $calendriers;
+
+    public function __construct()
+    {
+        $this->calendriers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -155,6 +167,34 @@ class Users implements UserInterface
     public function setResetToken(?string $reset_token): self
     {
         $this->reset_token = $reset_token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calendrier[]
+     */
+    public function getCalendriers(): Collection
+    {
+        return $this->calendriers;
+    }
+
+    public function addCalendrier(Calendrier $calendrier): self
+    {
+        if (!$this->calendriers->contains($calendrier)) {
+            $this->calendriers[] = $calendrier;
+            $calendrier->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendrier(Calendrier $calendrier): self
+    {
+        if ($this->calendriers->contains($calendrier)) {
+            $this->calendriers->removeElement($calendrier);
+            $calendrier->removeUser($this);
+        }
 
         return $this;
     }

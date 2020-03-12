@@ -31,34 +31,19 @@ class Calendrier
 
 
     /**
-     * la promotion
-     * @ORM\Column(type="array")
-     */
-    private $classe = [];
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $formateurs = [];
-
-    /**
-     * @ORM\Column(type="object")
-     */
-    private $admin;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $administratifs = [];
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EventZimbra", mappedBy="calendrier")
      */
     private $eventsZimbra;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Users", inversedBy="calendriers")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->eventsZimbra = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
 
@@ -169,6 +154,32 @@ class Calendrier
             if ($eventsZimbra->getCalendrier() === $this) {
                 $eventsZimbra->setCalendrier(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Users[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Users $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
         }
 
         return $this;
