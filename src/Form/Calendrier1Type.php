@@ -14,10 +14,7 @@ class Calendrier1Type extends AbstractType
         $builder
             ->add('nom')
             ->add('url')
-            ->add('classe')
-            ->add('formateurs')
-            ->add('admin')
-            ->add('administratifs')
+            ->add('users')
         ;
     }
 

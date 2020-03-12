@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendrier;
 use App\Form\Calendrier1Type;
+use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,12 @@ class CalendrierController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($calendrier);
+            $managerCal = new CalendarManager($entityManager);
+            try {
+                $managerCal->initCalendarZimbra($calendrier);
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('calendrier_index');

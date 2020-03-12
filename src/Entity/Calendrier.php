@@ -58,7 +58,7 @@ class Calendrier
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $nom): ?self
     {
         $this->nom = $nom;
 
@@ -80,53 +80,7 @@ class Calendrier
 
 
 
-    public function getClasse(): ?array
-    {
-        return $this->classe;
-    }
 
-    public function setClasse(array $classe): self
-    {
-        $this->classe = $classe;
-
-        return $this;
-    }
-
-    public function getFormateurs(): ?array
-    {
-        return $this->formateurs;
-    }
-
-    public function setFormateurs(array $formateurs): self
-    {
-        $this->formateurs = $formateurs;
-
-        return $this;
-    }
-
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin($admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    public function getAdministratifs(): ?array
-    {
-        return $this->administratifs;
-    }
-
-    public function setAdministratifs(array $administratifs): self
-    {
-        $this->administratifs = $administratifs;
-
-        return $this;
-    }
 
     /**
      * @return Collection|EventZimbra[]
@@ -167,7 +121,7 @@ class Calendrier
         return $this->users;
     }
 
-    public function addUser(Users $user): self
+    public function addUser(Users $user): ?self
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
@@ -176,7 +130,7 @@ class Calendrier
         return $this;
     }
 
-    public function removeUser(Users $user): self
+    public function removeUser(Users $user): ?self
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
