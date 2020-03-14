@@ -1,4 +1,83 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn">{{ button_label|default('Save') }}</button>
+<form>
+    <div class="form-style-5">
+        <div class="">
+            <input type="text" name="field1" placeholder="Nom de classe">
+        </div>
+
+        <div class="">
+            <input type="text" name="field1" placeholder="URL">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-style-5">
+            <legend><span class="number">1</span> Création d'élèves</legend>
+            <input type="text" name="field1" placeholder="Nom" id="nomEleve">
+            <input type="text" name="field2" placeholder="Prénom" id="prenomEleve">
+            <input type="email" name="field2" placeholder="E-mail" id="emailEleve">
+            <input type="button" value="Ajouter un élève" onclick="add_li('ma_liste')" />
+        </div>
+        <div class="form-style-5">
+            <legend><span class="number">1</span> Elèves enregistrés</legend>
+            <ul id="ma_liste">
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-style-5">
+            <legend><span class="number">2</span> Création de Formateurs</legend>
+            <select id="" name="field4">
+                <optgroup label="">
+                    <option value="">Nom formateur</option>
+                    <option value="">Nom formateur</option>
+                    <option value="">Nom formateur</option>
+                    <option value="">Nom formateur</option>
+                </optgroup>
+            </select>
+            <input type="text" name="field1" placeholder="Nom">
+            <input type="text" name="field2" placeholder="Prénom">
+            <input type="email" name="field2" placeholder="E-mail">
+            </select>
+            <input type="button" value="Valider"/>
+        </div>
+
+        <div class="form-style-5">
+            <legend><span class="number">2</span> Formateurs enregistrés</legend>
+            <label for=""></label>
+            </select>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="form-style-5">
+            <legend><span class="number">3</span> Création Personnels administratifs</legend>
+            <select id="" name="field4">
+                <optgroup label="">
+                    <option value="">Nom  administratif</option>
+                    <option value="">Nom  administratif</option>
+                </optgroup>
+
+            <label for=""></label>
+            <input type="text" name="field1" placeholder="Nom">
+            <input type="text" name="field2" placeholder="Prénom">
+            <input type="email" name="field2" placeholder="E-mail">
+
+
+
+                <input type="button" value="Valider" />
+        </div>
+        <div class="form-style-5">
+            <legend><span class="number">3</span> Personnels administratifs enregistrés</legend>
+
+        </div>
+        <input type="submit" value="Valider" />
+</div>
+</form>
+<script src="{{ asset('assets/js/page/page-crea-formulaire.js') }}"></script>
+
 {{ form_end(form) }}
