@@ -18,9 +18,15 @@ class CalendrierController extends AbstractController
 {
     /**
      * @Route("/", name="calendrier_index", methods={"GET"})
+     * @throws \Exception
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
+        $calendrier = $calendrierRepository->find(1);
+        $entityManger = $this->getDoctrine()->getManager();
+        $calendrierManager= new CalendarManager($entityManger);
+        $calendrierManager->synchroCalendar($calendrier);
+
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
         ]);

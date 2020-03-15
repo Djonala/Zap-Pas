@@ -20,4 +20,39 @@ class EventZimbraRepository extends ServiceEntityRepository
         parent::__construct($registry, EventZimbra::class);
     }
 
+    /**Fonction qui selectionne en bdd les eventZimbra dont l'idZimbra sera donné et à laquelle le calendrier correspond
+//     * @param $idZimbra
+//     * @return mixed|null
+//     * @throws \Doctrine\ORM\NonUniqueResultException
+//     */
+
+        public function findAllByIdJoinedToCalendrier($idCal) {
+            $query = $this->getEntityManager()
+                ->createQuery(
+                    'SELECT * FROM zappas1:event_zimbra
+            INNER JOIN calendrier c ON c.id = event_zimbra.calendrier_id
+            WHERE event_zimbra.id = :idCal'
+                )->setParameter('idCal', $idCal);
+
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        }
+//    public function findOneByIdJoinedToCalendrier($idZimbra)
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery(
+//                'SELECT event FROM AppBundle:Product p
+//        JOIN p.category c
+//        WHERE p.id = :id'
+//            )->setParameter('id', $productId);
+//
+//        try {
+//            return $query->getSingleResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
 }

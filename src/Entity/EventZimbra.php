@@ -56,6 +56,11 @@ class EventZimbra
      */
     private $calendrier;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $idZimbra;
+
 
     public function __construct()
     {
@@ -154,6 +159,18 @@ class EventZimbra
     public function setCalendrier(?Calendrier $calendrier): self
     {
         $this->calendrier = $calendrier;
+
+        return $this;
+    }
+
+    public function getIdZimbra(): ?string
+    {
+        return $this->idZimbra;
+    }
+
+    public function setIdZimbra(string $idZimbra): self
+    {
+        $this->idZimbra = $idZimbra;
 
         return $this;
     }
