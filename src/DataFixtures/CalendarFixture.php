@@ -14,9 +14,6 @@ class CalendarFixture extends Fixture
     {
          $calendar = new Calendrier();
          $calendar->setNom('Web_In_Pulse');
-         $calendar->setAdmin('maelys-veguer@onfaitunessai.com');
-         $calendar->setFormateurs(['Vincent', 'Pascal', 'Sarah']);
-         $calendar->setAdministratifs(['Emilie','Laurence','Laetitia']);
          $calendar->setUrl('https://webmail.ec-nantes.fr/home/mailys.veguer@ec-nantes.fr/Web%20in-pulse%20%231.json');
          $managerCal = new Manager\CalendarManager($manager);
 

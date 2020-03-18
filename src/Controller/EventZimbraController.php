@@ -81,6 +81,7 @@ class EventZimbraController extends AbstractController
 
     /**
      * @Route("/{id}", name="event_zimbra_delete", methods={"DELETE"})
+     *
      */
     public function delete(Request $request, EventZimbra $eventZimbra): Response
     {

@@ -31,7 +31,7 @@ class Calendrier
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EventZimbra", mappedBy="calendrier")
+     * @ORM\OneToMany(targetEntity="App\Entity\EventZimbra", mappedBy="calendrier", orphanRemoval=true, cascade={"persist", "remove", "merge"})
      */
     private $eventsZimbra;
 
