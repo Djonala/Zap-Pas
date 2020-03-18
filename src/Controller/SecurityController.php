@@ -22,6 +22,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -47,6 +49,11 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/oubli-pass", name="app_forgotten_password")
+     * @param Request $request
+     * @param UsersRepository $usersRepository
+     * @param \Swift_Mailer $mailer
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function forgottenPassword(Request $request, UsersRepository $usersRepository, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator){
         // on créer le formulaire
@@ -113,6 +120,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reset-pass/{token}", name ="app_reset_password")
+     * @param $token
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function resetPassword($token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
