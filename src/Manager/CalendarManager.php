@@ -11,7 +11,6 @@ use App\Repository\EventZimbraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
-use App\Repository;
 
 
 /**
@@ -35,66 +34,102 @@ class CalendarManager
 
 
     public function synchroCalendar(Calendrier $calendar) {
+        //recuperation de l'url du calendrier transmis
         $url = $calendar->getUrl();
         try {
+            //transforme le fichier json en array php
             $parsed_json = $this->parseJsonToPhpArray($url);
-            // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
+
             try {
-                $ar_events= $this->selectArrayFileJson($parsed_json,'appt');
+                // RECUPERATION DU TABLEAU D'EVENEMENT APPT DANS LE TABLEAU DU FICHIER JSON
+                $ar_api_eventZimbra= $this->selectArrayFileJson($parsed_json,'appt');
 
-                // ON BOUCLE SUR TOUS LES EVENEMENTS DU NOUVEAU TABLEAU
-                foreach ($ar_events as $event) {
-                    $repo = $this->entityManager->getRepository(EventZimbraRepository::class)->findBy(
-                        ['id_zimbra'=> $event{'id'}, 'calendrier_id'=> $calendar->getId()]
-                    );
+                // j'accede au repository
+                $repo = $this->entityManager->getRepository(EventZimbra::class);
 
-                    // SI L'OBJET EST INEXISTANT EN BDD
-                    if(!$repo){
-                        $coursZimbra = $this->createNewEventZimbra($event);
-                        $calendrier->addEventsZimbra($coursZimbra);
-                        // ENREGISTREMENT EN BDD
-                        $this->entityManager->persist($coursZimbra);
-                        $this->entityManager->persist($calendrier);
+                // je recupère l'ensemble des objets type eventzimbra en bdd
+                $objs_db_eventZimbra = $repo->findAll();
+                // j'instancie un tableau vide
+                $ar_db_idZimbra = [];
 
-                        // SI LE TITRE N'EST PAS A JOUR
-                    } else if ($repo->getMatiere() != $this->getTitleFromZimbra($event)) {
-                        $titre=$this->getTitleFromZimbra($event);
-                        $repo->setMatiere($titre);
-
-                        // SI L'HEURE DE DEBUT N'EST PAS A JOUR
-                    } else if($repo->getDateDebutEvent() != $this->getDateBeginFromZimbra($event)) {
-                        $dateHeureDebut=$this->getDateBeginFromZimbra($event);
-                        $repo->setDateDebutEvent($dateHeureDebut);
-
-                        // SI L'ID ZIMBRA N'EST PAS A JOUR
-                    } else if($repo->getIdZimbra() != $this->getIdFromZimbra($event)) {
-                        $id=$this->getIdFromZimbra($event);
-                        $repo->setIdZimbra($id);
-
-                        // SI LA DATE DE FIN N'EST PAS A JOUR
-                    } else if($repo->getDateFinEvent() != $this->getDateFinFromZimbra($event)) {
-                        $dateHeureFin=$this->getDateFinFromZimbra($event);
-                        $repo->setDateFinEvent($dateHeureFin);
-
-                        // SI LE LIEU N'EST PAS A JOUR
-                    } else if($repo->getLieu() != $this->getLieuFromZimbra($event)) {
-                        $lieu = $this->getLieuFromZimbra($event);
-                        $repo->setLieu($lieu);
-
-                        // SI LE MAIL DE L'INTERVENANT N'EST PAS A JOUR
-                    } else if($repo->getEmailIntervenant() != $this->getMailIntervenantFromZimbra($event)) {
-                        $mailIntervenant = $this->getMailIntervenantFromZimbra($event);
-                        $repo->setEmailIntervenant($mailIntervenant);
-
-                        // SI LE NOM DE L'INTERVENANT N'EST PAS A JOUR
-                    } else if($repo->getNomFormateur() != $this->getNomIntervenantFromZimbra($event)){
-                        $nomIntervenant = $this->getNomIntervenantFromZimbra($event);
-                        $repo->setNomFormateur($nomIntervenant);
-                    }
-                    // VALIDATION DE L'ENREGISTREMENT (UPDATE)
-                    $this->entityManager->flush();
+                // je boucle sur tous les objets et je recupère uniquement l'str_db_idZimbra que je place dans un tableau
+                foreach ($objs_db_eventZimbra as $obj_db_eventZimbra) {
+                    $ar_db_idZimbra[] = [
+                        'id'=>$obj_db_eventZimbra->getIdZimbra()
+                    ];
                 }
 
+                // Boucle sur tous les ID contenus dans le tableau
+                foreach ($ar_db_idZimbra as $str_db_idZimbra) {
+                    // pour chaque tour, j'init le validator à 'false'
+                    $validator = false;
+                    // pour chaque id, je boucle sur le tableau récupéré depuis l'api et je verifie la correspondance
+                    foreach ($ar_api_eventZimbra as $element) {
+                        //si l'id correspond à celui en base, validator prend la valeur 'true'
+                        // ici l'optimisation n'est pas maximale, parceque l'algorithme continue de verifier des valeurs qui ont déjà été validées
+                        if($element{'id'}==$str_db_idZimbra{'id'}) {
+                            $validator = true;
+                        }
+                    }
+                    // si le validator a la valeur 'false' soit si aucune correspondance n'a été trouvée dans les 2 tableaux d'id
+                    //on recupère l'objet en bdd et on le supprime.
+                    if($validator===false){
+                        $obj_db_eventZimbra= $repo->findOneBy(['idZimbra'=>$str_db_idZimbra{'id'}]);
+                        $this->entityManager->remove($obj_db_eventZimbra);
+                    }
+                }
+
+                // ON BOUCLE SUR TOUS LES EVENEMENTS DU NOUVEAU TABLEAU (VERIF MODIF ET AJOUT)-----------------------
+                foreach ($ar_api_eventZimbra as $event) {
+
+                    $event_db= $repo->findOneBy([
+                        'idZimbra'=> $event{'id'},
+                        'calendrier'=> $calendar->getId(),
+                    ]);
+
+                    // SI L'OBJET EST INEXISTANT EN BDD
+                    if(!$event_db){
+                        $coursZimbra = $this->createNewEventZimbra($event);
+
+                        $calendar->addEventsZimbra($coursZimbra);
+                        // ENREGISTREMENT EN BDD
+                        $this->entityManager->persist($coursZimbra);
+                        $this->entityManager->persist($calendar);
+
+                        // SI LE TITRE N'EST PAS A JOUR
+                    } else if ($event_db->getMatiere() != $this->getTitleFromZimbra($event)) {
+                        $titre=$this->getTitleFromZimbra($event);
+                        $event_db->setMatiere($titre);
+
+                        // SI L'HEURE DE DEBUT N'EST PAS A JOUR
+                    } else if($event_db->getDateDebutEvent() != $this->getDateBeginFromZimbra($event)) {
+                        $dateHeureDebut=$this->getDateBeginFromZimbra($event);
+                        $event_db->setDateDebutEvent($dateHeureDebut);
+
+                        // SI LA DATE DE FIN N'EST PAS A JOUR
+                    } else if($event_db->getDateFinEvent() != $this->getDateFinFromZimbra($event)) {
+                        $dateHeureFin=$this->getDateFinFromZimbra($event);
+                        $event_db->setDateFinEvent($dateHeureFin);
+
+                        // SI LE LIEU N'EST PAS A JOUR
+                    } else if($event_db->getLieu() != $this->getLieuFromZimbra($event)) {
+                        $lieu = $this->getLieuFromZimbra($event);
+                        $event_db->setLieu($lieu);
+
+                        // SI LE MAIL DE L'INTERVENANT N'EST PAS A JOUR
+                    } else if($event_db->getEmailIntervenant() != $this->getMailIntervenantFromZimbra($event)) {
+                        $mailIntervenant = $this->getMailIntervenantFromZimbra($event);
+                        $event_db->setEmailIntervenant($mailIntervenant);
+
+                        // SI LE NOM DE L'INTERVENANT N'EST PAS A JOUR
+                    } else if($event_db->getNomFormateur() != $this->getNomIntervenantFromZimbra($event)){
+                        $nomIntervenant = $this->getNomIntervenantFromZimbra($event);
+                        $event_db->setNomFormateur($nomIntervenant);
+                    }
+                }
+
+                // VALIDATION DE L'ENREGISTREMENT (UPDATE)-----------------------------------------------------
+                $this->entityManager->flush();
             } catch (Exception $exception) {
                 echo $exception->getMessage();
             }

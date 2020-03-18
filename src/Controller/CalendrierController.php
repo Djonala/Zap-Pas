@@ -22,10 +22,11 @@ class CalendrierController extends AbstractController
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
-        $calendrier = $calendrierRepository->find(1);
-        $entityManger = $this->getDoctrine()->getManager();
-        $calendrierManager= new CalendarManager($entityManger);
-        $calendrierManager->synchroCalendar($calendrier);
+        // pour tester la synchro à l'appel du /calendrier :
+//        $calendrier = $calendrierRepository->find(3);
+//        $entityManger = $this->getDoctrine()->getManager();
+//        $calendrierManager= new CalendarManager($entityManger);
+//        $calendrierManager->synchroCalendar($calendrier);
 
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
@@ -54,10 +55,11 @@ class CalendrierController extends AbstractController
             return $this->redirectToRoute('calendrier_index');
         }
 
-        return $this->render('calendrier/new.html.twig', [
-            'calendrier' => $calendrier,
-            'form' => $form->createView(),
-        ]);
+            return $this->render('calendrier/new.html.twig', [
+                'calendrier' => $calendrier,
+                'form' => $form->createView(),
+            ]);
+
     }
 
     /**
@@ -92,6 +94,7 @@ class CalendrierController extends AbstractController
 
     /**
      * @Route("/{id}", name="calendrier_delete", methods={"DELETE"})
+     * En cas de delete d'un calendrier, tous ses enfants seront delete aussi
      */
     public function delete(Request $request, Calendrier $calendrier): Response
     {

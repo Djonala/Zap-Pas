@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CoursZimbraRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\EventZimbraRepository")
  */
 class EventZimbra
 {
