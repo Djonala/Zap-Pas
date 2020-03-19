@@ -22,8 +22,12 @@ class CalendrierController extends AbstractController
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
-        // pour tester la synchro à l'appel du /calendrier :
-//        $calendrier = $calendrierRepository->find(3);
+//        // on recupère l'utilisateur
+//        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+//        $user = $this->getUser();
+
+////         pour tester la synchro à l'appel du /calendrier :
+//        $calendrier = $calendrierRepository->find(6);
 //        $entityManger = $this->getDoctrine()->getManager();
 //        $calendrierManager= new CalendarManager($entityManger);
 //        $calendrierManager->synchroCalendar($calendrier);

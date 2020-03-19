@@ -1,13 +1,13 @@
 <nav class="nav" role="navigation">
     <div class="container-logo">
-        <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}"/>
+        <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}" href="{{ path('calendrier_index') }}"/>
     </div>
     <ul class="container-link">
-        <li class="bouton-link"><a href="#">Calendrier</a></li>
+        <li class="bouton-link"><a href="{{ path('calendrier_index') }}">Calendrier</a></li>
         <li class="has-children bouton-link"><a href="#">Ohlala</a>
 
             <ul class="sous-menu">
-                <form>
+                <form class="form-navbar-ohlala">
                         <li > <a class="elmt" for="checkbox" >
                                 <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1"  onclick="afficheFormRetard(this)"> Retard
                             </a>
@@ -42,17 +42,9 @@
             </ul>
 
         </li>
-        <li class="bouton-link"><a href="#">Gérer</a>
+        <li class="bouton-link"><a href="{{ path('calendrier_new') }}">Gérer</a>
 
-        <li class="has-children bouton-link"><a href="#">Editer</a>
-
-            <ul class="sous-menu">
-                <li class="li-sous-menu-edition"><a href="#">Extraire période</a></li>
-                <li class="li-sous-menu-edition"><a href="#">Extraire liste de classe</a></li>
-                <li class="li-sous-menu-edition"><a href="#">Générer mot de passe </a></li>
-            </ul>
-        </li>
-        <li><a class="bouton-link" href="#">Deconnexion </a></li>
+        <li><a class="bouton-link" href="{{ path('app_logout') }}">Deconnexion </a></li>
     </ul>
 </nav>
 {% block javascripts %}

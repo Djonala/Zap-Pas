@@ -25,9 +25,9 @@ class Users implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="json_array")
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -90,13 +90,12 @@ class Users implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
-        $roles = $this->roles;
-         return (array) $roles;
+         return $this->roles;
     }
 
-    public function setRoles(string $roles): self
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 

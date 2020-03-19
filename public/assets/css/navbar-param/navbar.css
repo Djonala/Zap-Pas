@@ -92,11 +92,12 @@ label {
     width: 5vh;
 }
 
- form{
+ .form-navbar-ohlala {
      display: inline-flex;
      flex-direction: column;
      align-items: center;
      width: 100%;
+     margin-top: 0;
  }
  .submit-retard-absence {
      margin: 1vh;
