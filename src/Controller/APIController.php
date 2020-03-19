@@ -44,13 +44,10 @@ class APIController extends AbstractController
         //On instancie le "normaliseur" pour convertir la collection en tableau
         $normalizers = [new ObjectNormalizer()];
 
-        // On fait la conversion en json
         //on instancie le convertisseur
         $serializer = new Serializer($normalizers, $encoders);
 
-
         //on convertit en json
-
         $jsonContent = $serializer->serialize($result, 'json', [
             AbstractNormalizer::IGNORED_ATTRIBUTES => ['calendrier'],
             'circular_reference_handler' => function ($object) {
@@ -64,8 +61,7 @@ class APIController extends AbstractController
         // On ajoute l'entête http
         $response->headers->set('Content-Type', 'application/json');
 
-        //On envoie la reponse
-
+        //On envoi la reponse
         return $response;
 
     }

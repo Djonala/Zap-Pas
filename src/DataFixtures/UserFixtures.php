@@ -24,10 +24,10 @@ class UserFixtures extends Fixture
         $user->setNom('TRISTAN');
         $user->setPrenom('Johanna');
         $user->setEmail('johanna.tristan@gmail.com');
-        $user->setRoles(json_encode('ROLE_SUPER_ADMIN'));
+        $user->setRoles(['ROLE_USER']);
         $user->setPassword($this->passwordEncoder->encodePassword(
              $user,
-           'the_new_password'
+           'winwip'
         ));
         $user->setResetToken(null);
         $manager->persist($user);

@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
@@ -44,7 +44,9 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
+
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+
     }
 
     /**
@@ -69,7 +71,7 @@ class SecurityController extends AbstractController
             //On récupère les données
                 $donnees = $form->getData();
 
-            //On cherche si un utilisateur a cette email
+            //On cherche si un utilisateur a cet email
             $user = $usersRepository->findOneByEmail($donnees['email']);
 
             //si l'utilisateur n'existe pas
