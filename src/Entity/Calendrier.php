@@ -79,9 +79,6 @@ class Calendrier
     }
 
 
-
-
-
     /**
      * @return Collection|EventZimbra[]
      */

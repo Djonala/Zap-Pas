@@ -80,7 +80,8 @@
 }
 
 .form-style-5 input[type="submit"],
-.form-style-5 input[type="button"]
+.form-style-5 input[type="button"],
+.form-style-5 button[type="submit"]
 {
     position: relative;
     display: block;
@@ -92,10 +93,26 @@
     text-align: center;
     font-style: normal;
     width: 100%;
-    border: 1px solid #0e2748;
-    border-width: 1px 1px 3px;
     margin-bottom: 10px;
 }
+
+.form-style-5 input[type="submit"]:hover,
+.form-style-5 input[type="button"]:hover,
+.form-style-5 button[type="submit"]:hover
+{
+    position: relative;
+    display: block;
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    margin: 0 auto;
+    background: #154475;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 .form-group{
 
     margin: auto;
@@ -105,7 +122,7 @@
 }
 
 form {
-    margin-top: 20vh;
+    margin-top: 5vh;
 }
 
 
