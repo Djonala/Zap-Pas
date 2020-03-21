@@ -19,6 +19,11 @@ class CalendrierRepository extends ServiceEntityRepository
         parent::__construct($registry, Calendrier::class);
     }
 
+//    public function findAllAvailable(){
+//        return $this->createQueryBuilder('c')
+//            ->innerJoin(eventZimbra ez)
+//    }
+
     // /**
     //  * @return Calendrier[] Returns an array of Calendrier objects
     //  */

@@ -130,6 +130,7 @@ class CalendarManager
 
                 // VALIDATION DE L'ENREGISTREMENT (UPDATE)-----------------------------------------------------
                 $this->entityManager->flush();
+                echo('Calendrier '.$calendar->getNom().' id : '.$calendar->getId().' synchronisé');
             } catch (Exception $exception) {
                 echo $exception->getMessage();
             }
