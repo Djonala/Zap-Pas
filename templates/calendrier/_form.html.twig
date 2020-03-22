@@ -1,6 +1,7 @@
 {#{{ form_start(form) }}#}
-{#    {{ form_widget(form) }}#}
-{#    {{ form_start(form) }}#}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
 {#        {{ form_errors(form) }}#}
 {#            {{ form_row(form.name) }}#}
 {#            {{ form_row(form.url) }}#}
@@ -29,7 +30,7 @@
     <div class="container">
         <div class="form-style-5">
             <legend><span class="number">1</span> Création d'élèves</legend>
-                {{ include('users/_form.html.twig') }}
+{#                {{ include('users/_form.html.twig') }}#}
             <input type="text" name="field1" placeholder="Nom" id="nomEleve">
             <input type="text" name="field2" placeholder="Prénom" id="prenomEleve">
             <input type="email" name="field2" placeholder="E-mail" id="emailEleve">
