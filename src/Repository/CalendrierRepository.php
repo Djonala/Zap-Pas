@@ -21,9 +21,14 @@ class CalendrierRepository extends ServiceEntityRepository
         parent::__construct($registry, Calendrier::class);
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     * fonction qui recherche l'ensemble des calendriers qui ont des évenements datant de moins de 2 mois
+     */
     public function findAllCalAvailable(){
         $date = new \DateTime();
-        $date->modify('-3 month');
+        $date->modify('-2 month');
 
         return $this->createQueryBuilder('c')
             ->join('App\Entity\EventZimbra', 'ez', Expr\Join::WITH, 'c.id = ez.calendrier')
