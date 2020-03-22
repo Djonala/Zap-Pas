@@ -41,5 +41,5 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/calendrier, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/event/liste, roles: IS_AUTHENTICATED_FULLY}
+        - { path: ^/api/liste, roles: IS_AUTHENTICATED_FULLY}
 

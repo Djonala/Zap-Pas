@@ -22,15 +22,7 @@ class CalendrierController extends AbstractController
      */
     public function index(CalendrierRepository $calendrierRepository): Response
     {
-//        // on recupère l'utilisateur
-//        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-//        $user = $this->getUser();
 
-////         pour tester la synchro à l'appel du /calendrier :
-//        $calendrier = $calendrierRepository->find(6);
-//        $entityManger = $this->getDoctrine()->getManager();
-//        $calendrierManager= new CalendarManager($entityManger);
-//        $calendrierManager->synchroCalendar($calendrier);
 
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
@@ -71,6 +63,12 @@ class CalendrierController extends AbstractController
      */
     public function show(Calendrier $calendrier): Response
     {
+                // on recupère l'utilisateur
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
+
+
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
         ]);

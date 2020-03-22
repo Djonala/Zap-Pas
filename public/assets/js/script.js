@@ -38,7 +38,7 @@ window.onload = () => {
         }
     };
 
-    xmlhttp.open('get','http://localhost:8000/api/event/liste',true);
+    xmlhttp.open('get','http://localhost:8000/api/liste/',true);
     //findreplace(à voir) gulp, grunt, parcel 
     xmlhttp.send(null)
 
