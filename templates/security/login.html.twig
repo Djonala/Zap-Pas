@@ -12,10 +12,11 @@
 {% block body %}
 
     <div class="container">
-    <img id="logo" src="{{ asset('assets/img/LOGOZAP-PAS2.png') }}" alt="Logo" >
-    <img class="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
+        <img id="logo" src="{{ asset('assets/img/LOGOZAP-PAS2.png') }}" alt="Logo" >
+        <img class="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
     </div>
-    <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
+    <div class="imagefond">
+{#    <img class="image3" src="{{ asset('assets/img/photoagenda.jpg!d') }}" alt="photoAgena">#}
     <form id="formulaire" method="post">
         <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
         <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
@@ -28,6 +29,8 @@
          Sign in
         </button>
     </form>
+    </div>
+    <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
 {% endblock %}
 
 {#                <input type="checkbox" name="_remember_me"> Remember me#}
