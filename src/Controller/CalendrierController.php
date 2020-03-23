@@ -23,7 +23,7 @@ class CalendrierController extends AbstractController
     public function index(CalendrierRepository $calendrierRepository): Response
     {
 
-
+        $user = $this->getUser();
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
         ]);
