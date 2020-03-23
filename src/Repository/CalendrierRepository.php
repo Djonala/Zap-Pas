@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Calendrier;
+use App\Entity\EventZimbra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method Calendrier|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,37 +21,22 @@ class CalendrierRepository extends ServiceEntityRepository
         parent::__construct($registry, Calendrier::class);
     }
 
-//    public function findAllAvailable(){
-//        return $this->createQueryBuilder('c')
-//            ->innerJoin(eventZimbra ez)
-//    }
+    /**
+     * @return mixed
+     * @throws \Exception
+     * fonction qui recherche l'ensemble des calendriers qui ont des évenements datant de moins de 2 mois
+     */
+    public function findAllCalAvailable(){
+        $date = new \DateTime();
+        $date->modify('-2 month');
 
-    // /**
-    //  * @return Calendrier[] Returns an array of Calendrier objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->join('App\Entity\EventZimbra', 'ez', Expr\Join::WITH, 'c.id = ez.calendrier')
+            ->Where('ez.dateFinEvent >= :date')
+            ->groupBy('c')
+            ->setParameter('date', $date)
             ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+            ->getResult();
 
-    /*
-    public function findOneBySomeField($value): ?Calendrier
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
     }
-    */
 }

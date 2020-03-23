@@ -21,6 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * Pour implementer cette fonction dans un crontab :
  * 0 0 * * * /var/www/Zap-Pas && php bin/console --env=prod app:synchro:cal
  *
+ * php bin/console app:synchro:cal
  */
 class SynchroCalendrierCommand extends Command
 {
@@ -47,7 +48,7 @@ class SynchroCalendrierCommand extends Command
     {
 
         $repo = $this->em->getRepository(Calendrier::class);
-        $calendriers = $repo->findAll();
+        $calendriers = $repo->findAllCalAvailable();
         $managerCal = new CalendarManager($this->em);
         foreach ($calendriers as $cal) {
             $managerCal->synchroCalendar($cal);
