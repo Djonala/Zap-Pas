@@ -19,7 +19,7 @@
     flex-direction : row;
     justify-content: flex-end;
     width: 100%;
-    padding-right: 10vh;
+    padding-right: 0vh;
 }
 .container-logo{
     display: flex;
@@ -107,10 +107,22 @@ nav label {
     background: #105280;
 }
 
+#espace-perso-a {
+    color: #10385f;
+}
+
 #form-retard {
     display: none;
 }
 
 #form-absence {
     display: none;
+}
+.espace-perso:hover {
+    background: #edae05;
+    margin-left: 5vh;
+}
+.espace-perso {
+    background: #dba005;
+    margin-left: 5vh;
 }

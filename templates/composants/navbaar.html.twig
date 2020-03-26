@@ -49,8 +49,8 @@
             <a href="{{ path('calendrier_new') }}"><i class="fas fa-user-edit"></i> Gérer</a>
         </li>
 
-        <li class="bouton-link has-children">
-            <a><i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}</a>
+        <li class="bouton-link has-children espace-perso">
+            <a id="espace-perso-a"><i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}</a>
             <ul class="sous-menu">
                 <a class="li-sous-menu" href="{{ path('app_logout') }}"> Deconnexion </a>
             </ul>
