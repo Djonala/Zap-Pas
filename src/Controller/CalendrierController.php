@@ -24,8 +24,9 @@ class CalendrierController extends AbstractController
     {
 
         $user = $this->getUser();
+        $calendriers = $user->getCalendriers();
         return $this->render('calendrier/index.html.twig', [
-            'calendriers' => $calendrierRepository->findAll(),
+            'calendriers' => $calendriers,
         ]);
     }
 
@@ -70,11 +71,11 @@ class CalendrierController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-
+        $calendriers = $user->getCalendriers();
 
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
-            'calendriers' => $calendrierRepository->findAll(),
+            'calendriers' => $calendriers,
         ]);
     }
 
