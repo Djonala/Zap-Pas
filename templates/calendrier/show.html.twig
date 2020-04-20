@@ -7,7 +7,7 @@
     {% include 'composants/navbaar.html.twig' %}
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
-
+    <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
     <div id="calendrier"></div>
 {#    <p>{{ calendrier.id }}</p>#}
 {#    <p>{{ calendrier.nom }}</p>#}
