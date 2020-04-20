@@ -24,8 +24,9 @@ class CalendrierController extends AbstractController
     {
 
         $user = $this->getUser();
+        $calendriers = $user->getCalendriers();
         return $this->render('calendrier/index.html.twig', [
-            'calendriers' => $calendrierRepository->findAll(),
+            'calendriers' => $calendriers,
         ]);
     }
 
@@ -60,17 +61,21 @@ class CalendrierController extends AbstractController
 
     /**
      * @Route("/{id}", name="calendrier_show", methods={"GET"})
+     * @param Calendrier $calendrier
+     * @param CalendrierRepository $calendrierRepository
+     * @return Response
      */
-    public function show(Calendrier $calendrier): Response
+    public function show(Calendrier $calendrier, CalendrierRepository $calendrierRepository): Response
     {
                 // on recupère l'utilisateur
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-
-
+        $user = $this->getUser();
+        $calendriers = $user->getCalendriers();
 
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
+            'calendriers' => $calendriers,
         ]);
     }
 

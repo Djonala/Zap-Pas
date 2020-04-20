@@ -1,4 +1,5 @@
-
+let dataUrl = document.querySelector('.js-url');
+let url = dataUrl.dataset.url;
 
 window.onload = () => {
     let elementCalendrier = document.getElementById("calendrier");
@@ -38,7 +39,7 @@ window.onload = () => {
         }
     };
 
-    xmlhttp.open('get','http://localhost:8000/api/liste/',true);
+    xmlhttp.open('get',url,true);
     //findreplace(à voir) gulp, grunt, parcel 
     xmlhttp.send(null)
 

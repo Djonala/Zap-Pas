@@ -23,15 +23,27 @@ class APIController extends AbstractController
 {
 
     /**
-     * @Route("/liste", name="liste", methods={"GET"})
+     * @Route("/liste/{id}", name="liste", methods={"GET"})
      */
-    public function liste()
+    public function liste($id=null)
     {
+        // on récupère l'utilisateur en cours
         $user = $this->getUser();
 
-        $calendriers = $user->getCalendriers();
-        if (isset($calendriers[0])) {
-            $cal = $calendriers[0];
+        // si l'id na pas été renseigné, on essaye de récupérer le 1er calendrier de l'utilisateur
+        if($id === null ){
+            $calendriers = $user->getCalendriers();
+            if(isset($calendriers[0])){
+                $cal = $calendriers[0];
+            }
+        // sinon on recupère le calendrier correspondant à l'id
+        } else {
+            $repo = $this->getDoctrine()->getRepository(Calendrier::class);
+            $cal = $repo->find($id);
+        }
+
+        // si un calendrier a bien été recupéré
+        if (isset($cal)) {
 
             // on recupère les events associé à ce calendrier
             $repo = $this->getDoctrine()->getRepository(EventZimbra::class);
@@ -49,6 +61,7 @@ class APIController extends AbstractController
                     "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s')
                 ];
             }
+        // sinon, on renvoi un champ vide
         } else {
             $result[] = "";
         }
