@@ -4,8 +4,13 @@
         <img class="logo" alt="" src="{{ asset('/assets/img/LogoEcn.png') }}" href="{{ path('calendrier_index') }}"/>
     </div>
     <ul class="container-link">
-        <li class="bouton-link">
+        <li class="bouton-link has-children">
             <a href="{{ path('calendrier_index') }}"><i class="far fa-calendar-alt"></i> Calendrier</a>
+            <ul class="sous-menu">
+                {% for cal in calendriers%}
+                    <li><a href="/calendrier/{{ cal.id }}" > {{cal.nom}} {{ cal.id }}</a></li>
+                {% endfor %}
+            </ul>
         </li>
 
         <li class="has-children bouton-link">

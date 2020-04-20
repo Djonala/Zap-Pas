@@ -3,15 +3,13 @@
 {% block title %}Calendrier{% endblock %}
 
 {% block body %}
-    <h1>Calendrier : {{ calendrier.id }}</h1>
     {% include 'composants/navbaar.html.twig' %}
+    <h1>{{ calendrier.nom }}</h1>
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
     <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
     <div id="calendrier"></div>
-{#    <p>{{ calendrier.id }}</p>#}
-{#    <p>{{ calendrier.nom }}</p>#}
-{#    <p>{{ calendrier.url }}</p>#}
+
 
 
     {# fichier js #}
