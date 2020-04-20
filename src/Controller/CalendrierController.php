@@ -35,6 +35,8 @@ class CalendrierController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
+        $calendriers = $user->getCalendriers();
         $calendrier = new Calendrier();
         $form = $this->createForm(Calendrier1Type::class, $calendrier);
         $form->handleRequest($request);
@@ -55,6 +57,7 @@ class CalendrierController extends AbstractController
             return $this->render('calendrier/new.html.twig', [
                 'calendrier' => $calendrier,
                 'form' => $form->createView(),
+                'calendriers' => $calendriers,
             ]);
 
     }
@@ -86,7 +89,8 @@ class CalendrierController extends AbstractController
     {
         $form = $this->createForm(Calendrier1Type::class, $calendrier);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
+        $calendriers = $user->getCalendriers();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -96,6 +100,7 @@ class CalendrierController extends AbstractController
         return $this->render('calendrier/edit.html.twig', [
             'calendrier' => $calendrier,
             'form' => $form->createView(),
+            'calendriers' => $calendriers,
         ]);
     }
 
