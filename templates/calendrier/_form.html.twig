@@ -1,4 +1,4 @@
-{#{{ form_start(form) }}#}
+ {#{{ form_start(form) }}#}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
@@ -46,23 +46,23 @@
     <div class="container">
         <div class="form-style-5">
             <legend><span class="number">2</span> Création de Formateurs</legend>
-            <select id="" name="field4">
-                <optgroup label="">
-                    <option value="">Nom formateur</option>
-                    <option value="">Nom formateur</option>
-                </optgroup>
-            </select>
-            <input type="text" name="field1" placeholder="Nom">
-            <input type="text" name="field2" placeholder="Prénom">
-            <input type="email" name="field2" placeholder="E-mail">
-            <input type="button" value="Valider"/>
-
+            ici il faut mettre le résultat de la requete sql pour récupérer les personnes déja enregistré en formateur
+{#            <select id="" name="field4">#}
+{#                <optgroup label="">#}
+{#                    <option value="">Nom formateur</option>#}
+{#                    <option value="">Nom formateur</option>#}
+{#                </optgroup>#}
+{#            </select>#}
+            <input type="text" name="field1" placeholder="Nom" id="nomFormateur">
+            <input type="text" name="field2" placeholder="Prénom" id="prenomFormateur">
+            <input type="email" name="field2" placeholder="E-mail" id="emailFormateur">
+            <input type="button" value="Ajouter un formateur" onclick="add_li_form('ma_liste_formateur')" />
         </div>
 
         <div class="form-style-5">
             <legend><span class="number">2</span> Formateurs enregistrés</legend>
-            <label for=""></label>
-            </select>
+            <ul id="ma_liste_formateur">
+            </ul>
         </div>
     </div>
 

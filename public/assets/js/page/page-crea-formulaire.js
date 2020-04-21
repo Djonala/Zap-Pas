@@ -17,6 +17,7 @@ function add_li(sId) {
     return oLi;
 }
 
+
 /*********************Advanced Functions*********************/
 
 var IE = !!(window.attachEvent && !window.opera);

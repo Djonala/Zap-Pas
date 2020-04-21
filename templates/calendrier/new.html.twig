@@ -6,9 +6,13 @@
     {% endblock %}
 {% block body %}
     {% include 'composants/navbaar.html.twig' %}
-    <h1>Création Calendrier</h1>
+    <h1>Création Formation</h1>
+        <h2>Calendrier</h2>
+         {{ form(form) }}
+         <button class="btn">{{ button_label|default('Save') }}</button>
 
-    {{ include('calendrier/_form.html.twig') }}
-
-    <a href="{{ path('calendrier_index') }}">back to list</a>
+        <h2>Paricipants</h2>
+        <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
+{#    <a href="{{ path('calendrier_index') }}">back to list</a>#}
 {% endblock %}
+
