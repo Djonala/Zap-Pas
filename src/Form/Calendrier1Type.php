@@ -6,6 +6,7 @@ use App\Entity\Calendrier;
 use App\Entity\Users;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Entity;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,14 +25,16 @@ class Calendrier1Type extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
 //                        ->where('u.roles::text LIKE :role')
-                        ->orderBy('u.email', 'ASC');
+                        ->orderBy('u.nom', 'ASC');
 //                        ->setParameter('role', 'ROLE_ADMIN');
+
                 },
 
-                'choice_label'=>'prenom',
+                'choice_label'=> 'nomAndPrenom',
                 'multiple' => true,
                 'expanded' => true,
             ])
+
 
         ;
     }
@@ -42,4 +45,5 @@ class Calendrier1Type extends AbstractType
             'data_class' => Calendrier::class,
         ]);
     }
+
 }

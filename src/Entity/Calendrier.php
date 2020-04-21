@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Form\UsersType;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -135,7 +136,5 @@ class Calendrier
 
         return $this;
     }
-
-
 
 }
