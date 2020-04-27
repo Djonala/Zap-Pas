@@ -139,7 +139,7 @@ class EventZimbra
         return $this;
     }
 
-    public function getDateFinEvent(): ?DateTimeInterface
+    public function getDateFinEvent()
     {
         return $this->dateFinEvent;
     }
@@ -174,4 +174,16 @@ class EventZimbra
 
         return $this;
     }
+
+    public function toString(){
+        $message =
+            "Titre de l'évenement : ".$this->getMatiere()."<br\>".
+            "Date de début de l'évenement : ".$this->getDateDebutEvent()."<br\>".
+            "Date de fin de l'évenement : ".$this->getDateFinEvent()."<br\>".
+            "Lieu de l'évenement : ".$this->getLieu()."<br\>".
+            "Intervenant : ".$this->getNomFormateur()."<br\>".
+            "Contact de l'intervenant : ".$this->getEmailIntervenant()."<br\>";
+        return $message;
+    }
+
 }
