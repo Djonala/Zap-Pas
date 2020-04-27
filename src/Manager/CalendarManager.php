@@ -34,6 +34,9 @@ class CalendarManager
 
 
     public function synchroCalendar(Calendrier $calendar) {
+        //instantation d'un booléen pour declencher l'envoi d'un mail
+        $isModify = false;
+
         //recuperation de l'url du calendrier transmis
         $url = $calendar->getUrl();
         try {
@@ -81,7 +84,7 @@ class CalendarManager
 
                 // ON BOUCLE SUR TOUS LES EVENEMENTS DU NOUVEAU TABLEAU (VERIF MODIF ET AJOUT)-----------------------
                 foreach ($ar_api_eventZimbra as $event) {
-
+                    $isModify = false;
                     $event_db= $repo->findOneBy([
                         'idZimbra'=> $event{'id'},
                         'calendrier'=> $calendar->getId(),
@@ -96,35 +99,53 @@ class CalendarManager
                         $this->entityManager->persist($coursZimbra);
                         $this->entityManager->persist($calendar);
 
+                            // instantation d'un message pour le mail
+                        $message = "Un nouvelle evenement a été ajouté : <br\>".$coursZimbra->toString();
+                            // envoi du mail
+                        $this->sendMail($message, $mailer, $calendar);
+
                         // SI LE TITRE N'EST PAS A JOUR
                     } else if ($event_db->getMatiere() != $this->getTitleFromZimbra($event)) {
                         $titre=$this->getTitleFromZimbra($event);
                         $event_db->setMatiere($titre);
+                        $isModify = true;
 
                         // SI L'HEURE DE DEBUT N'EST PAS A JOUR
                     } else if($event_db->getDateDebutEvent() != $this->getDateBeginFromZimbra($event)) {
                         $dateHeureDebut=$this->getDateBeginFromZimbra($event);
                         $event_db->setDateDebutEvent($dateHeureDebut);
+                        $isModify = true;
 
                         // SI LA DATE DE FIN N'EST PAS A JOUR
                     } else if($event_db->getDateFinEvent() != $this->getDateFinFromZimbra($event)) {
                         $dateHeureFin=$this->getDateFinFromZimbra($event);
                         $event_db->setDateFinEvent($dateHeureFin);
+                        $isModify = true;
 
                         // SI LE LIEU N'EST PAS A JOUR
                     } else if($event_db->getLieu() != $this->getLieuFromZimbra($event)) {
                         $lieu = $this->getLieuFromZimbra($event);
                         $event_db->setLieu($lieu);
+                        $isModify = true;
 
                         // SI LE MAIL DE L'INTERVENANT N'EST PAS A JOUR
                     } else if($event_db->getEmailIntervenant() != $this->getMailIntervenantFromZimbra($event)) {
                         $mailIntervenant = $this->getMailIntervenantFromZimbra($event);
                         $event_db->setEmailIntervenant($mailIntervenant);
+                        $isModify = true;
 
                         // SI LE NOM DE L'INTERVENANT N'EST PAS A JOUR
                     } else if($event_db->getNomFormateur() != $this->getNomIntervenantFromZimbra($event)){
                         $nomIntervenant = $this->getNomIntervenantFromZimbra($event);
                         $event_db->setNomFormateur($nomIntervenant);
+                        $isModify = true;
+                    }
+                    if($isModify){
+                        // instantation du message pour le mail
+                        $message = "Un evenement a été modifié : <br\>".$event_db->toString();
+
+                        // envoi du mail
+                        $this->sendMail($message, $mailer, $calendar);
                     }
                 }
 
@@ -323,4 +344,30 @@ class CalendarManager
 
     }
 
-}
+    private function sendMail(string $body, \Swift_Mailer $mailer, Calendrier $calendrier)
+    {
+        //Recupération des utlisateurs de l'agenda
+        $users = $calendrier->getUsers();
+
+        //Pour tous les utilisateurs de cet agenda
+        foreach ($users as $user) {
+            $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
+                // on instancie un format
+                ->setFormat('votre@adresse.fr')
+
+                // On attribue le destinataire
+                ->setTo($user->getEmail())
+
+                // On créé le message
+                ->setBody(
+                    $this->renderView(
+                        'Mailer.notification_changement_agenda.html.twig', ['message' => $body]
+                    ),
+                    'text/html'
+                );
+            // On envoie le message
+            $mailer->send($message);
+        }
+    }
+
+    }
