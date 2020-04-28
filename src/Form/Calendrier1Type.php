@@ -10,6 +10,7 @@ use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,9 +35,9 @@ class Calendrier1Type extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-
-
-        ;
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'save'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
