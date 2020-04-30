@@ -7,7 +7,7 @@
 }
 
 .nav a {
-    padding: 1rem;
+    margin: 3vh;
     display: block;
     text-align:center;
     text-decoration: none;
@@ -20,15 +20,18 @@
     justify-content: flex-end;
     width: 100%;
     padding-right: 0vh;
+    align-items: center;
 }
 .container-logo{
     display: flex;
     justify-content: flex-start;
     width: auto;
+    align-items: center;
 }
 .logo {
-    height: 5vh;
+    height: 8vh;
 }
+
 
 body {
     margin : 0;
@@ -39,10 +42,13 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: stretch;
+    height: 7vh;
+    align-items: center;
 }
 
 .has-children {
     position: relative;
+
 }
 
 .has-children:hover > .sous-menu {
@@ -73,7 +79,8 @@ body {
 
 }
 .bouton-link {
-    width: 20vh;
+    width: 30vh;
+    font-size: 2vh;
 }
 
 .bouton-link:hover{
@@ -125,4 +132,7 @@ nav label {
 .espace-perso {
     background: #dba005;
     margin-left: 5vh;
+}
+.bouton-param{
+    width: 10vh;
 }

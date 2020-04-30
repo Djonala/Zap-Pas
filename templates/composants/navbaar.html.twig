@@ -12,7 +12,6 @@
                 {% endfor %}
             </ul>
         </li>
-
         <li class="has-children bouton-link">
             <a href="#"><i class="fas fa-user-clock"></i> Ohlala</a>
             <ul class="sous-menu">
@@ -49,16 +48,17 @@
                 </form>
             </ul>
         </li>
-
         <li class="bouton-link">
             <a href="{{ path('calendrier_new') }}"><i class="fas fa-user-edit"></i> Gérer</a>
         </li>
-
         <li class="bouton-link has-children espace-perso">
             <a id="espace-perso-a"><i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}</a>
             <ul class="sous-menu">
                 <a class="li-sous-menu" href="{{ path('app_logout') }}"> Deconnexion </a>
             </ul>
+        </li>
+        <li class="bouton-link bouton-param">
+            <a id="" href=""><i class="fas fa-cog"></i></a>
         </li>
 
     </ul>
