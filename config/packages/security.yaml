@@ -39,7 +39,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/user, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/calendrier, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/liste, roles: IS_AUTHENTICATED_FULLY}
 

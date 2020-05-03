@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\UserParameters;
 use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -20,11 +21,14 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $param = new UserParameters(true);
+        $manager->persist($param);
         $user = new Users();
         $user->setNom('TRISTAN');
         $user->setPrenom('Johanna');
         $user->setEmail('johanna.tristan@gmail.com');
         $user->setRoles(['ROLE_USER']);
+        $user->setParameters($param);
         $user->setPassword($this->passwordEncoder->encodePassword(
              $user,
            'winwip'

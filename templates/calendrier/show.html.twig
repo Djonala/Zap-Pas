@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
-<script src="https://kit.fontawesome.com/4ddbd1450d.js" crossorigin="anonymous"></script>
 {% block title %}Calendrier{% endblock %}
 
 {% block body %}
-    {% include 'composants/navbaar.html.twig' %}
+    {% include 'navbar/navbaar.html.twig' %}
     <h1>{{ calendrier.nom }}</h1>
     {% block stylesheets %}{% endblock %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
     <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
     <div id="calendrier"></div>
 

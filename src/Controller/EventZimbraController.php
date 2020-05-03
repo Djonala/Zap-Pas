@@ -21,7 +21,7 @@ class EventZimbraController extends AbstractController
      */
     public function index(EventZimbraRepository $coursZimbraRepository): Response
     {
-        return $this->render('event_zimbra/index.html.twig', [
+        return $this->render('event_zimbra/parameters.html.twig', [
             'event_zimbras' => $coursZimbraRepository->findAll(),
         ]);
     }

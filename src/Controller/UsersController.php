@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\UserParameters;
 use App\Entity\Users;
 use App\Form\UsersType;
 use App\Repository\UsersRepository;
@@ -21,7 +22,7 @@ class UsersController extends AbstractController
      */
     public function index(UsersRepository $usersRepository): Response
     {
-        return $this->render('users/index.html.twig', [
+        return $this->render('users/parameters.html.twig', [
             'users' => $usersRepository->findAll(),
         ]);
     }
@@ -38,6 +39,8 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $paramInit = new UserParameters(false);
+            $user->setParameters($paramInit);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

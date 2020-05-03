@@ -4,16 +4,14 @@
 {% block title %}Calendrier index{% endblock %}
 
 {% block body %}
-    {% include 'composants/navbaar.html.twig' %}
+    {% include 'navbar/navbaar.html.twig' %}
     {% if calendriers %}
         <h1>{{ calendriers[0].nom }}</h1>
     {% endif %}
 
     {% block stylesheets %}{% endblock %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
     <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste"/>
     <div id="calendrier"></div>
-
 
     {# fichier js #}
     {% block javascripts %}
