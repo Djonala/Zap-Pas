@@ -11,7 +11,7 @@ window.onload = () => {
                 let evenements = JSON.parse(xmlhttp.responseText);
                 // on s'instancie le calendrier
                 let calendrierZap_pas = new FullCalendar.Calendar(elementCalendrier, {
-                    // on appelle  les composants
+                    // on appelle  les navbar
                     plugins : ['dayGrid', 'timeGrid', 'list'],
                     defaultView: 'timeGridWeek',
                     locale: 'fr',

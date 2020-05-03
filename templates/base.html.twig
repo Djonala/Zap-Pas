@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %} {% endblock %}
 
-        {#on atemplates/composants/njoute les fichiers css pour la vue de l'agenda semaine mois et liste#}
+        {# Stylisation de l'agenda#}
+        {#on atemplates/navbar/njoute les fichiers css pour la vue de l'agenda semaine mois et liste#}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/daygrid/main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/timegrid/main.css') }}" >
@@ -14,20 +15,13 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style-calendrier.css') }}" >
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/page/page-admin.css') }}">
 
-{#<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/volet.css') }}">#}
-{% block stylesheets %}{% endblock %}
+        {# Stylisation de la navbar #}
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
+
 </head>
 <body>
-<header>
-{#{% include 'composants/navbaar.html.twig' %}#}
 
-{#{% include 'composants/voletparam.html.twig' %}#}
-</header>
-
-
-<div>
 {% block body %}{% endblock %}
-</div>
 
 </body>
 </html>

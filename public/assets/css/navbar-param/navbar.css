@@ -14,7 +14,7 @@
     color: #dba005;
 }
 
-.nav .container-link {
+.nav .case-link {
     display: flex;
     flex-direction : row;
     justify-content: flex-end;
@@ -22,7 +22,7 @@
     padding-right: 0vh;
     align-items: center;
 }
-.container-logo{
+.case-logo{
     display: flex;
     justify-content: flex-start;
     width: auto;
@@ -31,7 +31,6 @@
 .logo {
     height: 8vh;
 }
-
 
 body {
     margin : 0;
@@ -69,12 +68,12 @@ body {
     color: whitesmoke;
 }
 
-.container-link li ul {
+.case-link li ul {
 
     display: none;
 }
 
-.container-link li ul:hover{
+.case-link li ul:hover{
     display: block;
 
 }

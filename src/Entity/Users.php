@@ -55,6 +55,12 @@ class Users implements UserInterface
      */
     private $calendriers;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserParameters", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $parameters;
+
     public function __construct()
     {
         $this->calendriers = new ArrayCollection();
@@ -200,5 +206,17 @@ class Users implements UserInterface
 
     public function getnomAndPrenom() {
         return $this->nom.' '.$this->prenom;
+    }
+
+    public function getParameters(): ?UserParameters
+    {
+        return $this->parameters;
+    }
+
+    public function setParameters(UserParameters $parameters): self
+    {
+        $this->parameters = $parameters;
+
+        return $this;
     }
 }
