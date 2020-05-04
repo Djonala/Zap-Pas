@@ -26,6 +26,7 @@ class UsersType extends AbstractType
                 'multiple' => true,
             ])
             ->add('password')
+
         ;
     }
 

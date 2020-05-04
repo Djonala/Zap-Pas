@@ -22,7 +22,7 @@ class UsersController extends AbstractController
      */
     public function index(UsersRepository $usersRepository): Response
     {
-        return $this->render('users/parameters.html.twig', [
+        return $this->render('users/index.html.twig', [
             'users' => $usersRepository->findAll(),
         ]);
     }
@@ -41,6 +41,7 @@ class UsersController extends AbstractController
             $user->setPassword($password);
             $paramInit = new UserParameters(false);
             $user->setParameters($paramInit);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
