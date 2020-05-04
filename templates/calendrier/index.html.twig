@@ -5,7 +5,7 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    {% if calendriers is defined %}
+    {% if calendriers[0] is defined %}
         <h1>{{ calendriers[0].nom }}</h1>
     {% endif %}
 
