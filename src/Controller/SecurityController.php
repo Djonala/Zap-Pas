@@ -57,67 +57,61 @@ class SecurityController extends AbstractController
      * @param TokenGeneratorInterface $tokenGenerator
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function forgottenPassword(Request $request, UsersRepository $usersRepository, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator){
+    public function forgottenPassword(Request $request, UsersRepository $usersRepository, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
+    {
         // on créer le formulaire
-
         $form = $this->createForm(MotDePasseOublieType::class);
-
         // On traite le formulaire
-
         $form->handleRequest($request);
+        //Si le formulaire est post
+        if ($request->isMethod('POST')) {
 
-        //Si le formulaire est valide
-        if($form->isSubmitted() && $form->isValid()){
-            //On récupère les données
-                $donnees = $form->getData();
+            // je récupère la saisie du formulaire
+            $email = $request->request->get('mot_de_passe_oublie',['email']);
 
-            //On cherche si un utilisateur a cet email
-            $user = $usersRepository->findOneByEmail($donnees['email']);
 
-            //si l'utilisateur n'existe pas
-            if(!$user){
-                //on envoie un message flash
-                $this->addFlash('notice','pas de compte');
-                $this->redirectToRoute('login');
+            $entityManager = $this->getDoctrine()->getManager();
+            // je vérifie que le mail correspond a un mail en bdd ou alors je mets null
+            $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
+            /* @var $user Users */
+
+            // si le user existe j'envoie le mail et je redirige vers l'accueil
+            if ($user === null) {
+                $this->addFlash('notice', "Si l'adresse mentionnée est exacte, un mail vous a été envoyé");
+                return $this->redirectToRoute('app_login');
             }
-
             // On génère un token
             $token = $tokenGenerator->generateToken();
-
+            // je gère les exceptions
             try {
                 $user->setResetToken($token);
                 $entityManager = $this->getDoctrine()->getManager();
-
                 $entityManager->persist($user);
                 $entityManager->flush();
-            }catch (\Exception $e){
-                $this->addFlash('attention', 'une erreur est survenue : '. $e->getMessage());
+            } catch (\Exception $e) {
+                $this->addFlash('attention', 'une erreur est survenue : ' . $e->getMessage());
                 return $this->redirectToRoute('login');
             }
-
             // On génère l'URL de réinialisatio, de mot de passe
-            $url = $this->generateUrl('app_reset_password', ['token'=> $token], UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $this->generateUrl('app_reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // On envoie le message
             $message = (new \Swift_Message ('Mot de passe oublié'))
-                ->setFormat('votre@adresse.fr')
+                ->setFrom('centralenanteszappas@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
-                    "<p>Bonjour, </p><p>Une demande de réinitialisation de mot de passe a été éffectuée pour l'appli Zap'Pas. Veuillez cliquer sur le lien suivant : ". $url . '</p>',
+                    "<p>Bonjour, </p><p>Une demande de réinitialisation de mot de passe a été éffectuée pour l'appli Zap'Pas. Veuillez cliquer sur le lien suivant : " . $url . '</p>',
                     'text/html'
                 );
-
             //On envoie l'e-mail
             $mailer->send($message);
 
             //On créer le message flash
             $this->addFlash('message', 'Un e-mail de réinitialisation de mot de passe vous à été envoyé ');
-
-            return $this->redirectToRoute('app_reset_password', ['token'=> $token]);
-            }
-
+            return $this->redirectToRoute('app_login');
+        }
         //On envoie vers la page de demande de l'e-email
-        return $this->render("security/oubliePass.html.twig", ['emailForm'=> $form->createView()]);
+        return $this->render("security/oubliePass.html.twig", ['emailForm' => $form->createView()]);
     }
 
     /**
@@ -136,7 +130,7 @@ class SecurityController extends AbstractController
         $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['reset_token' => $token]);
 
         if (!$user) {
-            $this->addFlash('message', 'blabla');
+            $this->addFlash('message', 'une erreur est survenue');
             return $this->redirectToRoute('app_login');
         }
         // Si le formulaire est envoyé en méthode POST
@@ -149,7 +143,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('message identendique',' blabla');
+            $this->addFlash('message','mot de passe changé avec succès');
 
             return $this->redirectToRoute('app_login');
         }
