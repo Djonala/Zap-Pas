@@ -1,13 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'basecss.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}Edit Calendrier{% endblock %}
 
 {% block body %}
-    <h1>Edit Calendrier</h1>
-
+    {% include 'navbar/navbaar.html.twig' %}
+    <h1 style="text-align: center">Modifier un Calendrier</h1>
+        <div style="align-items: center; margin: 0 40%;">
     {{ include('calendrier/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('calendrier_index') }}">back to list</a>
-
     {{ include('calendrier/_delete_form.html.twig') }}
+        </div>
+
+        <div style="text-align: center">
+            <a class="btn-primary btn" href="{{ path('calendrier_index') }}">Retour à l'agenda</a>
+        </div>
+
 {% endblock %}
