@@ -1,14 +1,17 @@
 {% extends 'basecss.html.twig' %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block title %}Edit Users{% endblock %}
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1>Edit Users</h1>
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <h1>Edition de l'utilisateur Zap'Pas : </h1>
+        <h2 style="color: #404040">{{ user.prenom }} {{ user.nom }}</h2><br><br>
 
-    {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('users_index') }}">back to list</a>
-
-    {{ include('users/_delete_form.html.twig') }}
+        {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
+        <div style="align-items: center; display: flex; flex-direction : column; margin: 0 40% ;">
+            <a href="{{ path('users_index') }}"><input type="button" class="btn btn-outline-primary" style="margin-bottom: 10px" value="Retour à la liste les utilisateurs"></a>
+            {{ include('users/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

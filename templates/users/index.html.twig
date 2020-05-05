@@ -4,9 +4,9 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1>Users index</h1>
+    <h1>Liste des utilisateurs Zap'Pas</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -24,8 +24,8 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>
-                    <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
-                    <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
+                    <a href="{{ path('users_show', {'id': user.id}) }}"><input type="button" class="btn btn-primary btn-sm"  value="Voir"></a>
+                    <a href="{{ path('users_edit', {'id': user.id}) }}"><input type="button" class="btn btn-primary btn-sm"  value="Modifier"></a>
                 </td>
             </tr>
         {% else %}
@@ -35,7 +35,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
-    <a href="{{ path('calendrier_new') }}">Créér un calendrier</a>
+    <div style="align-items: center; display: flex; flex-direction : column; margin: 0 40% ;">
+        <a href="{{ path('users_new') }}"><input type="button" class="btn btn-outline-primary" style="margin-bottom: 10px" value="Ajouter un utilisateur"></a>
+        <a href="{{ path('calendrier_new') }}"><input type="button" class="btn btn-outline-primary" value="Retour à l'edition calendrier"></a>
+    </div>
 {% endblock %}

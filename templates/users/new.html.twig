@@ -5,11 +5,12 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1 style="text-align: center">Create new Users</h1>
+    <h1 style="text-align: center">Création d'un nouvel utilisateur Zap'Pas</h1>
 <div style="align-items: center; margin: 0 40%;">
     {{ include('users/_form.html.twig') }}
 </div>
     <div style="text-align: center" >
-         <a href="{{ path('users_index') }}">back to list</a>
+        <a href="{{ path('users_index') }}"><input type="button" class="btn btn-outline-primary" value="Voir la liste des utilisateurs"></a>
+        <a href="{{ path('calendrier_new') }}"><input type="button" class="btn btn-outline-primary" value="Retour à l'edition calendrier"></a>
     </div>
 {% endblock %}
