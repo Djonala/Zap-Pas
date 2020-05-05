@@ -2,16 +2,21 @@
 
 {% block title %}New Calendrier{% endblock %}
     {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/admin/calendrierNew.css') }}">
     {% endblock %}
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
     <h1>Création Formation</h1>
         <h2>Calendrier</h2>
-         {{ form(form) }}
+             <div class="cal">
+                 {{ form(form) }}
+             </div>
 
         <h2>Paricipants</h2>
-        <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
+            <div class="participants">
+                  <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
+            </div>
 {#    <a href="{{ path('calendrier_index') }}">back to list</a>#}
 {% endblock %}
 

@@ -1,0 +1,31 @@
+h1{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+.cal{
+    text-align: center;
+    padding-bottom: 3%;
+}
+.participants{
+    text-align: center;
+}
+.save {
+    margin: 2%;
+    border:none;
+    padding:6px 0 6px 0;
+    border-radius:75%;
+    border-bottom:15px solid #0e2748;
+    font:bold 13px Arial;
+    color:black;
+    background:#fff;
+    box-shadow:2px 2px 3px #999;
+    border-top:15px solid #dba005;
+    width: 70px;
+    height: 70px;
+    cursor: grab;
+}
+.required {
+    font-weight: bold;
+}
