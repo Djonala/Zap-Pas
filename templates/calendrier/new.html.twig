@@ -1,22 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'basecss.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}New Calendrier{% endblock %}
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/navbar-param/navbar.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/admin/calendrierNew.css') }}">
     {% endblock %}
+
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1>Création Formation</h1>
-        <h2>Calendrier</h2>
-             <div class="cal">
+    <h1 style="text-align: center; padding-bottom: 5px">Création Formation</h1>
+        <h2 style="text-align: center">Calendrier</h2>
+    <div style="align-items: center; margin: 0 40%;">
                  {{ form(form) }}
-             </div>
-
-        <h2>Paricipants</h2>
-            <div class="participants">
+    </div>
+        <h2 style="text-align: center; padding-bottom: 2%">Paricipants</h2>
+    <div style="align-items: center; margin: 0 40%;">
                   <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
-            </div>
+    <div>
 {#    <a href="{{ path('calendrier_index') }}">back to list</a>#}
 {% endblock %}
-

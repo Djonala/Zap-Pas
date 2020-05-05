@@ -1,12 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'basecss.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}New Users{% endblock %}
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1>Create new Users</h1>
-
+    <h1 style="text-align: center">Create new Users</h1>
+<div style="align-items: center; margin: 0 40%;">
     {{ include('users/_form.html.twig') }}
-
-    <a href="{{ path('users_index') }}">back to list</a>
+</div>
+    <div style="text-align: center" >
+         <a href="{{ path('users_index') }}">back to list</a>
+    </div>
 {% endblock %}
