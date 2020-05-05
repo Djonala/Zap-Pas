@@ -51,9 +51,11 @@
                     </form>
                 </ul>
             </li>
-            <li class="bouton-link">
-                <a href="{{ path('calendrier_new') }}"><i class="fas fa-user-edit"></i> Gérer</a>
-            </li>
+            {% if userEnCours.getRoles()[0] == 'ROLE_ADMIN' or userEnCours.getRoles()[0] == 'ROLE_SUPER_ADMIN'%}
+                <li class="bouton-link">
+                    <a href="{{ path('calendrier_new') }}"><i class="fas fa-user-edit"></i> Gérer</a>
+                </li>
+            {% endif %}
             <li class="bouton-link has-children espace-perso">
                 <a id="espace-perso-a"><i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}</a>
                 <ul class="sous-menu">

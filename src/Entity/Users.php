@@ -96,7 +96,7 @@ class Users implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
          return $this->roles;
     }

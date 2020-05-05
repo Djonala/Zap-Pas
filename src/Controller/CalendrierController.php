@@ -26,6 +26,7 @@ class CalendrierController extends AbstractController
         $calendriers = $user->getCalendriers();
         return $this->render('calendrier/index.html.twig', [
             'calendriers' => $calendriers,
+            'userEnCours' => $user
         ]);
     }
 
@@ -57,6 +58,7 @@ class CalendrierController extends AbstractController
                 'calendrier' => $calendrier,
                 'form' => $form->createView(),
                 'calendriers' => $calendriers,
+                'userEnCours' => $user
             ]);
 
     }
@@ -90,7 +92,8 @@ class CalendrierController extends AbstractController
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
             'calendriers' => $calendriers,
-            'events' => $events
+            'events' => $events,
+            'userEnCours' => $user
         ]);
     }
 
@@ -113,6 +116,7 @@ class CalendrierController extends AbstractController
             'calendrier' => $calendrier,
             'form' => $form->createView(),
             'calendriers' => $calendriers,
+            'userEnCours' => $user
         ]);
     }
 
@@ -130,4 +134,6 @@ class CalendrierController extends AbstractController
 
         return $this->redirectToRoute('calendrier_index');
     }
+
+
 }

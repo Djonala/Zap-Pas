@@ -36,6 +36,7 @@ class UserParametersController extends AbstractController
             'calendriers' => $calendriers,
             'param' => $param,
             'form' => $form->createView(),
+            'userEnCours' => $user
         ]);
     }
 }

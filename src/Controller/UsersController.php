@@ -29,7 +29,8 @@ class UsersController extends AbstractController
 
         return $this->render('users/index.html.twig', [
             'users' => $usersRepository->findAll(),
-            'calendriers' => $calendriers
+            'calendriers' => $calendriers,
+            'userEnCours'=> $userEnCours
         ]);
     }
 
@@ -67,7 +68,8 @@ class UsersController extends AbstractController
         return $this->render('users/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'calendriers' => $calendriers
+            'calendriers' => $calendriers,
+            'userEnCours' => $userEnCours
         ]);
     }
 
@@ -81,8 +83,9 @@ class UsersController extends AbstractController
         $userEnCours = $this->getUser();
         $calendriers = $userEnCours->getCalendriers();
         return $this->render('users/show.html.twig', [
+            'calendriers' => $calendriers,
             'user' => $user,
-            'calendriers' => $calendriers
+            'userEnCours' => $userEnCours
         ]);
     }
 
@@ -109,7 +112,8 @@ class UsersController extends AbstractController
         return $this->render('users/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'calendriers' => $calendriers
+            'calendriers' => $calendriers,
+            'userEnCours' => $userEnCours
         ]);
     }
 
