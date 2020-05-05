@@ -7,50 +7,25 @@
     <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
 
     <h1>{{ calendrier.nom }}</h1>
-
-{#    <div class="panel panel-default hidden-print">#}
-{#        <div class="panel-heading">#}
-{#            <h3 class="panel-title">Filter Calendar (Users, Calendar and Eventy Type)</h3>#}
+{#    <div class="filter">#}
+{#        <div>#}
+{#            <label>Matière : </label>#}
+{#            <select name="nombre">#}
+{#            {% for event in events %}#}
+{#                    <option value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>#}
+{#            {% endfor %}#}
+{#            </select>#}
 {#        </div>#}
-{#        <div class="panel-body">#}
-
-{#            <div class="col-lg-4">#}
-
-{#                <label for="calendar_view">Filter Eventy Type</label>#}
-{#                <div class="input-group">#}
-{#                    <select class="filter" id="type_filter" multiple="multiple">#}
-{#                        <option value="Appointment">Appointment</option>#}
-{#                        <option value="Check-in">Check-in</option>#}
-{#                        <option value="Checkout">Checkout</option>#}
-{#                        <option value="Inventory">Inventory</option>#}
-{#                        <option value="Valuation">Valuation</option>#}
-{#                        <option value="Viewing">Viewing</option>#}
-{#                    </select>#}
-{#                </div>#}
-{#            </div>#}
-
-{#            <div class="col-lg-4">#}
-
-{#                <label for="calendar_view">Filter Calendars</label>#}
-{#                <div class="input-group">#}
-{#                    <select class="filter" id="calendar_filter" multiple="multiple">#}
-{#                        <option value="Sales">Sales</option>#}
-{#                        <option value="Lettings">Lettings</option>#}
-{#                    </select>#}
-{#                </div>#}
-{#            </div>#}
-
-{#            <div class="col-lg-4">#}
-
-{#                <label for="calendar_view">Filter Users</label>#}
-{#                <div class="input-group">#}
-{#                    <label class="checkbox-inline"><input class='filter' type="checkbox" value="Caio Vitorelli" checked>Caio Vitorelli</label>#}
-{#                    <label class="checkbox-inline"><input class='filter' type="checkbox" value="Peter Grant" checked>Peter Grant</label>#}
-{#                    <label class="checkbox-inline"><input class='filter' type="checkbox" value="Adam Rackham" checked>Adam Rackham</label>#}
-{#                </div>#}
-{#            </div>#}
+{#        <div>#}
+{#            <label>Intervenant :</label>#}
+{#            <select name="nombre">#}
+{#                {% for event in events %}#}
+{#                    <option value="{{ event.getNomFormateur() }}">{{ event.getNomFormateur() }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
 {#        </div>#}
 {#    </div>#}
+
 
     <div id="calendrier"></div>
 
