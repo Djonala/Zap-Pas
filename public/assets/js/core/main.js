@@ -4489,9 +4489,9 @@ Docs & License: https://fullcalendar.io/
         weekNumberCalculation: 'local',
         editable: false,
         // nowIndicator: false,
-        scrollTime: '06:00:00',
-        minTime: '07:00:00',
-        maxTime: '20:00:00',
+        scrollTime: '14:00:00',
+        minTime: '06:00:00',
+        maxTime: '21:00:00',
         showNonCurrentDates: true,
         // event ajax
         lazyFetching: true,

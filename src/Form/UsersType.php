@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +27,8 @@ class UsersType extends AbstractType
                 ],
                 'multiple' => true,
             ])
-            ->add('password')
+            ->add('password', PasswordType::class)
+            ->add('envoyer', SubmitType::class)
 
         ;
     }

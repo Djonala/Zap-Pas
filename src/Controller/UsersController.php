@@ -22,8 +22,12 @@ class UsersController extends AbstractController
      */
     public function index(UsersRepository $usersRepository): Response
     {
+        $userEnCours = $this->getUser();
+        $calendriers = $userEnCours->getCalendriers();
+
         return $this->render('users/index.html.twig', [
             'users' => $usersRepository->findAll(),
+            'calendriers' => $calendriers
         ]);
     }
 
@@ -65,8 +69,11 @@ class UsersController extends AbstractController
      */
     public function show(Users $user): Response
     {
+        $userEnCours = $this->getUser();
+        $calendriers = $userEnCours->getCalendriers();
         return $this->render('users/show.html.twig', [
             'user' => $user,
+            'calendriers' => $calendriers
         ]);
     }
 
@@ -77,6 +84,8 @@ class UsersController extends AbstractController
     {
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
+        $userEnCours = $this->getUser();
+        $calendriers = $userEnCours->getCalendriers();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -87,6 +96,7 @@ class UsersController extends AbstractController
         return $this->render('users/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'calendriers' => $calendriers
         ]);
     }
 

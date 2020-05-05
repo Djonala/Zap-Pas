@@ -1,8 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'basecss.html.twig' %}
+
 
 {% block title %}Users{% endblock %}
 
 {% block body %}
+    {% include 'navbar/navbaar.html.twig' %}
     <h1>Users</h1>
 
     <table class="table">
@@ -19,10 +21,7 @@
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
+
         </tbody>
     </table>
 

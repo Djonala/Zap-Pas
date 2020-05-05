@@ -1,8 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'basecss.html.twig' %}
 
 {% block title %}Users index{% endblock %}
 
 {% block body %}
+    {% include 'navbar/navbaar.html.twig' %}
     <h1>Users index</h1>
 
     <table class="table">
@@ -11,8 +12,7 @@
                 <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +21,6 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>
                     <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
                     <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
