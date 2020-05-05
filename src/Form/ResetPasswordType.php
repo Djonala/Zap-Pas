@@ -14,6 +14,7 @@ class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // on construit le formulaire
         $builder
             ->add('password', PasswordType::class)
             ->add('token', HiddenType::class)

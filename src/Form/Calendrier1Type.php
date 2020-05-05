@@ -18,9 +18,13 @@ class Calendrier1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // on construit le formulaire
         $builder
+            //on ajoute le champ pou le nom du calendrier
             ->add('nom')
+            //le champs pour l'url du calendrier zimbra
             ->add('url')
+            // on récupère les utilisateurs enregistrés et on les affiche avec le nom et le prénom
             ->add('users', EntityType::class, [
                 'class'=>Users::class,
                 'query_builder' => function(EntityRepository $er) {
