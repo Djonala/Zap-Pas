@@ -67,6 +67,9 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         ;
     }
     */
+    /**
+     * permet de trouver un utilisateur par son email
+     */
     public function findOneByEmail($email)
     {
         return $this->findOneBy(array('email' => $email));
