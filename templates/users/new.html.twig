@@ -10,6 +10,7 @@
     {{ include('users/_form.html.twig') }}
 </div>
     <div style="text-align: center" >
-         <a href="{{ path('users_index') }}">back to list</a>
+        <a href="{{ path('users_index') }}"><input type="button" class="btn btn-outline-primary" value="Voir la liste des utilisateurs"></a>
+        <a href="{{ path('calendrier_new') }}"><input type="button" class="btn btn-outline-primary" value="Retour à l'edition calendrier"></a>
     </div>
 {% endblock %}

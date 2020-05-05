@@ -15,8 +15,10 @@
                  {{ form(form) }}
     </div>
         <h2 style="text-align: center; padding-bottom: 2%">Participants</h2>
-    <div style="align-items: center; margin: 0 40%;">
-                  <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
-    <div>
+    <div style="align-items: center; display: flex; flex-direction : column; margin: 0 40% ;">
+        <a href="{{ path('users_new') }}"><input type="button" class="btn btn-outline-primary" style="margin-bottom: 10px" value="Créer un nouvel accès"></a>
+
+        <a href="{{ path('users_index') }}"><input type="button" class="btn btn-outline-primary" value="Voir les utilisateurs"></a>
+    </div>
 {#    <a href="{{ path('calendrier_index') }}">back to list</a>#}
 {% endblock %}
