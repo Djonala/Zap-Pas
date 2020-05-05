@@ -35,9 +35,8 @@ class Calendrier1Type extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('save', SubmitType::class, [
-                'attr' => ['class' => 'save'],
-            ]);
+            ->add('envoyer', SubmitType::class)
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

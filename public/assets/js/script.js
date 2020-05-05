@@ -11,6 +11,7 @@ window.onload = () => {
                 let calendrierZap_pas = new FullCalendar.Calendar(elementCalendrier, {
                     // on appelle  les navbar
                     plugins : ['dayGrid', 'timeGrid', 'list'],
+                    height : 'auto',
                     defaultView: 'timeGridWeek',
                     locale: 'fr',
                     header: {
