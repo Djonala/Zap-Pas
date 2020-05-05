@@ -320,6 +320,7 @@ declare module '@fullcalendar/core/types/input-types' {
         }): void;
         loading?(isLoading: boolean): void;
         eventRender?(arg: {
+            description: any;
             isMirror: boolean;
             isStart: boolean;
             isEnd: boolean;

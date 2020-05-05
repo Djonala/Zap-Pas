@@ -8,8 +8,6 @@ window.onload = () => {
     xmlhttp.onreadystatechange = () => {
         if(xmlhttp.readyState === 4){
             if(xmlhttp.status === 200) {
-                let evenements = JSON.parse(xmlhttp.responseText);
-                // on s'instancie le calendrier
                 let calendrierZap_pas = new FullCalendar.Calendar(elementCalendrier, {
                     // on appelle  les navbar
                     plugins : ['dayGrid', 'timeGrid', 'list'],
@@ -20,6 +18,7 @@ window.onload = () => {
                         center: 'title',
                         right:'dayGridMonth, timeGridWeek, list',
                     },
+
                     // on passe en francais les bouttons
                     buttonText:{
                         today:"Aujourd'hui",
@@ -28,9 +27,25 @@ window.onload = () => {
                         list:"Liste des cours"
                     },
                     // on affiche les evenements
-                    events : evenements,
+                    events : {
+                        url: url,
+                        extraParams: {
+                            custom_param1: 'something',
+                            custom_param2: 'somethingelse'
+                        }
+                    },
+                    eventRender: function(event, element, view) {
+
+                    },
+
+                    // on ajoute le type de rendu voulu
+                    eventColor: '#dba005',
+                    textColor: '#10385f',
+
+
                     // on ajoute la vue de l'heure qu'il est sur la vue semaine
                     nowIndicator: true,
+
                 });
 
                 calendrierZap_pas.render()
@@ -40,7 +55,7 @@ window.onload = () => {
     };
 
     xmlhttp.open('get',url,true);
-    //findreplace(à voir) gulp, grunt, parcel 
+    //findreplace(à voir) gulp, grunt, parcel
     xmlhttp.send(null)
 
 };

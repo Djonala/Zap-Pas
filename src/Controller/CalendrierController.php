@@ -69,15 +69,28 @@ class CalendrierController extends AbstractController
      */
     public function show(Calendrier $calendrier, CalendrierRepository $calendrierRepository): Response
     {
-                // on recupère l'utilisateur
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        // on recupère l'utilisateur
         $user = $this->getUser();
+
+        // on recupère les calendriers de l'utilisateur
         $calendriers = $user->getCalendriers();
+
+
+        $allEvent = $calendrier->getEventsZimbra();
+        $events = array();
+        foreach ($allEvent as $event){
+            // Si la matière est déjà dans le tableau
+            if (!in_array(substr($event->getMatiere(),0,2),$events)){
+                $events[] = $event;
+            }
+        }
 
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
             'calendriers' => $calendriers,
+            'events' => $events
         ]);
     }
 
