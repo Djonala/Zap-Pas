@@ -9,8 +9,14 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    <h1 style="text-align: center; padding-bottom: 5px">Création Formation</h1>
-        <h2 style="text-align: center">Calendrier</h2>
+    <h1 style="text-align: center; padding-bottom: 5px">Formation</h1>
+<h2 style="text-align: center; padding-bottom: 5px">Calendrier en cours</h2>
+<ul style="text-align: center;">
+    {% for calendriers in calendriers %}
+            <a href="./{{calendriers.id|e}}/edit">{{calendriers.nom|e}}</a>
+    {% endfor %}
+</ul>
+        <h2 style="text-align: center">Ajouter un Calendrier</h2>
     <div style="align-items: center; margin: 0 40%;">
                  {{ form(form) }}
     </div>
@@ -18,5 +24,7 @@
     <div style="align-items: center; margin: 0 40%;">
                   <a href="{{ path('users_new') }}">Créer un nouvel accès</a>
     <div>
-{#    <a href="{{ path('calendrier_index') }}">back to list</a>#}
+    <div>
+         <a class="btn-primary btn" href="{{ path('calendrier_index') }}">Retour au calendrier</a>
+    </div>
 {% endblock %}
