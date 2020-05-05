@@ -38,6 +38,7 @@ class Calendrier1Type extends AbstractType
                 'choice_label'=> 'nomAndPrenom',
                 'multiple' => true,
                 'expanded' => true,
+                'label_attr' => ['class' => 'switch-custom']
             ])
             ->add('envoyer', SubmitType::class)
             ;

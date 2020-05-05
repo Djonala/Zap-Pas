@@ -102,7 +102,7 @@ class CalendarManager
                             // instantation d'un message pour le mail
                         $message = "Un nouvelle evenement a été ajouté : <br\>".$coursZimbra->toString();
                             // envoi du mail
-                        $this->sendMail($message, $mailer, $calendar);
+                        $this->sendMail($message, $mailer, $calendar, $coursZimbra);
 
                         // SI LE TITRE N'EST PAS A JOUR
                     } else if ($event_db->getMatiere() != $this->getTitleFromZimbra($event)) {
@@ -145,7 +145,7 @@ class CalendarManager
                         $message = "Un evenement a été modifié : <br\>".$event_db->toString();
 
                         // envoi du mail
-                        $this->sendMail($message, $mailer, $calendar);
+                        $this->sendMail($message, $mailer, $calendar, $event_db);
                     }
                 }
 
@@ -344,30 +344,38 @@ class CalendarManager
 
     }
 
-    private function sendMail(string $body, \Swift_Mailer $mailer, Calendrier $calendrier)
+    private function sendMail(string $body, \Swift_Mailer $mailer, Calendrier $calendrier, EventZimbra $eventZimbra)
     {
         //Recupération des utlisateurs de l'agenda
         $users = $calendrier->getUsers();
+        $mailIntervenant = $eventZimbra->getEmailIntervenant();
+
 
         //Pour tous les utilisateurs de cet agenda
         foreach ($users as $user) {
-            $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
-                // on instancie un format
-                ->setFormat('votre@adresse.fr')
+            //SI l'utilisateur est stagiaire ou s'il est le formateur responsable du cours
+            if($user->getRoles()==='ROLE_STAGIAIRE' || $user->getEmail()===$mailIntervenant) {
 
-                // On attribue le destinataire
-                ->setTo($user->getEmail())
+                // si l'utilisateur accepte l'envoi de notification par mail
+                if ($user->getParameters()->getAutorizedSendMail() === true) {
+                    $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
+                        // on instancie un format
+                        ->setFormat('votre@adresse.fr')
 
-                // On créé le message
-                ->setBody(
-                    $this->renderView(
-                        'Mailer.notification_changement_agenda.html.twig', ['message' => $body]
-                    ),
-                    'text/html'
-                );
-            // On envoie le message
-            $mailer->send($message);
+                        // On attribue le destinataire
+                        ->setTo($user->getEmail())
+
+                        // On créé le message
+                        ->setBody(
+                            $this->renderView(
+                                'Mailer.notification_changement_agenda.html.twig', ['message' => $body]
+                            ),
+                            'text/html'
+                        );
+                    // On envoie le message
+                    $mailer->send($message);
+                }
+            }
         }
     }
-
-    }
+}

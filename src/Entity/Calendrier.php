@@ -119,7 +119,7 @@ class Calendrier
         return $this->users;
     }
 
-    public function addUser(Users $user): ?self
+        public function addUser(Users $user): ?self
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
