@@ -100,7 +100,7 @@ class SecurityController extends AbstractController
                 ->setFrom('centralenanteszappas@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
-                    "<p>Bonjour, </p><p>Une demande de réinitialisation de mot de passe a été éffectuée pour l'appli Zap'Pas. Veuillez cliquer sur le lien suivant : " . $url . '</p>',
+                    "<p>Bonjour, </p><p>Une demande de réinitialisation de mot de passe a été effectuée pour l'appli Zap'Pas. Veuillez cliquer sur le lien suivant : " . $url . '</p>',
                     'text/html'
                 );
             //On envoie l'e-mail

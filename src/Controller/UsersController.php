@@ -35,6 +35,9 @@ class UsersController extends AbstractController
         $user = new Users();
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
+        $userEnCours = $this->getUser();
+        $calendriers = $userEnCours->getCalendriers();
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
@@ -53,6 +56,7 @@ class UsersController extends AbstractController
         return $this->render('users/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'calendriers' => $calendriers
         ]);
     }
 
