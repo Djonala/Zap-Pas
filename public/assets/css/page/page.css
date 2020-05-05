@@ -59,4 +59,8 @@
 body{
     background-color: whitesmoke;
 }
+.fc-title{
+    font-size: .9em;
+}
 
+.calendar{font-size: 12px !important}
