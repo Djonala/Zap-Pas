@@ -49,7 +49,6 @@ window.onload = () => {
                 });
 
                 calendrierZap_pas.render()
-
             }
         }
     };
