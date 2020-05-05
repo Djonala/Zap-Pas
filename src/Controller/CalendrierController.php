@@ -82,7 +82,7 @@ class CalendrierController extends AbstractController
         $events = array();
         foreach ($allEvent as $event){
             // Si la matière est déjà dans le tableau
-            if (!in_array(substr($event->getMatiere(),0,2),$events)){
+            if (!in_array($event->getMatiere(),$events)){
                 $events[] = $event;
             }
         }

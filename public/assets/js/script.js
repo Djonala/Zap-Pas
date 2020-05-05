@@ -39,8 +39,8 @@ window.onload = () => {
                     },
 
                     // on ajoute le type de rendu voulu
-                    eventColor: '#dba005',
-                    textColor: '#10385f',
+                    eventColor: '#10385f',
+                    eventTextColor: '#dba005',
 
 
                     // on ajoute la vue de l'heure qu'il est sur la vue semaine
