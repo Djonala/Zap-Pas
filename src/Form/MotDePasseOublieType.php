@@ -12,6 +12,7 @@ class MotDePasseOublieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // on construit le formulaire
         $builder
             ->add('email', EmailType::class)
             ->add('envoyer', SubmitType::class)
