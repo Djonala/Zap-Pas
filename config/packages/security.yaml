@@ -5,7 +5,9 @@ security:
         App\Entity\Users:
             algorithm: auto
 
-
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_STAGIAIRE, ROLE_INTERVENANT]
+        ROLE_SUPER_ADMIN: [ROLE_STAGIAIRE, ROLE_INTERVENANT, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -39,7 +41,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/user, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/user, roles: ROLE_ADMIN }
         - { path: ^/calendrier, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/liste, roles: IS_AUTHENTICATED_FULLY}
+        - { path: ^/api/liste, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/parameters, roles: IS_AUTHENTICATED_FULLY }
+
 
