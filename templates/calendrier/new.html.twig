@@ -13,7 +13,7 @@
 <h2 style="text-align: center; padding-bottom: 5px">Calendrier en cours</h2>
 <ul style="text-align: center;">
     {% for calendriers in calendriers %}
-            <a href="./{{calendriers.id|e}}/edit"><input type="button" class="btn btn-warning" style="margin-bottom: 10px" value="{{calendriers.nom|e}}"></a>
+        <a href="{{ path('calendrier_edit',{'id': calendriers.id}) }}" ><input type="button" class="btn btn-warning" style="margin-bottom: 10px" value="{{calendriers.nom|e}}"></a>
     {% endfor %}
 </ul>
         <h2 style="text-align: center">Ajouter un Calendrier</h2>
