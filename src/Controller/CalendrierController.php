@@ -77,7 +77,13 @@ class CalendrierController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // on recupère l'utilisateur
+
         $user = $this->getUser();
+        // je vérifie qu mon calendrier appartien a l'utilisateurs connecté
+        if (!$calendrier->getUsers()->contains($user))  {
+            // si non alors je lui dit que je ne trouve pas sa recherche
+            throw $this->createNotFoundException();
+        }
 
         // on recupère les calendriers de l'utilisateur
         $calendriers = $user->getCalendriers();
@@ -106,9 +112,15 @@ class CalendrierController extends AbstractController
      */
     public function edit(Request $request, Calendrier $calendrier): Response
     {
+        $user = $this->getUser();
+        // je vérifie qu mon calendrier appartien a l'utilisateurs connecté
+        if (!$calendrier->getUsers()->contains($user))  {
+            // si non alors je lui dit que je ne trouve pas sa recherche
+            throw $this->createNotFoundException();
+        }
+        // je récupère mon formulaire
         $form = $this->createForm(Calendrier1Type::class, $calendrier);
         $form->handleRequest($request);
-        $user = $this->getUser();
         $calendriers = $user->getCalendriers();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
