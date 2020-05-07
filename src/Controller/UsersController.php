@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/users")
+ * * @Security("is_granted('ROLE_ADMIN')")
  */
 class UsersController extends AbstractController
 {
@@ -37,6 +39,7 @@ class UsersController extends AbstractController
     /**
      * fonction pour créer un user
      * @Route("/new", name="users_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -76,6 +79,7 @@ class UsersController extends AbstractController
     /**
      * fonction pour voir user
      * @Route("/{id}", name="users_show", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function show(Users $user): Response
     {
@@ -92,6 +96,7 @@ class UsersController extends AbstractController
     /**
      * fonction pour modifier un utilisateur
      * @Route("/{id}/edit", name="users_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Users $user): Response
     {
@@ -120,6 +125,7 @@ class UsersController extends AbstractController
     /**
      * fonction pour supprimer un utilisateur
      * @Route("/{id}", name="users_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Users $user): Response
     {
