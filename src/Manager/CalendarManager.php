@@ -360,7 +360,7 @@ class CalendarManager
                 if ($user->getParameters()->getAutorizedSendMail() === true) {
                     $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
                         // on instancie un format
-                        ->setFormat('votre@adresse.fr')
+                        ->setFrom('centralenanteszappas@gmail.com')
 
                         // On attribue le destinataire
                         ->setTo($user->getEmail())
