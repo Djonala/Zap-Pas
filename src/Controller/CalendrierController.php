@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Calendrier;
+use App\Entity\EventZimbra;
 use App\Form\Calendrier1Type;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
@@ -45,6 +46,7 @@ class CalendrierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $managerCal = new CalendarManager($entityManager);
             try {
@@ -123,7 +125,27 @@ class CalendrierController extends AbstractController
         $form->handleRequest($request);
         $calendriers = $user->getCalendriers();
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+//            if($calendrier->getUrl() != $form->get('url')->getData()){
+                // j'accede au repository
+                $repo = $em->getRepository(EventZimbra::class);
+                // je recupère l'ensemble des objets type eventzimbra en bdd
+                $objs_db_eventZimbra = $repo->findAllEventByCalId($calendrier->getId());
+                // je les supprime
+                foreach ($objs_db_eventZimbra as $objEvent){
+                    $em->remove($objEvent);
+                }
+                // j'initialise un manager de calendrier
+                $managerCal = new CalendarManager($em);
+                try {
+                    // Je recupère les evenements associé et je les créer en base.
+                    $managerCal->initCalendarZimbra($calendrier);
+                } catch (\Exception $e) {
+                    var_dump($e->getMessage());
+                }
+//            }
+            // Je valide l'envoi à ma bdd
+            $em->flush();
 
             return $this->redirectToRoute('calendrier_index');
         }

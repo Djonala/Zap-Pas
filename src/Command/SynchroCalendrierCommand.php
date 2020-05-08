@@ -48,7 +48,8 @@ class SynchroCalendrierCommand extends Command
     {
 
         $repo = $this->em->getRepository(Calendrier::class);
-        $calendriers = $repo->findAllCalAvailable();
+ //       $calendriers = $repo->findAllCalAvailable();
+        $calendriers = $repo->findAll();
         $managerCal = new CalendarManager($this->em);
         foreach ($calendriers as $cal) {
             $managerCal->synchroCalendar($cal);

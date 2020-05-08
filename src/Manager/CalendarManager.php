@@ -13,6 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 use Exception;
 
 
+
 /**
  * Class CalendarManager
  * @package App\Manager
@@ -30,6 +31,7 @@ class CalendarManager
     public function __construct(ObjectManager $entityManager)
     {
         $this->entityManager = $entityManager;
+
     }
 
 
@@ -102,7 +104,7 @@ class CalendarManager
                             // instantation d'un message pour le mail
                         $message = "Un nouvelle evenement a été ajouté : <br\>".$coursZimbra->toString();
                             // envoi du mail
-                        $this->sendMail($message, $mailer, $calendar, $coursZimbra);
+                        $this->sendMail($message, $calendar, $coursZimbra);
 
                         // SI LE TITRE N'EST PAS A JOUR
                     } else if ($event_db->getMatiere() != $this->getTitleFromZimbra($event)) {
@@ -145,13 +147,13 @@ class CalendarManager
                         $message = "Un evenement a été modifié : <br\>".$event_db->toString();
 
                         // envoi du mail
-                        $this->sendMail($message, $mailer, $calendar, $event_db);
+                        $this->sendMail($message, $calendar, $event_db);
                     }
                 }
 
                 // VALIDATION DE L'ENREGISTREMENT (UPDATE)-----------------------------------------------------
                 $this->entityManager->flush();
-                echo('Calendrier '.$calendar->getNom().' id : '.$calendar->getId().' synchronisé');
+                echo('Calendrier '.$calendar->getNom()." synchronisé \n");
             } catch (Exception $exception) {
                 echo $exception->getMessage();
             }
@@ -344,12 +346,15 @@ class CalendarManager
 
     }
 
-    private function sendMail(string $body, \Swift_Mailer $mailer, Calendrier $calendrier, EventZimbra $eventZimbra)
+    private function sendMail(string $body, Calendrier $calendrier, EventZimbra $eventZimbra)
     {
+        $mailer = new \Swift_Mailer(
+            new \Swift_SmtpTransport('smtp://localhost', 25)
+        );
+
         //Recupération des utlisateurs de l'agenda
         $users = $calendrier->getUsers();
         $mailIntervenant = $eventZimbra->getEmailIntervenant();
-
 
         //Pour tous les utilisateurs de cet agenda
         foreach ($users as $user) {
@@ -359,7 +364,7 @@ class CalendarManager
                 // si l'utilisateur accepte l'envoi de notification par mail
                 if ($user->getParameters()->getAutorizedSendMail() === true) {
                     $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
-                        // on instancie un format
+                        // on instancie l'expéditeur
                         ->setFrom('centralenanteszappas@gmail.com')
 
                         // On attribue le destinataire
