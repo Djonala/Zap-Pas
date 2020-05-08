@@ -125,7 +125,7 @@ class EventZimbra
     /**
      * @return mixed
      */
-    public function getDateDebutEvent()
+    public function getDateDebutEvent(): ?DateTimeInterface
     {
         return $this->dateDebutEvent;
     }
@@ -139,7 +139,7 @@ class EventZimbra
         return $this;
     }
 
-    public function getDateFinEvent()
+    public function getDateFinEvent(): ?DateTimeInterface
     {
         return $this->dateFinEvent;
     }
@@ -178,8 +178,8 @@ class EventZimbra
     public function toString(){
         $message =
             "Titre de l'évenement : ".$this->getMatiere()."<br\>".
-            "Date de début de l'évenement : ".$this->getDateDebutEvent()."<br\>".
-            "Date de fin de l'évenement : ".$this->getDateFinEvent()."<br\>".
+            "Date de début de l'évenement : ".$this->getDateDebutEvent()->format('d-m-Y H:i')."<br\>".
+            "Date de fin de l'évenement : ".$this->getDateFinEvent()->format('d-m-Y H:i')."<br\>".
             "Lieu de l'évenement : ".$this->getLieu()."<br\>".
             "Intervenant : ".$this->getNomFormateur()."<br\>".
             "Contact de l'intervenant : ".$this->getEmailIntervenant()."<br\>";
