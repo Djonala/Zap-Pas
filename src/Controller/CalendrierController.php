@@ -118,21 +118,21 @@ class CalendrierController extends AbstractController
                 // j'accede au repository
                 $repo = $em->getRepository(EventZimbra::class);
                 // je recupère l'ensemble des objets type eventzimbra en bdd
-                $objs_db_eventZimbra = $repo->findAll();
+                $objs_db_eventZimbra = $repo->findAllEventByCalId($calendrier->getId());
                 // je les supprime
                 foreach ($objs_db_eventZimbra as $objEvent){
                     $em->remove($objEvent);
                 }
-
-
-
+                // j'initialise un manager de calendrier
                 $managerCal = new CalendarManager($em);
                 try {
+                    // Je recupère les evenements associé et je les créer en base.
                     $managerCal->initCalendarZimbra($calendrier);
                 } catch (\Exception $e) {
                     var_dump($e->getMessage());
                 }
 //            }
+            // Je valide l'envoi à ma bdd
             $em->flush();
 
             return $this->redirectToRoute('calendrier_index');
