@@ -18,6 +18,16 @@
     <div class="imagefond">
 {#    <img class="image3" src="{{ asset('assets/img/photoagenda.jpg!d') }}" alt="photoAgena">#}
     <form id="formulaire" method="post">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('message') %}
+            <div class="alert alert-message">
+                {{ message }}
+            </div>
+        {% endfor %}
         <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
         <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
         <span class="psw"><a href="/oubli-pass">Identifiant ou mot de passe oublié?</a></span>
@@ -29,6 +39,7 @@
          Sign in
         </button>
     </form>
+
     </div>
     <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
 {% endblock %}
