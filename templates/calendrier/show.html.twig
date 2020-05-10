@@ -3,43 +3,65 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    {% block stylesheets %}<link rel="stylesheet"  href="{{ asset('assets/css/filtres/filters.css') }}">{% endblock %}
-    <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
 
-    <h1>{{ calendrier.nom }}</h1>
-{#    <div class="filter">#}
-{#        <div>#}
-{#            <label>Matière : </label>#}
-{#            <select name="nombre">#}
-{#            {% for event in events %}#}
-{#                    <option value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>#}
-{#            {% endfor %}#}
-{#            </select>#}
-{#        </div>#}
-{#        <div>#}
-{#            <label>Intervenant :</label>#}
-{#            <select name="nombre">#}
-{#                {% for event in events %}#}
-{#                    <option value="{{ event.getNomFormateur() }}">{{ event.getNomFormateur() }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{#        </div>#}
-{#    </div>#}
-
-
-    <div id="calendrier"></div>
+    {% if calendriers[0] is defined %}
+        <h1>{{ calendriers[0].nom }}</h1>
+    {% endif %}
 
 
 
+    <div id="calendar-holder"></div>
 
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+    {% endblock %}
 
-    {# fichier js #}
     {% block javascripts %}
-        <script src="{{ asset('assets/js/core/main.js') }}"></script>
-        <script src="{{ asset('assets/js/daygrid/main.js') }}"></script>
-        <script src="{{ asset('assets/js/timegrid/main.js') }}"></script>
-        <script src="{{ asset('assets/js/list/main.js') }}"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                const calendarEl = document.getElementById('calendar-holder');
+
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    defaultView: 'timeGridWeek',
+                    editable: false,
+                    locale: 'fr',
+                    eventSources: [
+                        {
+                            url: "{{ path('api_liste', {id: calendrier.id }) }}",
+                            method: "GET",
+                            extraParams: {
+                                filters: JSON.stringify({})
+                            },
+                            failure: () => {
+                                alert("There was an error while fetching FullCalendar!");
+                            },
+                        },
+                    ],
+                    // on passe en francais les bouttons
+                    buttonText:{
+                        today:"Aujourd'hui",
+                        month:"Mois",
+                        week:'Semaine',
+                        day: 'Jour',
+                        list:"Liste des cours"
+                    },
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,list',
+                    },
+                    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC',
+                });
+                calendar.render();
+            });
+        </script>
     {% endblock %}
 {% endblock %}
-{#    {{ include('calendrier/_delete_form.html.twig') }}#}

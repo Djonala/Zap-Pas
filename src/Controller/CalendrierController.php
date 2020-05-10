@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendrier;
 use App\Entity\EventZimbra;
+use App\EventSubscriber\CalendarSubscriber;
 use App\Form\Calendrier1Type;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
@@ -27,7 +28,11 @@ class CalendrierController extends AbstractController
     {
         $user = $this->getUser();
         $calendriers = $user->getCalendriers();
+        if (isset($calendriers)){
+            $calendrier = $calendriers[0];
+        }
         return $this->render('calendrier/index.html.twig', [
+            'calendrier' => $calendrier,
             'calendriers' => $calendriers,
             'userEnCours' => $user
         ]);
@@ -79,10 +84,11 @@ class CalendrierController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // on recupère l'utilisateur
-
         $user = $this->getUser();
+
         // je vérifie qu mon calendrier appartien a l'utilisateurs connecté
         if (!$calendrier->getUsers()->contains($user))  {
+
             // si non alors je lui dit que je ne trouve pas sa recherche
             throw $this->createNotFoundException();
         }
@@ -94,11 +100,13 @@ class CalendrierController extends AbstractController
         $allEvent = $calendrier->getEventsZimbra();
         $events = array();
         foreach ($allEvent as $event){
+
             // Si la matière est déjà dans le tableau
             if (!in_array($event->getMatiere(),$events)){
                 $events[] = $event;
             }
         }
+
 
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,

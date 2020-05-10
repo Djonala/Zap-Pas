@@ -23,7 +23,7 @@ class APIController extends AbstractController
 {
 
     /**
-     * @Route("/liste/{id}", name="liste", methods={"GET"})
+     * @Route("/liste/{id}", name="api_liste", methods={"GET"})
      */
     public function liste($id=null)
     {
