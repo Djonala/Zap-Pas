@@ -64,12 +64,18 @@ class LoginFormUsersAuthenticator extends AbstractFormLoginAuthenticator impleme
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
-
+        // on affiche un message d'erreur si le login ou le mdp est incorect
         $user = $this->entityManager->getRepository(Users::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorect');
+        }
+
+        $user =$this->entityManager->getRepository(Users::class)->findOneBy(['password'=> $credentials['password']]);
+        if (!$user) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorect');
         }
 
         return $user;

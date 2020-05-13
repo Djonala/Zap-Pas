@@ -55,9 +55,13 @@ class UsersController extends AbstractController
 
         // si le formulaire est valid et envoyé alors on encode le mot de passe
         if ($form->isSubmitted() && $form->isValid()) {
+            // on encode le mot de passe
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            // on set le mdp au user
             $user->setPassword($password);
+            // par défaut l'utilisateur refuse l'envoit de mail pour les notif
             $paramInit = new UserParameters(false);
+            // on set les param au user
             $user->setParameters($paramInit);
 
 
