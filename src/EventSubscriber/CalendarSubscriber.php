@@ -32,8 +32,14 @@ class CalendarSubscriber implements EventSubscriberInterface
         ];
     }
 
+
+    public static function load(){
+
+    }
+
     /**
      * @Route("/calendarSubscriber/set", name="set-calendarSubscriber", methods={"POST"})
+     * @param CalendarEvent $calendar
      */
     public function onCalendarSetData(CalendarEvent $calendar) {
         $start = $calendar->getStart();
@@ -55,8 +61,8 @@ class CalendarSubscriber implements EventSubscriberInterface
             // this create the events with your data (here booking data) to fill calendar
             $eventZimbra = new Event(
                 $event->getTitle(),
-                $event->getBeginAt(),
-                $event->getEndAt() // If the end date is null or not defined, a all day event is created.
+                $event->getDateDebutEvent(),
+                $event->getDateFinEvent() // If the end date is null or not defined, a all day event is created.
             );
 
             /*

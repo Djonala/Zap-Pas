@@ -56,9 +56,12 @@ class APIController extends AbstractController
             // Je selectionne dans mon tableau les elements qui m'interesse
             foreach ($events as $event){
                 $result[] = [
+                    "id" => $event->getMatiere(),
                     "title" => $event->getMatiere(),
                     "start" => $event->getDateDebutEvent()->format('Y-m-d H:i:s'),
-                    "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s')
+                    "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s'),
+                    "calendrier" => $cal->getId(),
+                    "intervenant" => $event->getEmailIntervenant()
                 ];
             }
         // sinon, on renvoi un champ vide
