@@ -13,6 +13,7 @@ class ParametersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // on construit le fomrulaire
         $builder
             ->add('autorizedSendMail', CheckboxType::class, [
             'label'    => 'Autorisation envoi de mail de notification',
