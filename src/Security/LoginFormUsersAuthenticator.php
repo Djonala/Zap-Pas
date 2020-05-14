@@ -72,12 +72,6 @@ class LoginFormUsersAuthenticator extends AbstractFormLoginAuthenticator impleme
             throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorect');
         }
 
-        $user =$this->entityManager->getRepository(Users::class)->findOneBy(['password'=> $credentials['password']]);
-        if (!$user) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorect');
-        }
-
         return $user;
     }
 
