@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    background-image: url("../assets/img/erreur.jpg");
+    background-size: 100%;
+
+}
+.text-right{
+    margin-right: 30%!important;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+p {
+    margin-top: 50%!important;
+
+}
+@media screen and (max-width: 1024px) { /* Le traitement est ici spécifique à l'image */
+    body {
+        left: 50%;
+        margin-left: -512px; /* 50% */
+    }
+    .centre{
+        top: 30%;
+    }
+    .text-right{
+        text-align: center;
+        font-size: medium;
+    }
+    p{
+        margin-top: 0;
+        color: whitesmoke;
+        text-align: center;
+    }
+}
