@@ -23,8 +23,8 @@
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-message" style="color: whitesmoke">
                 {{ message }}
             </div>
         {% endfor %}
