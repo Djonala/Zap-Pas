@@ -5,9 +5,9 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    {% if calendrier is defined %}
-        <h1>{{ calendrier.nom }}</h1>
-    {% endif %}
+
+    <h2 style="margin-top: 3vh; text-align: center">Aucun calendrier en cours</h1>
+
 
 
     <div id="calendar-holder" style="margin: 5vh; display: flex; flex-direction: column; height: 60vh"></div>
