@@ -10,16 +10,18 @@
             <li class="bouton-link has-children">
                 <a href="{{ path('calendrier_index') }}"><i class="far fa-calendar-alt"></i> Calendrier</a>
                 <ul class="sous-menu">
-                    {% for cal in calendriers%}
-                        <li><a href="/calendrier/{{ cal.id }}" > {{cal.nom}} </a></li>
-                    {% endfor %}
+                    {% if calendriers is defined %}
+                        {% for cal in calendriers%}
+                            <li><a href="/calendrier/{{ cal.id }}" > {{cal.nom}} </a></li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             </li>
             <li class="has-children bouton-link">
                 <a href="#"><i class="fas fa-user-clock"></i> Ohlala</a>
                 <ul class="sous-menu">
                     <form class="form-navbar-ohlala">
-                            <li > <a class="elmt" for="checkbox" >
+                            <li > <a class="elmt" for="checkbox" style="color: whitesmoke">
                                     <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1"  onclick="afficheFormRetard(this)"> Retard
                                 </a>
                             </li>
@@ -34,7 +36,7 @@
                                 </div>
                             </li>
 
-                            <li> <a class="elmt" for="checkbox" >
+                            <li> <a class="elmt" for="checkbox" style="color: whitesmoke">
                                     <input type="checkbox" name="checkbox-absence" id="checkbox-absence" class="check-absence" value="2" onclick="afficheFormAbsence(this)"> Absence
                                 </a>
                             </li>

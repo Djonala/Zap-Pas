@@ -23,7 +23,7 @@ class APIController extends AbstractController
 {
 
     /**
-     * @Route("/liste/{id}", name="liste", methods={"GET"})
+     * @Route("/liste/{id}", name="api_liste", methods={"GET"})
      */
     public function liste($id=null)
     {
@@ -56,9 +56,11 @@ class APIController extends AbstractController
             // Je selectionne dans mon tableau les elements qui m'interesse
             foreach ($events as $event){
                 $result[] = [
+                    "id" => (string)$event->getId(),
                     "title" => $event->getMatiere(),
                     "start" => $event->getDateDebutEvent()->format('Y-m-d H:i:s'),
-                    "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s')
+                    "end" => $event->getDateFinEvent()->format('Y-m-d H:i:s'),
+                    "extendedProps" => ["intervenant" => $event->getEmailIntervenant()]
                 ];
             }
         // sinon, on renvoi un champ vide
