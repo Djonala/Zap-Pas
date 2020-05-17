@@ -28,58 +28,13 @@ class CalendrierController extends AbstractController
     {
         $user = $this->getUser();
         $calendriers = $user->getCalendriers();
-        if (isset($calendriers)){
-            $calendrier = $calendriers[0];
 
-            // on recupère les calendriers de l'utilisateur
-            $calendriers = $user->getCalendriers();
-            $ar_events = array();
-
-            //pour tous les calendriers de l'utilisateur
-            foreach ($calendriers as $calendar){
-                // On récupère tous les évènements du calendrier
-                $allEvent = $calendar->getEventsZimbra();
-                //pour tous les evenements de ce calendrier
-                foreach ($allEvent as $event){
-                    $isExistInArray = false;
-
-                    // pour tous les evenements du tableau
-                    foreach ($ar_events as $eventOfArray){
-                        // s'il est déjà existant dans le tableau
-                        if ($event->getMatiere() === $eventOfArray->getMatiere()){
-                            $isExistInArray = true;
-                            break;
-                        }
-                    }
-                    if($isExistInArray===false){
-                        $ar_events[] = $event;
-                    }
-                }
-                unset($allEvent);
-            }
-
-            $ar_mailIntervenant = array();
-            foreach ($ar_events as $eventOnLoad){
-                $isExistInArray = false;
-                // pour tous les evenements du tableau
-                foreach ($ar_mailIntervenant as $mailIntervenant){
-                    // s'il est déjà existant dans le tableau
-                    if ($eventOnLoad->getEmailIntervenant() === $mailIntervenant){
-                        $isExistInArray = true;
-                        break;
-                    }
-                }
-                if($isExistInArray===false){
-                    $ar_mailIntervenant[] = $eventOnLoad->getEmailIntervenant();
-                }
-            }
+        if (isset($calendriers[0])){
+            $id = $calendriers[0]->getId();
+           return $this->redirectToRoute('calendrier_show', ['id'=>$id]);
         }
         return $this->render('calendrier/index.html.twig', [
-            'calendrier' => $calendrier,
-            'calendriers' => $calendriers,
-            'ar_events' => $ar_events,
-            'userEnCours' => $user,
-            'ar_mailIntervenant' => $ar_mailIntervenant
+            'userEnCours' => $user
         ]);
     }
 

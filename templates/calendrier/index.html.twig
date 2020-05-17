@@ -6,59 +6,19 @@
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
     {% if calendrier is defined %}
-
-    <h2 style="margin-top: 3vh; text-align: center">{{ calendrier.nom }}</h2>
-
-    {#          formulaire de filtre                                                                                 #}
-    <form class="form-group" style= "display: flex; align-items: center; justify-content: center">
-        <div style="display: flex; flex-direction: column; margin-right: 3vh">
-            {#        Select de l'intervenant   #}
-            <label for="intervenant">Intervenant</label>
-            <select  class="select-intervenant " style="max-width: 30vh" id="select_intervenant">
-                <option class="option-intervenant" value="0" selected>--- Choisir un intervenant ---</option>
-                {% for mailIntervenant in ar_mailIntervenant %}
-                    <option class="option-intervenant" value="{{ mailIntervenant }}">{{ mailIntervenant }}</option>
-                {% endfor %}
-            </select>
-
-            {#        select sur la matière #}
-            <label for="title_selector"> Titre </label>
-            <select class="select-titre" style="max-width: 30vh" id="title_selector">
-                <option class="option-titre" value="0" selected>--- Choisir une matière ---</option>
-                {% for event in ar_events %}
-                    <option class="option-titre" value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        {#        Checkbox sur les calendriers  #}
-        <div>
-            {% for cal in calendriers %}
-                <div class="custom-control custom-switch">
-                    <input class="custom-control-input" type="checkbox" name="{{ cal.id }}" id="{{ cal.id }}"
-                            {% if cal.id == calendrier.id %}
-                                checked
-                            {% endif %}
-                    >
-                    <label style="margin: 1vh" class="custom-control-label" for="{{ cal.id }}">{{ cal.nom }}</label>
-                </div>
-            {% endfor %}
-        </div>
-
-        {#        bouton de soumission du formulaire#}
-        <input type="button" class="btn btn-info" id="btn-filtrer" value="filtrer">
-    </form>
+        <h1>{{ calendrier.nom }}</h1>
     {% endif %}
-    {#    div dans laquelle sera affichée le calendrier                                                                     #}
-    <div id="calendar-holder" style="margin: 5vh; display: flex; flex-direction: column; "></div>
 
+
+    <div id="calendar-holder" style="margin: 5vh; display: flex; flex-direction: column; height: 60vh"></div>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.css">
-        <link href="{{ asset('assets/css/filtres/filters.css') }}" rel="stylesheet">
     {% endblock %}
+
     {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
@@ -67,92 +27,55 @@
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.js"></script>
 
         <script type="text/javascript">
-
             document.addEventListener('DOMContentLoaded', () => {
                 const calendarEl = document.getElementById('calendar-holder');
+
                 const calendar = new FullCalendar.Calendar(calendarEl, {
-                    height: 650,
+                    height: "parent" ,
+
                     defaultView: 'timeGridWeek',
                     editable: false,
                     locale: 'fr',
+                    eventSources: [
+                        {
+                            url: "",
+                            method: "GET",
+                            extraParams: {
+                                filters: JSON.stringify({})
+                            },
+                            failure: () => {
+                                alert("There was an error while fetching FullCalendar!");
+                            },
+                        },
+                    ],
                     // on passe en francais les bouttons
-                    buttonText: {
-                        today: "Aujourd'hui",
-                        month: "Mois",
-                        week: 'Semaine',
+                    buttonText:{
+                        today:"Aujourd'hui",
+                        month:"Mois",
+                        week:'Semaine',
                         day: 'Jour',
-                        list: "Liste des cours"
+                        list:"Liste des cours"
                     },
+
                     header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listYear',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
                     },
                     weekends: false,
                     firstDay: 1,
-                    plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'], // https://fullcalendar.io/docs/plugin-index
+                    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ], // https://fullcalendar.io/docs/plugin-index
                     timeZone: 'UTC',
                     businessHours: {
-                        daysOfWeek: [1, 2, 3, 4, 5],
-                        startTime: '08:00',
-                        endTime: '20:00',
-                    },
-                    nowIndicator: true,
-                    maxTime: "22:00:00",
-                    minTime: "07:00:00",
-                    eventColor: '#d2720d',
-                    eventBorderColor: "#9e5300",
-                    eventRender: function(info){
-                        // filtre sur le titre des évènements
-                        if(document.getElementById('title_selector').value !== "0"){
-                            if(info.event.title !== document.getElementById('title_selector').value){
-                                info.event.remove();
-                            }
-                        }
+                        // days of week. an array of zero-based day of week integers (0=Sunday)
+                        daysOfWeek: [ 1, 2, 3, 4, 5 ],
 
-                        // filtre sur le mail des intervenants
-                        if(document.getElementById('select_intervenant').value !== "0"){
-                            if(info.event.extendedProps.intervenant !== document.getElementById('select_intervenant').value){
-                                info.event.remove();
-                            }
-                        }
+                        startTime: '08:00', // a start time (10am in this example)
+                        endTime: '20:00', // an end time (6pm in this example)
                     }
-
-
                 });
-
-                //**********************************************************************//
-                //Application des filtres au click sur le bouton "filtrer"
-                document.getElementById('btn-filtrer').onclick = (function () {
-                    // suppression des calendriers existant et ajout de ceux selectionnés
-                    calendar.removeAllEventSources();
-                    {% for cal in calendriers %}
-                    if (document.getElementById({{ cal.id }}).checked) {
-                        calendar.addEventSource("{{ path('api_liste', {id: cal.id }) }}");
-                    }
-                    calendar.rerenderEvents();
-
-                    {% endfor %}
-                })
-                //               *************************************************************************//
-
-
-
-                calendar.addEventSource("{{ path('api_liste', {id: calendrier.id }) }}");
-
                 calendar.render();
-                let someEvents = calendar.getEvents().filter(function(event) {
-                    return event.title === 'Essai 4 johanna';
-                });
-
-
             });
-            // document.getElementById('select-intervenant').onchange = (function () {
-            //     alert("ca marche");
-            // });
-
-
         </script>
-
     {% endblock %}
 {% endblock %}

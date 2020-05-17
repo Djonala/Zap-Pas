@@ -10,9 +10,11 @@
             <li class="bouton-link has-children">
                 <a href="{{ path('calendrier_index') }}"><i class="far fa-calendar-alt"></i> Calendrier</a>
                 <ul class="sous-menu">
-                    {% for cal in calendriers%}
-                        <li><a href="/calendrier/{{ cal.id }}" > {{cal.nom}} </a></li>
-                    {% endfor %}
+                    {% if calendriers is defined %}
+                        {% for cal in calendriers%}
+                            <li><a href="/calendrier/{{ cal.id }}" > {{cal.nom}} </a></li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             </li>
             <li class="has-children bouton-link">
