@@ -20,9 +20,10 @@
             <li class="has-children bouton-link">
                 <a href="#"><i class="fas fa-user-clock"></i> Ohlala</a>
                 <ul class="sous-menu">
-                    <form class="form-navbar-ohlala">
-                            <li > <a class="elmt" for="checkbox" style="color: whitesmoke">
-                                    <input type="checkbox" name="checkbox-retard" id="checkbox-retard" class="check-retard" value="1"  onclick="afficheFormRetard(this)"> Retard
+                    <form class="form-navbar-ohlala" method="post" action="{{ path('ohlala') }}">
+                            <li > <a class="elmt" for="checkbox" >
+                                    <input type="checkbox" name="checkbox" id="checkbox-retard" class="check-retard" value="retard"  onclick="afficheFormRetard(this)"> Retard
+
                                 </a>
                             </li>
                             <li id="form-retard">
@@ -34,10 +35,15 @@
                                         <option value="heure">H</option>
                                     </select>
                                 </div>
+                                <label> Jour : </label>
+                                <div class="container-duree">
+                                    <input type="date" min="01-01-2020" class="jour" name="jour" value="">
+                                </div>
                             </li>
 
-                            <li> <a class="elmt" for="checkbox" style="color: whitesmoke">
-                                    <input type="checkbox" name="checkbox-absence" id="checkbox-absence" class="check-absence" value="2" onclick="afficheFormAbsence(this)"> Absence
+                            <li> <a class="elmt" for="checkbox" >
+                                    <input type="checkbox" name="checkbox" id="checkbox-absence" class="check-absence" value="absence" onclick="afficheFormAbsence(this)"> Absence
+
                                 </a>
                             </li>
                             <li id="form-absence">
