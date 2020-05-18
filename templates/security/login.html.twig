@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/securite/login.css') }}">
 {% endblock %}
 
 
@@ -11,42 +11,50 @@
 
 {% block body %}
 
-    <div class="container">
-        <img id="logo" src="{{ asset('assets/img/LOGOZAP-PAS2.png') }}" alt="Logo" >
-        <img class="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
+    <div class="containerLogo">
+        <div class="containerImg">
+            <img id="logo" src="{{ asset('assets/img/LogoZapPas.png') }}" alt="Logo" >
+        </div>
+        <div class="containerImg">
+            <img id="ECN" src="{{ asset('assets/img/ECN.png') }}" alt="Logo-ECN">
+        </div>
     </div>
-    <div class="imagefond">
-{#    <img class="image3" src="{{ asset('assets/img/photoagenda.jpg!d') }}" alt="photoAgena">#}
-    <form id="formulaire" method="post">
-        {% if error %}
-            <div class="alert alert-warning" style="color: whitesmoke">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
-        {% for message in app.flashes('notice') %}
-            <div class="alert alert-message" style="color: whitesmoke">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('message') %}
-            <div class="alert alert-message" style="color: whitesmoke">
-                {{ message }}
-            </div>
-        {% endfor %}
-        <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
-        <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
-        <span class="psw"><a href="{{ path('app_forgotten_password') }}">Identifiant ou mot de passe oublié?</a></span>
-        <br>
-        <input type="hidden" class="btn btn-primary" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-        <button class="btn btn-lg btn-primary" type="submit">
-         Sign in
-        </button>
-    </form>
 
+
+    <div class="imagefond">
+        <form id="formulaire" method="post">
+            {% if error %}
+                <div class="alert alert-warning" style="color: whitesmoke">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-message" style="color: whitesmoke">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('message') %}
+                <div class="alert alert-message" style="color: whitesmoke">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
+            <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
+            <span class="psw"><a href="{{ path('app_forgotten_password') }}">Identifiant ou mot de passe oublié?</a></span>
+            <br>
+            <input type="hidden" class="btn btn-primary" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button class="btn btn-lg btn-warning" type="submit">
+             Se connecter
+            </button>
+        </form>
     </div>
-    <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
+    <div class="containerImgShakeTheFuture">
+        <img class="imageflottante2" src="{{ asset('assets/img/Shake.png') }}" alt="Shake-the-future">
+    </div>
+
 {% endblock %}
 
 {#                <input type="checkbox" name="_remember_me"> Remember me#}

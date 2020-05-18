@@ -1,0 +1,112 @@
+body {
+    margin-top: 2vh !important;
+    opacity: 0.8;
+    width: 100%;
+
+}
+
+.imagefond{
+    background-image: url("../../img/photoagenda.jpg");
+}
+
+#logo {
+    /*position: relative;*/
+    width: 40vh;
+}
+#ECN {
+    justify-self: right;
+    width: 30vh;
+    height: 15vh;
+    /*position: absolute;*/
+}
+.containerImgShakeTheFuture {
+    display: flex;
+    justify-content: center;
+}
+.containerImg{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+input {
+    margin-bottom: 2vh !important;
+}
+
+.container-2 {
+    text-align: center;
+}
+
+.containerLogo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+form {
+
+    margin-top: 60px;
+    border-radius: 3%;
+    padding:  40px 30px;
+    display:  flex;
+    flex-direction:  column;
+    align-items:  center;
+    padding-bottom:  20px;
+    width:  400px;
+    height: 250px;
+    margin: 0 auto;
+    background-color: #102648;
+
+  }
+    #formulaire_mdp_oublie{
+        display: flex;
+        flex-direction: column;
+    }
+
+  button {
+    -webkit-appearance:  none;
+    width:  auto;
+    min-width:  100px;
+    border-radius:  24px;
+    text-align:  center;
+    padding:  15px 40px;
+    margin-top:  15px;
+    background-color: #fff;;
+    color: #0e2748;
+    font-size:  14px;
+    font-weight:  500;
+    border:  none;
+    transition:  all .3s ease;
+    outline: 0;
+  }
+  
+
+
+
+.password {
+
+    text-align: right;
+    color: grey;
+    font-style: italic;
+}
+
+
+span {
+    margin-bottom: 1vh;
+    float: right;
+}
+
+span a {
+
+    text-decoration: #0e2748;
+    color: whitesmoke;
+    font-style: italic;
+    font-weight: bold;
+
+
+}
+img{
+    align-self: center;
+}
