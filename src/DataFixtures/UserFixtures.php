@@ -24,14 +24,14 @@ class UserFixtures extends Fixture
         $param = new UserParameters(true);
         $manager->persist($param);
         $user = new Users();
-        $user->setNom('TRISTAN');
-        $user->setPrenom('Johanna');
-        $user->setEmail('johanna.tristan@gmail.com');
-        $user->setRoles(['ROLE_USER']);
+        $user->setNom('Super');
+        $user->setPrenom('Admin');
+        $user->setEmail('centralenanteszappas@gmail.com');
+        $user->setRoles(["ROLE_SUPER_ADMIN"]);
         $user->setParameters($param);
         $user->setPassword($this->passwordEncoder->encodePassword(
              $user,
-           'winwip'
+           'WIP2020'
         ));
         $user->setResetToken(null);
         $manager->persist($user);
