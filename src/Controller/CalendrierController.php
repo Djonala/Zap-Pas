@@ -224,7 +224,8 @@ class CalendrierController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         //je récupère le mail de l'utilisateur et les données saisie dans le form
-        $user = $this->getUser()->getUsername();
+        $user = $this->getUser();
+        $nom = $user->getnomAndPrenom();
         $motif = $_POST['checkbox'];
         $jour = $_POST['jour'];
         $temps = $_POST['date'];
@@ -242,7 +243,7 @@ class CalendrierController extends AbstractController
                     ->setTo('slclegras@aol.com')
                     ->setBody(
                         "Bonjour, le " . htmlentities($jour) . " " .
-                        htmlentities($user) . "  " . "va etre en " . htmlentities($motif) . " de " .
+                        htmlentities($nom) . "  " . "va etre en " . htmlentities($motif) . " de " .
                         htmlentities($temps) . htmlentities($unite),
                         'text/html'
                     );
