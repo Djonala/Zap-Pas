@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendrier;
 use App\Entity\EventZimbra;
-use App\Entity\Users;
+use App\EventSubscriber\CalendarSubscriber;
 use App\Form\Calendrier1Type;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
@@ -28,8 +28,12 @@ class CalendrierController extends AbstractController
     {
         $user = $this->getUser();
         $calendriers = $user->getCalendriers();
+
+        if (isset($calendriers[0])){
+            $id = $calendriers[0]->getId();
+           return $this->redirectToRoute('calendrier_show', ['id'=>$id]);
+        }
         return $this->render('calendrier/index.html.twig', [
-            'calendriers' => $calendriers,
             'userEnCours' => $user
         ]);
     }
@@ -80,32 +84,64 @@ class CalendrierController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // on recupère l'utilisateur
-
         $user = $this->getUser();
+
         // je vérifie qu mon calendrier appartien a l'utilisateurs connecté
         if (!$calendrier->getUsers()->contains($user))  {
+
             // si non alors je lui dit que je ne trouve pas sa recherche
             throw $this->createNotFoundException();
         }
 
         // on recupère les calendriers de l'utilisateur
         $calendriers = $user->getCalendriers();
+        $ar_events = array();
 
+        //pour tous les calendriers de l'utilisateur
+        foreach ($calendriers as $calendar){
+            // On récupère tous les évènements du calendrier
+            $allEvent = $calendar->getEventsZimbra();
+            //pour tous les evenements de ce calendrier
+            foreach ($allEvent as $event){
+                $isExistInArray = false;
 
-        $allEvent = $calendrier->getEventsZimbra();
-        $events = array();
-        foreach ($allEvent as $event){
-            // Si la matière est déjà dans le tableau
-            if (!in_array($event->getMatiere(),$events)){
-                $events[] = $event;
+                // pour tous les evenements du tableau
+                foreach ($ar_events as $eventOfArray){
+                    // s'il est déjà existant dans le tableau
+                    if ($event->getMatiere() === $eventOfArray->getMatiere()){
+                        $isExistInArray = true;
+                        break;
+                    }
+                }
+                if($isExistInArray===false){
+                    $ar_events[] = $event;
+                }
+            }
+            unset($allEvent);
+        }
+
+        $ar_mailIntervenant = array();
+        foreach ($ar_events as $eventOnLoad){
+            $isExistInArray = false;
+            // pour tous les evenements du tableau
+            foreach ($ar_mailIntervenant as $mailIntervenant){
+                // s'il est déjà existant dans le tableau
+                if ($eventOnLoad->getEmailIntervenant() === $mailIntervenant){
+                    $isExistInArray = true;
+                    break;
+                }
+            }
+            if($isExistInArray===false){
+                $ar_mailIntervenant[] = $eventOnLoad->getEmailIntervenant();
             }
         }
 
         return $this->render('calendrier/show.html.twig', [
             'calendrier' => $calendrier,
             'calendriers' => $calendriers,
-            'events' => $events,
-            'userEnCours' => $user
+            'ar_events' => $ar_events,
+            'userEnCours' => $user,
+            'ar_mailIntervenant' => $ar_mailIntervenant
         ]);
     }
 

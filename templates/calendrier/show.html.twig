@@ -3,43 +3,153 @@
 
 {% block body %}
     {% include 'navbar/navbaar.html.twig' %}
-    {% block stylesheets %}<link rel="stylesheet"  href="{{ asset('assets/css/filtres/filters.css') }}">{% endblock %}
-    <input type="hidden" class="js-url" data-url="http://localhost:8000/api/liste/{{ calendrier.id }}"/>
+    <h2 style="margin-top: 3vh; text-align: center">{{ calendrier.nom }}</h2>
 
-    <h1>{{ calendrier.nom }}</h1>
-{#    <div class="filter">#}
-{#        <div>#}
-{#            <label>Matière : </label>#}
-{#            <select name="nombre">#}
-{#            {% for event in events %}#}
-{#                    <option value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>#}
-{#            {% endfor %}#}
-{#            </select>#}
-{#        </div>#}
-{#        <div>#}
-{#            <label>Intervenant :</label>#}
-{#            <select name="nombre">#}
-{#                {% for event in events %}#}
-{#                    <option value="{{ event.getNomFormateur() }}">{{ event.getNomFormateur() }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{#        </div>#}
-{#    </div>#}
+{#          formulaire de filtre                                                                                 #}
+    <form class="form-group" style= "display: flex; align-items: center; justify-content: center">
+        <div style="display: flex; flex-direction: column; margin-right: 3vh">
+{#        Select de l'intervenant   #}
+            <label for="intervenant">Intervenant</label>
+            <select  class="select-intervenant " style="max-width: 30vh" id="select_intervenant">
+                <option class="option-intervenant" value="0" selected>--- Choisir un intervenant ---</option>
+                {% for mailIntervenant in ar_mailIntervenant %}
+                    <option class="option-intervenant" value="{{ mailIntervenant }}">{{ mailIntervenant }}</option>
+                {% endfor %}
+            </select>
+
+{#        select sur la matière #}
+            <label for="title_selector"> Titre </label>
+            <select class="select-titre" style="max-width: 30vh" id="title_selector">
+                <option class="option-titre" value="0" selected>--- Choisir une matière ---</option>
+                {% for event in ar_events %}
+                    <option class="option-titre" value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+{#        Checkbox sur les calendriers  #}
+        <div>
+        {% for cal in calendriers %}
+            <div class="custom-control custom-switch">
+                <input class="custom-control-input" type="checkbox" name="{{ cal.id }}" id="{{ cal.id }}"
+                        {% if cal.id == calendrier.id %}
+                            checked
+                        {% endif %}
+                >
+                <label style="margin: 1vh" class="custom-control-label" for="{{ cal.id }}">{{ cal.nom }}</label>
+            </div>
+        {% endfor %}
+        </div>
+
+{#        bouton de soumission du formulaire#}
+        <input type="button" class="btn btn-info" id="btn-filtrer" value="filtrer">
+    </form>
+
+{#    div dans laquelle sera affichée le calendrier                                                                     #}
+    <div id="calendar-holder" style="margin: 5vh; display: flex; flex-direction: column; "></div>
 
 
-    <div id="calendrier"></div>
-
-
-
-
-
-    {# fichier js #}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.css">
+        <link href="{{ asset('assets/css/filtres/filters.css') }}" rel="stylesheet">
+    {% endblock %}
     {% block javascripts %}
-        <script src="{{ asset('assets/js/core/main.js') }}"></script>
-        <script src="{{ asset('assets/js/daygrid/main.js') }}"></script>
-        <script src="{{ asset('assets/js/timegrid/main.js') }}"></script>
-        <script src="{{ asset('assets/js/list/main.js') }}"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.js"></script>
+
+        <script type="text/javascript">
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const calendarEl = document.getElementById('calendar-holder');
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    height: 650,
+                    defaultView: 'timeGridWeek',
+                    editable: false,
+                    locale: 'fr',
+                    // on passe en francais les bouttons
+                    buttonText: {
+                        today: "Aujourd'hui",
+                        month: "Mois",
+                        week: 'Semaine',
+                        day: 'Jour',
+                        list: "Liste des cours"
+                    },
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listYear',
+                    },
+                    weekends: false,
+                    firstDay: 1,
+                    plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC',
+                    businessHours: {
+                        daysOfWeek: [1, 2, 3, 4, 5],
+                        startTime: '08:00',
+                        endTime: '20:00',
+                    },
+                    nowIndicator: true,
+                    maxTime: "22:00:00",
+                    minTime: "07:00:00",
+                    eventColor: '#d2720d',
+                    eventBorderColor: "#9e5300",
+                    eventRender: function(info){
+                        // filtre sur le titre des évènements
+                        if(document.getElementById('title_selector').value !== "0"){
+                            if(info.event.title !== document.getElementById('title_selector').value){
+                                 info.event.remove();
+                             }
+                         }
+
+                        // filtre sur le mail des intervenants
+                        if(document.getElementById('select_intervenant').value !== "0"){
+                            if(info.event.extendedProps.intervenant !== document.getElementById('select_intervenant').value){
+                                info.event.remove();
+                            }
+                        }
+                    }
+
+
+                });
+
+                //**********************************************************************//
+                //Application des filtres au click sur le bouton "filtrer"
+                document.getElementById('btn-filtrer').onclick = (function () {
+                    // suppression des calendriers existant et ajout de ceux selectionnés
+                    calendar.removeAllEventSources();
+                    {% for cal in calendriers %}
+                        if (document.getElementById({{ cal.id }}).checked) {
+                            calendar.addEventSource("{{ path('api_liste', {id: cal.id }) }}");
+                        }
+                    calendar.rerenderEvents();
+
+                    {% endfor %}
+                })
+ //               *************************************************************************//
+
+
+
+                calendar.addEventSource("{{ path('api_liste', {id: calendrier.id }) }}");
+
+                calendar.render();
+                let someEvents = calendar.getEvents().filter(function(event) {
+                    return event.title === 'Essai 4 johanna';
+                });
+
+                
+            });
+            // document.getElementById('select-intervenant').onchange = (function () {
+            //     alert("ca marche");
+            // });
+
+
+        </script>
+
     {% endblock %}
 {% endblock %}
-{#    {{ include('calendrier/_delete_form.html.twig') }}#}
+
