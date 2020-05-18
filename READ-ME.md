@@ -73,6 +73,10 @@ https://symfony.com/download
 Et aplliquer les migrations grâce à 
             
         symfony console do:mi:mi
+Forcer l’update  en réalisant les commandes suivantes : 
+
+        symfony console doctrine:schema:update --dump-sql
+        symfony console doctrine:schema:update --force
         
 8.Base de données de démo
     
