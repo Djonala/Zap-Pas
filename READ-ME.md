@@ -83,3 +83,9 @@ Forcer l’update  en réalisant les commandes suivantes :
         symfony console do:fi:lo
 - Vous pouez donc vous connecter avec :
 centralenanteszappas@gmail.com et comme mot de passe : WIP2020
+
+9.Pour lancer le projet, effectuer la commande
+        
+        symfony server:start
+      
+Et allez sur la page http://localhost:8000/
