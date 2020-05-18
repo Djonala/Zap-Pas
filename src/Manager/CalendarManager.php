@@ -364,17 +364,9 @@ class CalendarManager
                 // si l'utilisateur accepte l'envoi de notification par mail
                 if ($user->getParameters()->getAutorizedSendMail() === true) {
                     $message = (new \Swift_Message('Notification : Motification d\'un evenement.'))
-                        // on instancie l'expéditeur
                         ->setFrom('centralenanteszappas@gmail.com')
-
-                        // On attribue le destinataire
-                        ->setTo($user->getEmail())
-
-                        // On créé le message
-                        ->setBody(
-                            $this->renderView(
-                                'Mailer.notification_changement_agenda.html.twig', ['message' => $body]
-                            ),
+                        ->setTo('johanna.tristan@gmail.COM')
+                        ->setBody("Bonjour, " . $body,
                             'text/html'
                         );
                     // On envoie le message

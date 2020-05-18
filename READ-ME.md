@@ -89,3 +89,41 @@ centralenanteszappas@gmail.com et comme mot de passe : WIP2020
         symfony server:start
       
 Et allez sur la page http://localhost:8000/
+
+#Installation pour déploiement rapide avec Docker
+1. Checkout du projet avec GIT
+
+        $ cd 
+        $ mkdir app
+        $ cd app
+        $ git clone https://github.com/Djonala/Zap-Pas.git
+
+2. Installation de Docker
+
+    https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+
+3. Deploiement du projet
+
+       $ cd ~/app/Zap-Pas/
+       $ sudo docker-compose build
+       $ sudo docker-compose up -d
+       
+4. Initialisation de la base de données 
+
+        $ sudo docker-compose exec -u root php bin/console do:da:cr
+        $ sudo docker-compose exec -u root php bin/console doctrine:schema:update --dump-sql
+        $ sudo docker-compose exec -u root php bin/console doctrine:schema:update --force
+        
+5. Peuplement de la base de données de démo
+                
+        $ sudo docker-compose exec -u root php bin/console do:fi:lo
+        
+6. Accès au site
+
+    http://localhost:8080/
+    
+    identifiant de connexion : 
+    
+    user -> centralenanteszappas@gmail.com
+    
+    mdp ->  WIP2020
