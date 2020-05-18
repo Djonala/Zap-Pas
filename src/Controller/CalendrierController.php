@@ -253,7 +253,7 @@ class CalendrierController extends AbstractController
                 $message = (new \Swift_Message ('Absence'))
                     ->setFrom('centralenanteszappas@gmail.com')
                     ->setTo('slclegras@aol.com')
-                    ->setBody("Bonjour, ".$nom. "sera absent du ".$datedeb. " au ". $datefin,
+                    ->setBody("Bonjour, ".$nom. " sera absent du ".$datedeb. " au ". $datefin,
                     'text/html'
                     );
             }
