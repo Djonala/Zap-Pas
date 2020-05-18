@@ -6,6 +6,17 @@ Nous remercions Maîlys Veguer (porteuse du projet et cliente), Vincent Graillot
 Et Centrale Nantes.
 ## Installation  
 
+Pré-requis : 
+- Installer PHP :  https://doc.ubuntu-fr.org/php
+
+        $ sudo apt-get install php7
+
+- Installer Apache : https://doc.ubuntu-fr.org/apache2
+- Installation de Symfony :https://symfony.com/doc/current/setup.html
+- Installation de PostgreSQL : (ou un autre SGBD)
+https://doc.ubuntu-fr.org/postgresql
+
+
 1. Preparez votre workspace :  
 
         mkdir workspaceWinWip
