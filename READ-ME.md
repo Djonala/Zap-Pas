@@ -73,9 +73,19 @@ https://symfony.com/download
 Et aplliquer les migrations grâce à 
             
         symfony console do:mi:mi
+Forcer l’update  en réalisant les commandes suivantes : 
+
+        symfony console doctrine:schema:update --dump-sql
+        symfony console doctrine:schema:update --force
         
 8.Base de données de démo
     
         symfony console do:fi:lo
 - Vous pouez donc vous connecter avec :
 centralenanteszappas@gmail.com et comme mot de passe : WIP2020
+
+9.Pour lancer le projet, effectuer la commande
+        
+        symfony server:start
+      
+Et allez sur la page http://localhost:8000/
