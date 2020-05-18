@@ -10,6 +10,22 @@
 
 
 {% block body %}
+{#    ajout des message d'erreur#}
+    {% if error %}
+        <div class="alert alert-dark text-center" style="color: black">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-dark text-center" role="alert" style="color: black">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-dark text-center" style="color: black">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="containerLogo">
         <div class="containerImg">
@@ -23,21 +39,7 @@
 
     <div class="imagefond">
         <form id="formulaire" method="post">
-            {% if error %}
-                <div class="alert alert-warning" style="color: whitesmoke">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
-            {% endif %}
-            {% for message in app.flashes('notice') %}
-                <div class="alert alert-message" style="color: whitesmoke">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('message') %}
-                <div class="alert alert-message" style="color: whitesmoke">
-                    {{ message }}
-                </div>
-            {% endfor %}
+
             <input type="email" value="{{ last_username }}" placeholder="E-mail" name="email" id="inputEmail" class="form-control" required autofocus>
             <input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
             <span class="psw"><a href="{{ path('app_forgotten_password') }}">Identifiant ou mot de passe oublié?</a></span>
