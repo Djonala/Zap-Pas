@@ -10,6 +10,7 @@
 
 
 {% block body %}
+{#    ajout des message d'erreur#}
     {% if error %}
         <div class="alert alert-dark text-center" style="color: black">
             {{ error.messageKey|trans(error.messageData, 'security') }}
