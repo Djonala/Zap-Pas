@@ -4,7 +4,37 @@ Dans le cadre de la formation WebInPulse de l'école Centrale Nantes, il nous a 
 créer un agenda pour la formation continue.
 Nous remercions Maîlys Veguer (porteuse du projet et cliente), Vincent Graillot pour l'appui technique
 Et Centrale Nantes.
-## Installation  
+ 
+
+##Pré-requis : 
+- Installer PHP :  https://doc.ubuntu-fr.org/php
+
+        $ sudo apt-get install php7
+
+- Installer Apache : https://doc.ubuntu-fr.org/apache2
+- Installation de Symfony :https://symfony.com/doc/current/setup.html
+- Installation de PostgreSQL : (ou un autre SGBD)
+https://doc.ubuntu-fr.org/postgresql
+
+        $ sudo apt-get install postgres
+
+- Installer GIT
+https://doc.ubuntu-fr.org/git
+
+        $ sudo apt-get install git
+
+- Installation de composer : 
+Placez vous à la racine du projet puis suivez la documentation suivante : 
+https://getcomposer.org/download/
+
+        $ sudo apt-get install composer
+
+- Installer Symfony CLI 
+https://symfony.com/download
+
+        $ composer require symfony/console
+
+##Installation 
 
 1. Preparez votre workspace :  
 
@@ -40,6 +70,9 @@ Et Centrale Nantes.
 7.Initialiser la database
 
         symfony console doctrine:database:create
+Et aplliquer les migrations grâce à 
+            
+        symfony console do:mi:mi
         
 8.Base de données de démo
     
