@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendrier;
 use App\Entity\EventZimbra;
+use App\Entity\Users;
 use App\Form\Calendrier1Type;
 use App\Manager\CalendarManager;
 use App\Repository\CalendrierRepository;
@@ -175,4 +176,54 @@ class CalendrierController extends AbstractController
     }
 
 
+
+    /**
+     * @param Request $request
+     * @param \Swift_Mailer $mailer
+     * @Route("/ohlala", name="ohlala", methods={"POST"})
+     */
+    public function ohlala(Request $request, \Swift_Mailer $mailer) : Response {
+
+        // sécurité
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        //je récupère le mail de l'utilisateur et les données saisie dans le form
+        $user = $this->getUser()->getUsername();
+        $motif = $_POST['checkbox'];
+        $jour = $_POST['jour'];
+        $temps = $_POST['date'];
+        $unite = $_POST['unite-temp'];
+        $datedeb = $_POST['trip-start'];
+        $datefin = $_POST['trip-end'];
+
+        // si le form est submit
+        if ($request->isMethod('POST')){
+            // si le motif est retard
+            if ($motif ==='retard') {
+                // alors je complète le corps de mon mail en fonction
+                $message = (new \Swift_Message ('Retard'))
+                    ->setFrom('centralenanteszappas@gmail.com')
+                    ->setTo('slclegras@aol.com')
+                    ->setBody(
+                        "Bonjour, le " . htmlentities($jour) . " " .
+                        htmlentities($user) . "  " . "va etre en " . htmlentities($motif) . " de " .
+                        htmlentities($temps) . htmlentities($unite),
+                        'text/html'
+                    );
+            }
+            else {
+                // sinon je le comlète en fonction de l'absence
+                $message = (new \Swift_Message ('Absence'))
+                    ->setFrom('centralenanteszappas@gmail.com')
+                    ->setTo('slclegras@aol.com')
+                    ->setBody("Bonjour, je serais absent(e) du ".$datedeb. " au ". $datefin,
+                    'text/html'
+                    );
+            }
+            //On envoie l'e-mail
+            $mailer->send($message);
+        }
+        // on renvoit sur une page qui prévient que le mail est envoyé et invite a retourner a la page precedente
+        return $this->render('calendrier/ohlala.html.twig');
+    }
 }
