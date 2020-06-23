@@ -2,32 +2,47 @@
 {% block title %}Calendrier{% endblock %}
 
 {% block body %}
-    {% include 'navbar/navbaar.html.twig' %}
+    {% include 'navbar/navbarBootstrap.html.twig' %}
     <h2 style="margin-top: 3vh; text-align: center">{{ calendrier.nom }}</h2>
 
-{#          formulaire de filtre                                                                                 #}
-    <form class="form-group" style= "display: flex; align-items: center; justify-content: center">
-        <div style="display: flex; flex-direction: column; margin-right: 3vh">
-{#        Select de l'intervenant   #}
-            <label for="intervenant">Intervenant</label>
-            <select  class="select-intervenant " style="max-width: 30vh" id="select_intervenant">
-                <option class="option-intervenant" value="0" selected>--- Choisir un intervenant ---</option>
-                {% for mailIntervenant in ar_mailIntervenant %}
-                    <option class="option-intervenant" value="{{ mailIntervenant }}">{{ mailIntervenant }}</option>
-                {% endfor %}
-            </select>
+{#          formulaire de filtres                                                                                 #}
+    <form class="form-filtre form-group">
 
-{#        select sur la matière #}
-            <label for="title_selector"> Titre </label>
-            <select class="select-titre" style="max-width: 30vh" id="title_selector">
-                <option class="option-titre" value="0" selected>--- Choisir une matière ---</option>
-                {% for event in ar_events %}
-                    <option class="option-titre" value="{{ event.getMatiere() }}">{{ event.getMatiere() }}</option>
+    {#        Container des selects#}
+        <div id="div-filtre-select">
+
+        {#        Select de l'intervenant   #}
+            <label for="intervenant">Intervenant</label>
+            <select  class="select-intervenant select-filtre" id="select_intervenant">
+                <option class="option-intervenant" value="0" selected>
+                    --- Choisir un intervenant ---
+                </option>
+                {% for mailIntervenant in ar_mailIntervenant %}
+                    <option class="option-intervenant" value="{{ mailIntervenant }}">
+                        {{ mailIntervenant }}
+                    </option>
                 {% endfor %}
             </select>
+        {#        FIN / Select de l'intervenant   #}
+
+        {#        select sur la matière #}
+            <label for="title_selector"> Titre </label>
+            <select class="select-titre select-filtre" id="title_selector">
+                <option class="option-titre" value="0" selected>
+                    --- Choisir une matière ---
+                </option>
+                {% for event in ar_events %}
+                    <option class="option-titre" value="{{ event.getMatiere() }}">
+                        {{ event.getMatiere() }}
+                    </option>
+                {% endfor %}
+            </select>
+        {#        FIN / select sur la matière #}
         </div>
-{#        Checkbox sur les calendriers  #}
-        <div>
+    {#       FIN / Container des selects#}
+
+    {#        Container checkbox sur les calendriers  #}
+        <div class="container-checkbox">
         {% for cal in calendriers %}
             <div class="custom-control custom-switch">
                 <input class="custom-control-input" type="checkbox" name="{{ cal.id }}" id="{{ cal.id }}"
@@ -35,14 +50,19 @@
                             checked
                         {% endif %}
                 >
-                <label style="margin: 1vh" class="custom-control-label" for="{{ cal.id }}">{{ cal.nom }}</label>
+                <label id="label-calendrier" class="custom-control-label" for="{{ cal.id }}">{{ cal.nom }}</label>
             </div>
         {% endfor %}
         </div>
+    {#       FIN / Container checkbox sur les calendriers  #}
 
-{#        bouton de soumission du formulaire#}
-        <input type="button" class="btn btn-warning" id="btn-filtrer" value="filtrer">
+    {#        bouton de soumission du formulaire#}
+        <div>
+            <input type="button" class="btn btn-warning" id="btn-filtrer" value="filtrer">
+        </div>
+     {#        FIN / bouton de soumission du formulaire#}
     </form>
+{#          FIN /formulaire de filtres
 
 {#    div dans laquelle sera affichée le calendrier                                                                     #}
     <div id="calendar-holder" style="margin: 5vh; display: flex; flex-direction: column; "></div>
@@ -96,8 +116,9 @@
                     nowIndicator: true,
                     maxTime: "22:00:00",
                     minTime: "07:00:00",
-                    eventColor: '#d2720d',
-                    eventBorderColor: "#9e5300",
+                    eventColor: '#fab600',
+                    eventTextColor: '#102648',
+                    eventBorderColor: "#102648",
                     eventRender: function(info){
                         // filtre sur le titre des évènements
                         if(document.getElementById('title_selector').value !== "0"){
@@ -131,8 +152,6 @@
                     {% endfor %}
                 })
  //               *************************************************************************//
-
-
 
                 calendar.addEventSource("{{ path('api_liste', {id: calendrier.id }) }}");
 

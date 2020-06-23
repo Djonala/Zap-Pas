@@ -20,43 +20,43 @@
             <li class="has-children bouton-link">
                 <a href="#"><i class="fas fa-user-clock"></i> Ohlala</a>
                 <ul class="sous-menu">
-                    <form class="form-navbar-ohlala" method="post" action="{{ path('ohlala') }}">
-                            <li > <a class="elmt" for="checkbox" style="color: whitesmoke">
-                                    <input type="checkbox" name="checkbox" id="checkbox-retard" class="check-retard" value="retard"  onclick="afficheFormRetard(this)"> Retard
-
-                                </a>
-                            </li>
-                            <li id="form-retard">
-                                <label for="appt"> Durée :</label>
-                                <div id="appt" class="container-duree">
-                                    <input type="number" class="duree"  name="date" value="" />
-                                    <select name="unite-temp" id="unite-temp-select">
-                                        <option value="min">min</option>
-                                        <option value="heure">H</option>
-                                    </select>
-                                </div>
-                                <label> Jour : </label>
-                                <div class="container-duree">
-                                    <input type="date" min="01-01-2020" class="jour" name="jour" value="">
-                                </div>
-                            </li>
-
-                            <li> <a class="elmt" for="checkbox" style="color: whitesmoke">
-                                    <input type="checkbox" name="checkbox" id="checkbox-absence" class="check-absence" value="absence" onclick="afficheFormAbsence(this)"> Absence
-
-                                </a>
-                            </li>
-                            <li id="form-absence">
-                                    <label for="start">du</label>
-                                    <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31"><br>
-                                    <label for="end">au</label>
-                                    <input type="date" id="end" name="trip-end" value="2020-02-10" min="2010-01-01" max="2050-12-31">
-                                </a>
-                            </li>
-                        <li>
-                            <input  type="submit" class="submit-retard-absence" value="Envoyer"><br>
+                <form class="form-navbar-ohlala" method="post" action="{{ path('ohlala') }}">
+                        <li >
+                            <a class="elmt" for="checkbox" style="color: whitesmoke">
+                                <input type="checkbox" name="checkbox" id="checkbox-retard" class="check-retard" value="retard"  onclick="afficheFormRetard(this)"> Retard
+                            </a>
                         </li>
-                    </form>
+                        <li id="form-retard">
+                            <label for="appt"> Durée :</label>
+                            <div id="appt" class="container-duree">
+                                <input type="number" class="duree"  name="date" value="" />
+                                <select name="unite-temp" id="unite-temp-select">
+                                    <option value="min">min</option>
+                                    <option value="heure">H</option>
+                                </select>
+                            </div>
+                            <label> Jour : </label>
+                            <div class="container-duree">
+                                <input type="date" min="01-01-2020" class="jour" name="jour" value="">
+                            </div>
+                        </li>
+
+                        <li> <a class="elmt" for="checkbox" style="color: whitesmoke">
+                                <input type="checkbox" name="checkbox" id="checkbox-absence" class="check-absence" value="absence" onclick="afficheFormAbsence(this)"> Absence
+
+                            </a>
+                        </li>
+                        <li id="form-absence">
+                                <label for="start">du</label>
+                                <input type="date" id="start" name="trip-start" value="2020-02-10" min="2010-01-01" max="2050-12-31"><br>
+                                <label for="end">au</label>
+                                <input type="date" id="end" name="trip-end" value="2020-02-10" min="2010-01-01" max="2050-12-31">
+                            </a>
+                        </li>
+                    <li>
+                        <input  type="submit" class="submit-retard-absence" value="Envoyer"><br>
+                    </li>
+                </form>
                 </ul>
             </li>
             {% if userEnCours.getRoles()[0] == 'ROLE_ADMIN' or userEnCours.getRoles()[0] == 'ROLE_SUPER_ADMIN'%}
@@ -64,7 +64,7 @@
                     <a href="{{ path('calendrier_new') }}"><i class="fas fa-user-edit"></i> Gérer</a>
                 </li>
             {% endif %}
-            <li class="bouton-link has-children espace-perso">
+            <li class="bouton-link has-children espace-perso" id="espace-perso-li">
                 <a id="espace-perso-a"><i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}</a>
                 <ul class="sous-menu">
                     <a class="li-sous-menu" href="{{ path('app_logout') }}"> Deconnexion </a>
@@ -73,7 +73,6 @@
             <li class="bouton-link bouton-param">
                 <a id="" href="{{ path('user_parameters') }}"><i class="fas fa-cog"></i></a>
             </li>
-
         </ul>
     </div>
 </nav>

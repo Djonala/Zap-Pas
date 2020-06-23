@@ -1,0 +1,97 @@
+<script src="https://kit.fontawesome.com/4ddbd1450d.js" crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg navbar-light row">
+    <a class="navbar-brand col-4" href="#">Zap'Pas</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse col align-self-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto container-sm">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-calendar-alt"></i> Calendrier
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if calendriers is defined %}
+                        {% for cal in calendriers%}
+                            <a class="dropdown-item" href="/calendrier/{{ cal.id }}" > {{cal.nom}} </a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-clock"></i>  Ohlala
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <form class="form-navbar-ohlala" method="post" action="{{ path('ohlala') }}">
+                        <li>
+                            <a class="elmt" for="checkbox" style="color: whitesmoke">
+                                <input type="checkbox" name="checkbox" id="checkbox-retard" class="check-retard" value="retard"  onclick="afficheFormRetard(this)"> Retard
+                            </a>
+                        </li>
+                        <li id="form-retard">
+                            <label for="appt"> Durée :</label>
+                            <div id="appt" class="container-duree">
+                                <input type="number" class="duree"  name="date" value="" />
+                                <select name="unite-temp" id="unite-temp-select">
+                                    <option value="min">min</option>
+                                    <option value="heure">H</option>
+                                </select>
+                            </div>
+                            <label> Jour : </label>
+                            <div class="container-duree">
+                                <input type="date" min="01-01-2020" class="jour" name="jour" value="">
+                            </div>
+                        </li>
+
+                        <li>
+                            <a class="elmt" for="checkbox" style="color: whitesmoke">
+                                <input type="checkbox" name="checkbox" id="checkbox-absence" class="check-absence" value="absence" onclick="afficheFormAbsence(this)"> Absence
+                            </a>
+                        </li>
+
+                        <li id="form-absence">
+                            <label for="start">du</label>
+                            <input type="date" id="start" name="trip-start" value="2020-06-23" min="2010-01-01" max="2050-12-31"><br>
+                            <label for="end">au</label>
+                            <input type="date" id="end" name="trip-end" value="2020-06-23" min="2010-01-01" max="2050-12-31">
+                        </a>
+                        </li>
+
+                        <li>
+                            <input  type="submit" class="submit-retard-absence" value="Envoyer"><br>
+                        </li>
+                    </form>
+                </div>
+            </li>
+
+            {% if userEnCours.getRoles()[0] == 'ROLE_ADMIN' or userEnCours.getRoles()[0] == 'ROLE_SUPER_ADMIN'%}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('calendrier_new') }}">
+                    <i class="fas fa-user-edit"></i>   Gérer
+                    <span class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="EspacePerso" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-sign-out-alt"></i> {{ app.user.prenom}} {{ app.user.nom}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"> Deconnexion</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('user_parameters') }}"><i class="fas fa-cog"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/navbar.js') }}"></script>
+{% endblock %}

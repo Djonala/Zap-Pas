@@ -1,0 +1,34 @@
+.form-filtre{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#div-filtre-select{
+    display: flex;
+    flex-direction: column;
+    margin-right: 3vh;
+}
+
+.select-filtre{
+max-width: 30vh;
+}
+
+#label-calendrier{
+    margin: 1vh;
+}
+
+.container-checkbox{
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 500px)  {
+    .form-filtre{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+    }
+}

@@ -11,3 +11,9 @@ h1 {
 html{
     font-family: arial, serif;
 }
+@media screen and (max-width: 500px)  {
+    div.fc-toolbar.fc-header-toolbar{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+}
